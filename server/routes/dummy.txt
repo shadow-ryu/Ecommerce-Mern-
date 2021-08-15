@@ -1,0 +1,63 @@
+{
+
+
+     "name":"",
+    "seller":"",
+    "brand": "",
+    "category": "",
+    "description": "",
+    "price": "",
+    "countInStock": "",
+    "rating": "",
+    "numReviews": "",
+    
+}
+  "paymentMethod": "",
+    "paymentResult": {
+      "id": "",
+      "status": "",
+      "update_time": "",
+      "email_address": "",
+    },
+
+    "shippingPrice": ,
+    "taxPrice": ,
+    "totalPrice": ,
+    "user":"",
+    
+  
+    "isPaid": { type: Boolean, default: false },
+    "paidAt": { type: Date },
+   name
+:
+"HP Pavilion Gaming Laptop , 15-dk1148TX"
+seller
+:
+6110b7cb7e095f183c4cae9c
+brand
+:
+"HP"
+specs
+:
+" 10th Gen Intel Core i5 Processor 15.6-inch FHD 8GB/512GB SSD + 32GB I..."
+image
+:
+"https://m.media-amazon.com/images/I/611VHOvjkES._SX522_.jpg"
+category
+:
+"Laptops"
+description
+:
+"Processor: 10th Gen Intel Core i5-10300H (2.5 GHz base frequency, up t..."
+price
+:
+1076
+countInStock
+:
+500
+rating
+:
+0
+numReviews
+:
+0

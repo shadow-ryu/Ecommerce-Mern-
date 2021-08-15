@@ -1,0 +1,166 @@
+.navbar {
+    height: 60px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background-color: #131921;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar__logo {
+    width: 100px;
+    justify-content: center;
+    object-fit: contain;
+    align-items: center;
+    margin: 0 20px;
+   
+  }
+  
+  .navbar__search {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    border-radius: 24px;
+  }
+  
+  .navbar__searchInput {
+    height: 12px;
+    padding: 10px;
+    border: none;
+    
+    width: 100%;
+  }
+  input[type="text"], textarea, select { 
+    outline: none;
+}
+  
+  .navbar__searchIcon {
+    padding: 5px;
+    height: 22px !important;
+    background-color: #cd9042;
+  }
+  
+  .navbar__optionLineOne {
+    font-size: 10px;
+  }
+  
+  .navbar__optionLineTwo {
+    font-size: 13px;
+    font-weight: 800;
+  }
+  
+  .navbar__optionBasket {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    justify-content: center;
+    color: white;
+  }
+  
+  .navbar__basketCount {
+    margin-left: 3px;
+    margin-bottom: 11px;
+    margin-right: 3px;
+    background-color:gray;
+    text-decoration: none;
+    border-radius:100%;
+    padding:3px;
+    border:none;
+  }
+  
+  .navbar__nav {
+    display: flex;
+    margin: 0 10px;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+  }
+  
+  .navbar__option {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: white;
+  }
+  .navbar__miniScreen{
+      display:none;
+  }
+
+  @media only screen and (max-width: 600px) {
+
+    .navbar__hidden{
+      display:none;
+      transform: translateX(0%);
+    }
+    .mini_navbar__nav {
+       display: flex;
+       position: absolute;
+       flex-direction: column;
+       align-items: center;
+      text-align: center;
+      justify-content: space-evenly;
+       top: 60px;
+       margin: 0;
+       height:42vh;
+       align-items: center;
+       width: 100%;
+       background-color: #131921;
+     
+       transition: transform 0.5 ease-in-out;
+    }
+ 
+    .navbar__logo {
+        width: 60px;
+        justify-content: center;
+        object-fit: contain;
+        align-items: center;
+        margin: 0 10px;
+       
+      } 
+      .navbar__search {
+        display: flex;
+        flex: 0.9;
+        align-items: center;
+        border-radius: 24px;
+      }
+      
+      .navbar__optionBasket {
+        display: flex;
+        align-items: center;
+        color: white;
+        
+        margin: 0 7px;
+      }
+      .navbar__basketCount {
+        margin-left: 3px;
+        margin-bottom: 11px;
+   
+        background-color:gray;
+        text-decoration: none;
+        border-radius:100%;
+        padding:3px;
+        border:none;
+      }
+      .navbar__miniScreen{
+          display: block;
+          align-items: center;
+       
+          justify-content: center;
+          color: white;
+      }
+      .togl{
+          display: flex;
+          justify-content: flex-end;
+          margin-left:13px;
+          align-items: center;
+      }
+      .navbar__menu{
+          margin-top: 109px;
+          margin: 0 20px;
+          align-items: center;
+          background-color: #131921;
+      }
+  }
