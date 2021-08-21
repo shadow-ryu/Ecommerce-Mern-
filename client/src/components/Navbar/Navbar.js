@@ -1,22 +1,66 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import SearchIcon from "@material-ui/icons/Search";
+
+import * as actionType  from '../../constants/ActionTypes';
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
+
 import logo from "./logo.png"
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import decode from 'jwt-decode';
+import MenuItem from '@material-ui/core/MenuItem';
+import  {Avatar} from '@material-ui/core';
+
+import { useDispatch } from 'react-redux';
+
+
+
 import './navbar.css'
-import { Link } from 'react-router-dom'
+
+
 
 const Navbar = () => {
-    const userData = {
-        name: 'ryu'
-    }
-    const [user, setUser] = useState(null);
-    const [click, setClick] = useState(false);
-    const menutoggle=()=> {
+  const userdata = JSON.parse(localStorage.getItem('profile'))
+  const [user, setUser] = useState(  userdata );
+  
 
-      setClick(!click);
-    }
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
+  const [anchorEl, setAnchorEl] =useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+   
+    
+const logout = () => {
+  dispatch({ type: actionType.LOGOUT });
+
+  history.push('/auth');
+  setAnchorEl(null);
+  setUser(null);
+};
+const token = user?.token;
+useEffect(() => {
+
+
+  if (token) {
+    const decodedToken = decode(token);
+
+    if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+  }
+
+  setUser(JSON.parse(localStorage.getItem('profile')));
+},[]);
+   
+
     return (
         // <img classNamr="navbar__logo" src={logo} alt="" />
         <div className="navbar" >
@@ -29,58 +73,22 @@ const Navbar = () => {
         <SearchIcon className="navbar__searchIcon" />
       </div>
 
-      <div className={click ?" mini_navbar__nav ":"navbar__nav"}>
+      <div className={"navbar__nav"}>
 
-            <Link to={!user && '/login'} className="navbar__hidden">
+            <Link to={!user && '/auth'} className="navbar__hidden">
                 <div onClick className="navbar__option">
                 
-                   <span className="navbar__optionLineOne">Hello {!user ? 'Guest' : user.name}</span>
-                  <span className="navbar__optionLineTwo">{user ? 'Log Out' : 'Sign In'}</span>
-
+                   <span className="navbar__optionLineOne">Hello  </span>
+                 
+                   <span className="navbar__optionLineTwo">{!user ? 'Guest' :user?.user.name}</span>
               
                  
                 </div>
               </Link>
-              <Link to='/orders' className="navbar__hidden">
-                <div onClick className="navbar__option">
-                
-                 
+          
             
-                <span className="navbar__optionLineOne">Returns</span>
-                  <span className="navbar__optionLineTwo">{!user ? 'Order' : "My Order"}</span>
-              
-                 
-                </div>
-              </Link>
-            
-
-              {click?
-                  <>
-                     <Link to='/profile'>
-                    <div className="navbar__option">
-                    <span className="navbar__optionLineTwo">{!user ? 'Profile' : "My Profile"}</span>
-                    </div>
-                   </Link>
-                  </> :
-                  <>
-                
-                  </>
-
-                  }
-                     {click?
-                  <>
-                    <Link to='/orders'>
-                <div className="navbar__option " >
-                   <span className="navbar__optionLineOne">Returns</span>
-                  <span className="navbar__optionLineTwo">{!user ? 'Order' : "My Order"}</span>
-                </div>
-              </Link>
-                  </> :
-                  <>
-                
-                  </>
-
-                  }
+          
+         
               
       </div>
       <Link to="/checkout">
@@ -91,15 +99,34 @@ const Navbar = () => {
                   </span>
                 </div>
         </Link>
-         <div className="navbar__miniScreen">
-           <div className="togl" onClick={menutoggle}>
-           {click ?  <CloseIcon/>  :<MenuIcon/>}
-         
-           </div>
- 
-          
-           
-         </div>
+                   
+    { user? 
+           <>
+            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+        <Avatar alt={user?.user.name} src={user?.user.imageUrl}>{user?.user.name.charAt(0)}</Avatar>
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+        
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+
+         <MenuItem onClick={handleClose}>orders</MenuItem>
+
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        </Menu>
+           </>:
+     <Button component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+    
+      }
+
+     
+   
+     
     </div>
     ) 
 }

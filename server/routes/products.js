@@ -10,7 +10,7 @@ const router = express.Router();
 //adding products
 router.post('/', checkAuth, isSellerOrAdmin,createProduct);
 //specific  product by ID
-router.get("/:id",getProductById); ;
+router.get("/:id",getProductById); 
     
 
 // //specific product update by id

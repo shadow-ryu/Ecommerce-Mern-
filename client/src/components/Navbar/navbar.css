@@ -108,8 +108,8 @@
        align-items: center;
        width: 100%;
        background-color: #131921;
-     
-       transition: transform 0.5 ease-in-out;
+      transition:transition easeease-in-out;
+      
     }
  
     .navbar__logo {

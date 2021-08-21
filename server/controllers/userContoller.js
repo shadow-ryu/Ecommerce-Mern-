@@ -1,9 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
+import Product  from "../models/product.js";
 import UserModal from "../models/user.js";
 
-const secret = process.env.HIDDEN_JWT;
+const secret = process.env.HIDDEN_JWT || "lOGINsecretJWTS";
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
@@ -26,7 +26,7 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password, name ,role,sellerDetails} = req.body;
+  const { email, password, firstName,lastName ,role,sellerDetails} = req.body;
 
   try {
     const oldUser = await UserModal.findOne({ email });
@@ -35,16 +35,27 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const result = await UserModal.create({ email, password: hashedPassword, name :name,role:role ,sellerDetails:sellerDetails});
+    const user = await UserModal.create({ email, password: hashedPassword,role:role ,sellerDetails:sellerDetails, name: `${firstName} ${lastName}` });
 
-    const token = jwt.sign( { email: result.email, id: result._id, role:role ,sellerDetails:sellerDetails}, secret, { expiresIn: "1h" } );
+    const token = jwt.sign( { email: user.email, name: user.name, id: user._id, role:role ,sellerDetails:sellerDetails}, secret, { expiresIn: "1h" } );
 
-    res.status(201).json({ result, token });
+    res.status(201).json({ user, token });
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
      
     console.log(error);
   }
 };
+export const MyProducts =  async(req, res) => {
+  try {
+    const user= req.userData.id;
+    const product = await Product.find({seller:user});
+        
+    res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 
 
