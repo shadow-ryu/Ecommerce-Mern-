@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import Product  from "../models/product.js";
 import UserModal from "../models/user.js";
 
-const secret = process.env.HIDDEN_JWT || "lOGINsecretJWTS";
+const secret = process.env.HIDDEN_JWT;
 
 export const signin = async (req, res) => {
   const { email, password } = req.body;
