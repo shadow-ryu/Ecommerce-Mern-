@@ -2,8 +2,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Product from "../models/product.js";
 import UserModal from "../models/user.js";
+<<<<<<< HEAD
 import dotenv from "dotenv";
 dotenv.config();
+=======
+
+>>>>>>> beeb164afe245856b58fef90a358bfbce453fa92
 const secret = process.env.HIDDEN_JWT;
 
 export const signin = async (req, res) => {
