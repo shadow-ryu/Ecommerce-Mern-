@@ -122,11 +122,7 @@ theme = {
         backgroundColor: "#404854",
       },
     },
-    MuiListItemText: {
-      primary: {
-        fontWeight: theme.typography.fontWeightMedium,
-      },
-    },
+
     MuiListItemIcon: {
       root: {
         color: "inherit",

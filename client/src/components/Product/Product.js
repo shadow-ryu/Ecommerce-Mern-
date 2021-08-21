@@ -51,13 +51,13 @@ const Product = (product) => {
         />
       </CardMedia>
       <CardContent>
-        <Typography variant="body2" color="textprimrary" component="h2">
+        <Typography variant="body2" component="h2">
           {product.title}
         </Typography>
-        <Typography variant="body2" color="textprimrary" component="h6">
+        <Typography variant="body2" component="h6">
           $ {product.price}
         </Typography>
-        <Typography variant="body2" color="textprimrary" component="p">
+        <Typography variant="body2" component="p">
           {product.rating}
         </Typography>
       </CardContent>
@@ -66,7 +66,7 @@ const Product = (product) => {
           <>
             <IconButton className={classes.bottom} aria-label="edit">
               <Link to={`/admin/editProduct/${product.id}`}>
-                <Typography variant="body2" color="textprimrary" component="p">
+                <Typography variant="body2" component="p">
                   edit
                 </Typography>
               </Link>
@@ -87,7 +87,7 @@ const Product = (product) => {
               <AddShoppingCartIcon />
             </IconButton>
             <IconButton className={classes.bottom} aria-label="show more">
-              <Typography variant="body2" color="textprimrary" component="p">
+              <Typography variant="body2" component="p">
                 More info
               </Typography>
               <NavigateNextIcon />
