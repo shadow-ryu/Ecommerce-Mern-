@@ -36,7 +36,7 @@ export const fetchsellerProducts = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchMyProducts();
-    console.log(data);
+    
     dispatch({ type: SELLERPRODUCTS, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
