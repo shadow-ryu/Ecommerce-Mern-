@@ -1,31 +1,51 @@
 import {
   FETCH_ALL,
   CREATE,
+  START_LOADING,
   SELLERPRODUCTS,
   BYID,
+  END_LOADING,
   UPDATE,
   DELETE,
   LIKE,
 } from "../../constants/ActionTypes";
-const productReducers = (product = [], action) => {
+const productReducers = (state = { isLoading: true, product: [] }, action) => {
   switch (action.type) {
+    case START_LOADING:
+      return { ...state, isLoading: true };
+    case END_LOADING:
+      return { ...state, isLoading: false };
     case FETCH_ALL:
-      return action.payload;
+      return {
+        ...state,
+        products: action.payload.data,
+      };
     case CREATE:
-      return [...product, action.payload];
+      return { ...state, products: [...state.products, action.payload] };
     case SELLERPRODUCTS:
-      return action.payload;
+      return {
+        ...state,
+        products: action.payload.data,
+      };
 
     case BYID:
-      return { ...product, product: action.payload.product };
+      return { ...state, product: action.payload.product };
     case UPDATE:
-      return product.map((p) =>
-        p._id === action.payload._id ? action.payload : p
-      );
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product._id === action.payload._id ? action.payload : product
+        ),
+      };
     case DELETE:
-      return product.filter((p) => p._id !== action.payload);
+      return {
+        ...state,
+        products: state.products.filter(
+          (product) => product._id !== action.payload
+        ),
+      };
     default:
-      return product;
+      return state;
   }
 };
 export default productReducers;

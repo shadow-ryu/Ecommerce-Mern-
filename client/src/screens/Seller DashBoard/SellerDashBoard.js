@@ -178,6 +178,10 @@ function AdminDashboard(props) {
     setMobileOpen(!mobileOpen);
   };
   const { id } = useParams();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchsellerProducts());
+  }, [dispatch]);
 
   return (
     <ThemeProvider theme={theme}>

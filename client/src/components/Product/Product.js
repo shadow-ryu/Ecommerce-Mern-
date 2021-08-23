@@ -87,10 +87,12 @@ const Product = (product) => {
               <AddShoppingCartIcon />
             </IconButton>
             <IconButton className={classes.bottom} aria-label="show more">
-              <Typography variant="body2" component="p">
-                More info
-              </Typography>
-              <NavigateNextIcon />
+              <Link to={`/Product/${product.id}`}>
+                <Typography variant="body2" component="p">
+                  More info
+                </Typography>
+                <NavigateNextIcon />
+              </Link>
             </IconButton>
           </>
         )}

@@ -9,7 +9,7 @@ import SignupOrSigninScreen from "./screens/signupScreen/SignupOrSigninScreen";
 import Home from "./screens/HomeScreen/Homescreen";
 import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
 import ProductForm from "./components/Product Form/ProductForm";
-// import Product from './components/Product/Product';
+import ProductDetails from "./components/Product/ProductDetails";
 
 function App() {
   return (
@@ -29,6 +29,14 @@ function App() {
           <Route path="/admin/editProduct/:id" exact>
             <SellerDashBoard Update />
           </Route>
+          <Route path="/Product/:id" exact>
+            <Navbar />
+            <Home byId />
+          </Route>
+          {/* <Route path="/product/:id" exact>
+            <Navbar />
+            <ProductDetails />
+          </Route> */}
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />
           </Route>

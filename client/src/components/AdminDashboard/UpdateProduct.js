@@ -60,24 +60,6 @@ export default function ProductForm(prop) {
   useEffect(() => {
     id && product && reset(product);
   }, [id, reset, product]);
-  // useEffect(() => {
-  //   id &&
-  //     fetch("http://localhost:5000/product/" + id, {
-  //       method: "GET",
-  //     }).then(
-  //       function (response) {
-  //         // console.log(response);
-  //         response.text().then((r) => {
-  //           const d = JSON.parse(r);
-  //           console.log(d);
-  //           reset(d);
-  //         });
-  //       },
-  //       function (error) {
-  //         console.log(error.message);
-  //       }
-  //     );
-  // }, []);
 
   if (isLoading) {
     return (
@@ -181,7 +163,7 @@ export default function ProductForm(prop) {
                 render={({ field }) => (
                   <TextField
                     variant="outlined"
-                    Label="countInStock"
+                    label="countInStock"
                     type="number"
                     required
                     fullWidth

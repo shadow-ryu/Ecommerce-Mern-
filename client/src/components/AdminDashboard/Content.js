@@ -17,6 +17,7 @@ import ProductForm from "../Product Form/ProductForm";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchsellerProducts } from "../../Redux/Actions/productActions";
+import { CircularProgress } from "@material-ui/core";
 const styles = (theme) => ({
   paper: {
     maxWidth: 936,
@@ -43,12 +44,13 @@ const styles = (theme) => ({
 function Content(props) {
   const { classes } = props;
   const [newForm, setNewForm] = useState(false);
+
   const newporduct = () => {
     setNewForm(!newForm);
   };
 
-  const products = useSelector((state) => state.productReducers);
-
+  const { products, isLoading } = useSelector((state) => state.productReducers);
+  console.log(products);
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -115,20 +117,26 @@ function Content(props) {
         ) : (
           <>
             <Grid className container alignItems="stretch" spacing={3}>
-              {console.log(products)}
-              {products?.map((product) => (
-                <Grid>
-                  <Product
-                    id={product._id}
-                    title={product.name}
-                    price={product.price}
-                    rating={product.rating}
-                    image={product.image}
-                    edit
-                  />
-                </Grid>
-              ))}
-              {console.log(products)}
+              {isLoading ? (
+                <CircularProgress />
+              ) : (
+                <>
+                  <Grid container alignItems="stretch" spacing={3}>
+                    {products?.map((product) => (
+                      <Grid key={product._id}>
+                        <Product
+                          id={product._id}
+                          title={product.name}
+                          price={product.price}
+                          rating={product.rating}
+                          image={product.image}
+                          edit
+                        />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </>
+              )}
             </Grid>
           </>
         )}
