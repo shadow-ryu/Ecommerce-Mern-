@@ -7,7 +7,6 @@ import {
   END_LOADING,
   UPDATE,
   DELETE,
-  LIKE,
 } from "../../constants/ActionTypes";
 const productReducers = (state = { isLoading: true, product: [] }, action) => {
   switch (action.type) {

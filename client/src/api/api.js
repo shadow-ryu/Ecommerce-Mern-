@@ -28,3 +28,6 @@ export const createP = (newProduct) => API.post("/product", newProduct);
 export const updateProduct = (id, updatedPost) =>
   API.patch(`/product/${id}`, updatedPost);
 export const deleteProduct = (id) => API.delete(`/product/${id}`);
+export const addtoCart = (id) => API.get(`/product/${id}/addCart`);
+export const removetoCart = (id) => API.get(`/product/${id}/removeCart`);
+export const getuserCart = () => API.get("/cart");

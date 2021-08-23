@@ -7,7 +7,6 @@ import {
   END_LOADING,
   UPDATE,
   DELETE,
-  LIKE,
 } from "../../constants/ActionTypes";
 import * as api from "../../api/api.js";
 
@@ -36,7 +35,7 @@ export const fetchsellerProducts = () => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchMyProducts();
-    
+
     dispatch({ type: SELLERPRODUCTS, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {

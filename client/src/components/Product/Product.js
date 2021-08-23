@@ -69,9 +69,8 @@ const Product = (product) => {
                 <Typography variant="body2" component="p">
                   edit
                 </Typography>
+                <EditIcon />
               </Link>
-
-              <EditIcon />
             </IconButton>
             <Button
               size="small"
