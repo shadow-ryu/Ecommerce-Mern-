@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+
 import { getproduct } from "../../Redux/Actions/productActions";
 import { Button } from "@material-ui/core";
 import { addProductToCart } from "../../Redux/Actions/cartActions";
@@ -9,9 +9,10 @@ const ProductDetails = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getproduct(id));
-  }, [id, dispatch]);
-  const qty = 1;
+  }, []);
+
   const { product, isLoading } = useSelector((state) => state.productReducers);
+  console.log(product);
   return (
     <div>
       <>
@@ -30,10 +31,17 @@ const ProductDetails = (props) => {
           >
             addtocart
           </Button>
+          <Button
+            size="small"
+            color="secondary"
+            onClick={() => dispatch(addProductToCart(product._id))}
+          >
+            addtocart
+          </Button>
           <a href="/">back</a>
           {product?.specs?.map((spec) => (
-            <div>
-              <h6 key={spec._id}>
+            <div key={spec._id}>
+              <h6>
                 {spec?.specName}:{spec?.specValue}
               </h6>
             </div>

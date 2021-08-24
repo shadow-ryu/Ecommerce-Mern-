@@ -10,6 +10,7 @@ import Home from "./screens/HomeScreen/Homescreen";
 import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
 import ProductForm from "./components/Product Form/ProductForm";
 import ProductDetails from "./components/Product/ProductDetails";
+import { Cart } from "./components/Cart/Cart";
 
 function App() {
   return (
@@ -33,10 +34,10 @@ function App() {
             <Navbar />
             <Home byId />
           </Route>
-          {/* <Route path="/product/:id" exact>
+          <Route path="/mycart" exact>
             <Navbar />
-            <ProductDetails />
-          </Route> */}
+            <Cart />
+          </Route>
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />
           </Route>

@@ -14,7 +14,7 @@ const cartReducers = (state = { isLoading: true, cart: [] }, action) => {
     case GETCART:
       return {
         ...state,
-        cart: action.payload.data,
+        carts: action.payload.data[0],
       };
 
     case ADDTOCART:

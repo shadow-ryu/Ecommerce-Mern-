@@ -104,10 +104,7 @@ export const myCart = async (req, res) => {
     );
     const endresult = await Cart.find({ user: user })
       .then((result) => {
-        res.status(201).json({
-          message: "  cart details",
-          endresult: result,
-        });
+        res.status(201).json(result);
       })
       .catch((err) => {
         console.log(err);
