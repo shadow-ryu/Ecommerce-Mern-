@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { getproduct } from "../../Redux/Actions/productActions";
 import { Button } from "@material-ui/core";
 import { addProductToCart } from "../../Redux/Actions/cartActions";
+import { useHistory } from "react-router-dom";
 const ProductDetails = (props) => {
   const { id } = props;
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
     dispatch(getproduct(id));
   }, []);
 
   const { product, isLoading } = useSelector((state) => state.productReducers);
-  console.log(product);
+
   return (
     <div>
       <>
@@ -27,15 +29,11 @@ const ProductDetails = (props) => {
           <Button
             size="small"
             color="secondary"
-            onClick={() => dispatch(addProductToCart(product._id))}
+            onClick={() => dispatch(addProductToCart(product._id, history))}
           >
             addtocart
           </Button>
-          <Button
-            size="small"
-            color="secondary"
-            onClick={() => dispatch(addProductToCart(product._id))}
-          >
+          <Button size="small" color="secondary">
             addtocart
           </Button>
           <a href="/">back</a>

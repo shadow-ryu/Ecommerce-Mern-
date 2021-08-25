@@ -1,21 +1,17 @@
 import { Button } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { userCart } from "../../Redux/Actions/cartActions";
-import { getProducts } from "../../Redux/Actions/productActions";
-import cartReducer from "./../../Redux/Reducers/cartReducer";
+import { useHistory } from "react-router-dom";
+import { removeProductToCart, userCart } from "../../Redux/Actions/cartActions";
 
 import "./cart.css";
 export const Cart = () => {
   const dispatch = useDispatch();
   const { carts } = useSelector((state) => state.cartReducer);
+  const history = useHistory();
   useEffect(() => {
     dispatch(userCart());
   }, [dispatch]);
-
-  const removeFromBasket = () => {
-    // remove the item from the basket
-  };
 
   return (
     <div className="cartM">
@@ -32,7 +28,17 @@ export const Cart = () => {
               <div className="cartProduct__info">
                 <div className="removs">
                   <p className="cartProduct__title">{cartItem?.name}</p>
-                  <Button onClick={removeFromBasket}>Remove from Basket</Button>
+
+                  <Button
+                    onClick={() => {
+                      dispatch(
+                        removeProductToCart(cartItem.productID, history)
+                      );
+                      // window.location.reload(false);
+                    }}
+                  >
+                    Remove from Basket
+                  </Button>
                 </div>
 
                 <p className="cartProduct__price">

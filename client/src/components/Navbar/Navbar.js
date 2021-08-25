@@ -12,9 +12,10 @@ import decode from "jwt-decode";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Avatar } from "@material-ui/core";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./navbar.css";
+import { userCart } from "./../../Redux/Actions/cartActions";
 
 const Navbar = () => {
   const userdata = JSON.parse(localStorage.getItem("profile"));
@@ -42,6 +43,7 @@ const Navbar = () => {
   };
   const token = user?.token;
   useEffect(() => {
+    dispatch(userCart());
     if (token) {
       const decodedToken = decode(token);
 
@@ -50,6 +52,7 @@ const Navbar = () => {
 
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
+  const { carts } = useSelector((state) => state.cartReducer);
 
   return (
     // <img classNamr="navbar__logo" src={logo} alt="" />
@@ -74,10 +77,12 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <Link to="/checkout">
+      <Link to="/mycart">
         <div className="navbar__optionBasket">
           <ShoppingBasketIcon />
-          <span className="navbar__optionLineTwo navbar__basketCount">1</span>
+          <span className="navbar__optionLineTwo navbar__basketCount">
+            {carts ? carts?.cartItems?.length : 0}
+          </span>
         </div>
       </Link>
 

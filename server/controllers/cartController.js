@@ -66,15 +66,18 @@ export const addToCart = async (req, res) => {
 
 export const removeitem = async (req, res) => {
   const id = req.params.id;
+
   const user = req.userData.id;
 
   const cart = await Cart.find({ user: user }, { cartItems: 1 });
 
   const cartItems = cart[0].cartItems;
+
   var filtered = cartItems.filter(function (el) {
     return el.productID == id;
   });
-  const reomveId = filtered[0]._id;
+
+  const reomveId = filtered[0]?._id;
 
   await Cart.updateOne(
     { user: user },
