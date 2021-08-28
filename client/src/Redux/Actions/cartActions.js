@@ -22,7 +22,7 @@ export const removeProductToCart = (id, router) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
     const { data } = await api.removetoCart(id);
-    router.replace("/mycart");
+
     dispatch({ type: REMOVEFROMCART, payload: data });
   } catch (error) {
     console.log(error);

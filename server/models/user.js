@@ -1,4 +1,3 @@
-  
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
@@ -11,6 +10,7 @@ const UserSchema = new mongoose.Schema(
       name: String,
       logo: String,
       description: String,
+      shippingPrice: { type: Number, default: 0, required: true },
       rating: { type: Number, default: 0, required: true },
       numReviews: { type: Number, default: 0, required: true },
     },
@@ -19,7 +19,6 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
- 
-const user = mongoose.model('User', UserSchema);
-export default user;
 
+const user = mongoose.model("User", UserSchema);
+export default user;

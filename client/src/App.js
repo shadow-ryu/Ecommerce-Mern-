@@ -8,9 +8,9 @@ import Navbar from "./components/Navbar/Navbar";
 import SignupOrSigninScreen from "./screens/signupScreen/SignupOrSigninScreen";
 import Home from "./screens/HomeScreen/Homescreen";
 import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
-import ProductForm from "./components/Product Form/ProductForm";
-import ProductDetails from "./components/Product/ProductDetails";
+
 import { Cart } from "./components/Cart/Cart";
+import Checkout from "./components/Shipping&Checkout/Checkout";
 
 function App() {
   return (
@@ -37,6 +37,10 @@ function App() {
           <Route path="/mycart" exact>
             <Navbar />
             <Cart />
+          </Route>
+          <Route path="/placeOrder" exact>
+            <Navbar />
+            <Checkout />
           </Route>
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />

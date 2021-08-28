@@ -61,3 +61,7 @@ rating
 numReviews
 :
 0
+
+//admin
+email_address:erud@gmail.com
+password:erud@

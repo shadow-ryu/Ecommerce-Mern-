@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Product from "../models/product.js";
 import UserModal from "../models/user.js";
-
+import shippingAddressM from "../models/shippingAddress.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -85,6 +85,16 @@ export const MyProducts = async (req, res) => {
     const product = await Product.find({ seller: user });
 
     res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const Myaddress = async (req, res) => {
+  try {
+    const user = req.userData.id;
+    const ShippingAddress = await shippingAddressM.find({ user: user });
+
+    res.status(200).json(ShippingAddress);
   } catch (error) {
     console.log(error);
   }

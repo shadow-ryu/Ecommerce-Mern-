@@ -22,7 +22,11 @@ export const signup = (formData, router) => async (dispatch) => {
 
     dispatch({ type: AUTH, data });
 
-    router.push("/");
+    if (data?.user.role === "admin") {
+      router.push("/admin");
+    } else {
+      router.push("/");
+    }
   } catch (error) {
     console.log(error);
   }

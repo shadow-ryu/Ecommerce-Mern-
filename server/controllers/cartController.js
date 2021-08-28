@@ -1,5 +1,6 @@
 import Product from "../models/product.js";
 import Cart from "../models/addCart.js";
+import User from "../models/user.js";
 
 export const addToCart = async (req, res) => {
   const id = req.params.id;
@@ -99,12 +100,43 @@ export const myCart = async (req, res) => {
     res.status(400).send("empty cart");
   } else {
     const cartItems = cart[0].cartItems.map((p) => p.totalprice);
+
     const totalPrice = cartItems.reduce((a, b) => a + b, 0);
-    await Cart.updateOne(
+    const sellers = cart?.[0]?.cartItems.map((s) => {
+      return s.seller.toString();
+    });
+    const sellersSet = new Set(sellers);
+    // console.log(sellersSet);
+    let arrayy = Array.from(sellersSet);
+    // console.log(arrayy);
+    const shippingPrices = [];
+    for (const s of arrayy) {
+      shippingPrices.push(await User.find({ _id: s }, { sellerDetails: 1 }));
+    }
+
+    const responseData = [];
+    for (let i = 0; i < shippingPrices.length; i++) {
+      responseData[i] = shippingPrices[i][0];
+    }
+    const responseDataPrice = [];
+    for (let i = 0; i < shippingPrices.length; i++) {
+      responseDataPrice[i] = shippingPrices[i][0]?.sellerDetails?.shippingPrice;
+    }
+
+    const totalShippingPrice = responseDataPrice.reduce((a, b) => a + b, 0);
+
+    const grandtotalPrice = totalShippingPrice + totalPrice;
+
+    const updstedCart = await Cart.updateOne(
       { user: user },
-      { $set: { grandtotalPrice: totalPrice } },
-      { new: true }
+      {
+        $set: {
+          ShipingPrice: totalShippingPrice,
+          grandtotalPrice: grandtotalPrice,
+        },
+      }
     );
+
     const endresult = await Cart.find({ user: user })
       .then((result) => {
         res.status(201).json(result);

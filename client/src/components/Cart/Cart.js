@@ -12,7 +12,9 @@ export const Cart = () => {
   useEffect(() => {
     dispatch(userCart());
   }, [dispatch]);
-
+  const placeorder = () => {
+    history.push("/placeOrder");
+  };
   return (
     <div className="cartM">
       <div className="cart">
@@ -62,13 +64,20 @@ export const Cart = () => {
               </div>
             ))}
           </div>
+          <div className="cartotal1">
+            <h4>ShipingPrice</h4>
+            <h4> {carts?.ShipingPrice}</h4>
+          </div>
           <div className="cartotal">
             <h4>total</h4>
             <h4> {carts?.grandtotalPrice}</h4>
           </div>
         </div>
       </div>
-      <Button color="primary"> place order</Button>
+      <Button color="primary" onClick={placeorder}>
+        {" "}
+        place order
+      </Button>
     </div>
   );
 };
