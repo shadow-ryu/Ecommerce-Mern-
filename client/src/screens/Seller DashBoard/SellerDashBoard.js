@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux";
 import { fetchsellerProducts } from "../../Redux/Actions/productActions";
 import UpdateProduct from "../../components/AdminDashboard/UpdateProduct";
 import { useParams } from "react-router-dom";
+import SellerOrderList from "../../components/AdminDashboard/SellerOrderList";
 
 function Copyright() {
   const dispatch = useDispatch();
@@ -205,7 +206,7 @@ function AdminDashboard(props) {
           <main className={classes.main}>
             {Update ? <UpdateProduct id={id} /> : ""}
             {sellerProducts ? <Content /> : ""}
-            {SellerOrder ? "all orders" : ""}
+            {SellerOrder ? <SellerOrderList /> : ""}
           </main>
           <footer className={classes.footer}>
             <Copyright />

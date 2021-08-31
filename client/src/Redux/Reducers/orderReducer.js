@@ -1,7 +1,7 @@
 import {
   START_LOADING,
   END_LOADING,
-  ADDTOCART,
+  SELLERORDERS,
   // REMOVEFROMCART,
   PLACEORDER,
 } from "../../constants/ActionTypes";
@@ -14,11 +14,15 @@ const OrderReducers = (state = { isLoading: true, Order: [] }, action) => {
     case PLACEORDER:
       return {
         ...state,
-        Order: action.payload.data[0],
+        Order: action.payload.data,
       };
 
-    //   case ADDTOCART:
-    //     return { ...state, cart: [...state.cart, action.payload] };
+    case SELLERORDERS:
+      console.log(action.payload.data);
+      return {
+        ...state,
+        Order: action.payload.data,
+      };
 
     default:
       return state;

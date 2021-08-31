@@ -32,3 +32,4 @@ export const addtoCart = (id) => API.get(`/product/${id}/addCart`);
 export const removetoCart = (id) => API.get(`/product/${id}/removeCart`);
 export const getuserCart = () => API.get("/cart");
 export const placOrder = (formData) => API.post("order", formData);
+export const sellerOrderList = () => API.get("/user/sellerOrders");
