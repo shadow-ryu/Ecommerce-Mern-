@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-
+import { PayPalButton } from "react-paypal-button-v2";
 import { useForm } from "react-hook-form";
 import { Button, Select } from "@material-ui/core";
 import { savemypaymentMethod } from "../../Redux/Actions/PaymentMethodActopn";
@@ -10,10 +10,10 @@ import { useDispatch } from "react-redux";
 export default function PaymentForm() {
   const { register, control, handleSubmit, reset, trigger, setError } =
     useForm();
+
   const dispatch = useDispatch();
   const onSubmit = (data) => {
     dispatch(savemypaymentMethod(data));
-    console.log(data);
   };
   return (
     <React.Fragment>
@@ -23,7 +23,7 @@ export default function PaymentForm() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label for="cars">Choose a car:</label>
+            <label for="cars">Choose Payment method:</label>
             <Select
               native
               {...register("paymentMethod", { required: true })}
@@ -42,8 +42,13 @@ export default function PaymentForm() {
                 PAYPAL
               </option>
             </Select>
-            <Button type="submit" className="btn btn-">
-              select this address
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              style={{ margin: "10px" }}
+            >
+              select
             </Button>
           </form>
         </Grid>

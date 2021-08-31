@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
@@ -10,6 +10,9 @@ import { userCart } from "./../../Redux/Actions/cartActions";
 import { getmyaddress } from "../../Redux/Actions/UseraddressAction";
 import { Button } from "@material-ui/core";
 import { placeOrderFnc } from "../../Redux/Actions/orderAction";
+import { PayPalButton } from "react-paypal-button-v2";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -33,7 +36,8 @@ export default function ReviewOrder() {
   const { newAddress } = useSelector((state) => state.newAddressReducer);
   const { address } = useSelector((state) => state.addressReducers);
   const { Order } = useSelector((state) => state.OrderReducers);
-  console.log(Order);
+  const history = useHistory();
+  const [paypalID, setPaypalID] = useState(false);
   const { savePaynetMethod } = useSelector(
     (state) => state.savePaynetMethodReducer
   );
@@ -46,9 +50,25 @@ export default function ReviewOrder() {
 
   useEffect(() => {
     dispatch(userCart());
-
+    const addPaypalScript = async () => {
+      const { data: clientId } = await axios.get(
+        "http://localhost:5000/config/paypal"
+      );
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+      script.async = true;
+      script.onload = () => {
+        setPaypalID(true);
+      };
+      document.body.appendChild(script);
+    };
+    if (savePaynetMethod[0]?.paymentMethod === "paypal") {
+      addPaypalScript();
+    }
+    console.log(paypalID);
     dispatch(getmyaddress());
-  }, [dispatch]);
+  }, [dispatch, paypalID, savePaynetMethod]);
   const PlaceOrderHandler = () => {
     if (savePaynetMethod[0]?.paymentMethod === "cash") {
       if (id) {
@@ -57,19 +77,43 @@ export default function ReviewOrder() {
           paymentMethod: "cash",
           shippingAddress: selectedAddress[0],
         };
-        dispatch(placeOrderFnc(placeorderdetails));
-      } else {
+        dispatch(placeOrderFnc(placeorderdetails, history));
+      } else if (newAddress[0]) {
         let placeorderdetails = {
           isPaid: false,
           paymentMethod: "cash",
           shippingAddress: newAddress[0],
         };
-        dispatch(placeOrderFnc(placeorderdetails));
+        dispatch(placeOrderFnc(placeorderdetails, history));
       }
     } else {
       console.log("data");
     }
   };
+
+  const SuccessHandler = (paymentResult) => {
+    if (id) {
+      let placeorderdetails = {
+        isPaid: true,
+        paymentMethod: "PayPal",
+        shippingAddress: selectedAddress[0],
+        paymentResult: paymentResult,
+      };
+      dispatch(placeOrderFnc(placeorderdetails, history));
+    }
+
+    // OPTIONAL: Call your server to save the transaction
+    else if (newAddress[0]) {
+      let placeorderdetails = {
+        isPaid: true,
+        paymentMethod: "PayPal",
+        shippingAddress: newAddress[0],
+        paymentResult: paymentResult,
+      };
+      dispatch(placeOrderFnc(placeorderdetails, history));
+    }
+  };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -152,14 +196,22 @@ export default function ReviewOrder() {
         </Grid>
       </Grid>
       <Grid item container direction="column" xs={12} sm={6}>
-        <Button
-          variant="contained"
-          onClick={PlaceOrderHandler}
-          color="primary"
-          className={classes.button}
-        >
-          place Order Order
-        </Button>
+        {savePaynetMethod[0]?.paymentMethod === "cash" ? (
+          <Button
+            variant="contained"
+            onClick={PlaceOrderHandler}
+            color="primary"
+            className={classes.button}
+          >
+            place Order Order
+          </Button>
+        ) : (
+          <PayPalButton
+            amount={carts?.grandtotalPrice}
+            // shippingPreference="NO_SHIPPING" // default is "GET_FROM_FILE"
+            onSuccess={SuccessHandler}
+          />
+        )}
       </Grid>
     </React.Fragment>
   );

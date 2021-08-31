@@ -1,8 +1,7 @@
-import { getProducts } from "./Redux/Actions/productActions";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import SignupOrSigninScreen from "./screens/signupScreen/SignupOrSigninScreen";
@@ -11,6 +10,7 @@ import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
 
 import { Cart } from "./components/Cart/Cart";
 import Checkout from "./components/Shipping&Checkout/Checkout";
+import Thanks from "./components/Thnaks";
 
 function App() {
   return (
@@ -41,6 +41,10 @@ function App() {
           <Route path="/placeOrder" exact>
             <Navbar />
             <Checkout />
+          </Route>
+          <Route path="/sucessOrder" exact>
+            <Navbar />
+            <Thanks />
           </Route>
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />

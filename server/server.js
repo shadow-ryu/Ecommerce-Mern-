@@ -48,3 +48,6 @@ app.use("/product", productRouter);
 app.get("/cart", checkAuth, myCart);
 
 app.use("/order", orderRouter);
+app.use("/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID);
+});

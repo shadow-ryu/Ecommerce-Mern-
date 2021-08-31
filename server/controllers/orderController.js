@@ -7,13 +7,8 @@ import shippingAddressM from "../models/shippingAddress.js";
 export const placeOrder = async (req, res) => {
   try {
     const user = req.userData.id;
-    const {
-      shippingAddress,
-      paymentMethod,
-
-      isPaid,
-      paidAt,
-    } = req.body;
+    const { shippingAddress, paymentMethod, paymentResult, isPaid, paidAt } =
+      req.body;
     const userCart = await Cart.find(
       { user: user },
       { _id: 0, grandtotalPrice: 1, cartItems: 1 }
@@ -54,7 +49,7 @@ export const placeOrder = async (req, res) => {
         },
         paymentMethod: paymentMethod,
         shippingPrice: shippingPrice,
-
+        paymentResult: paymentResult,
         totalPrice: totalPrice,
         user: user,
 
@@ -102,9 +97,9 @@ export const placeOrder = async (req, res) => {
     res.status(200).json({
       message: "order done",
     });
-    // const empty = await Cart.findOneAndDelete({ user: user }).then((result) => {
-    //   res.json({ message: "order is placed and cart is empty now." });
-    // });
+    const empty = await Cart.findOneAndDelete({ user: user }).then((result) => {
+      res.json({ message: "order is placed and cart is empty now." });
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({
@@ -117,4 +112,9 @@ export const myBill = async (req, res) => {};
 
 export const myOrder = async (req, res) => {};
 
-export const sellerOrderList = async (req, res) => {};
+export const sellerOrderList = async (req, res) => {
+  const user = req.userData.id;
+  await SellerOrder.find({ seller: user }).then((result) => {
+    res.status(201).json(result);
+  });
+};

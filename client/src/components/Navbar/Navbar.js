@@ -18,13 +18,32 @@ import "./navbar.css";
 import { userCart } from "./../../Redux/Actions/cartActions";
 
 const Navbar = () => {
-  const userdata = JSON.parse(localStorage.getItem("profile"));
-  const [user, setUser] = useState(userdata);
-
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+
   const [anchorEl, setAnchorEl] = useState(null);
+  const logout = () => {
+    dispatch({ type: actionType.LOGOUT });
+
+    history.push("/auth");
+    setAnchorEl(null);
+    setUser(null);
+    setUser(null);
+  };
+
+  useEffect(() => {
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -34,13 +53,6 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    dispatch({ type: actionType.LOGOUT });
-
-    history.push("/auth");
-    setAnchorEl(null);
-    setUser(null);
-  };
   const token = user?.token;
   useEffect(() => {
     dispatch(userCart());
@@ -49,7 +61,10 @@ const Navbar = () => {
 
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
+  }, []);
 
+  useEffect(() => {
+    console.log(`${user} `);
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
   const { carts } = useSelector((state) => state.cartReducer);

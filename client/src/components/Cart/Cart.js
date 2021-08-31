@@ -1,17 +1,21 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { removeProductToCart, userCart } from "../../Redux/Actions/cartActions";
-
+import { useCallback } from "react";
 import "./cart.css";
 export const Cart = () => {
   const dispatch = useDispatch();
   const { carts } = useSelector((state) => state.cartReducer);
   const history = useHistory();
+  const location = useLocation();
+  const [removed, setRemove] = useState(false);
+
   useEffect(() => {
     dispatch(userCart());
-  }, [dispatch]);
+  }, [dispatch, location, removed]);
+
   const placeorder = () => {
     history.push("/placeOrder");
   };
@@ -36,7 +40,7 @@ export const Cart = () => {
                       dispatch(
                         removeProductToCart(cartItem.productID, history)
                       );
-                      // window.location.reload(false);
+                      setRemove(!removed);
                     }}
                   >
                     Remove from Basket
