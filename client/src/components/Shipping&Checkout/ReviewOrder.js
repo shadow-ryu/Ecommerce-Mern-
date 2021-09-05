@@ -11,7 +11,11 @@ import { getmyaddress } from "../../Redux/Actions/UseraddressAction";
 import { Button } from "@material-ui/core";
 import { placeOrderFnc } from "../../Redux/Actions/orderAction";
 import { PayPalButton } from "react-paypal-button-v2";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+
+import { ToastContainer, toast } from "react-toastify";
+
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +39,7 @@ export default function ReviewOrder() {
   const { carts } = useSelector((state) => state.cartReducer);
   const { newAddress } = useSelector((state) => state.newAddressReducer);
   const { address } = useSelector((state) => state.addressReducers);
-  const { Order } = useSelector((state) => state.OrderReducers);
+  const { Order, isLoading } = useSelector((state) => state.OrderReducers);
   const history = useHistory();
   const [paypalID, setPaypalID] = useState(false);
   const { savePaynetMethod } = useSelector(
@@ -63,10 +67,12 @@ export default function ReviewOrder() {
       };
       document.body.appendChild(script);
     };
-    if (savePaynetMethod[0]?.paymentMethod === "paypal") {
+    if (paypalID && !window.paypal) {
       addPaypalScript();
+    } else {
+      setPaypalID(true);
     }
-    console.log(paypalID);
+
     dispatch(getmyaddress());
   }, [dispatch, paypalID, savePaynetMethod]);
   const PlaceOrderHandler = () => {
@@ -86,11 +92,24 @@ export default function ReviewOrder() {
         };
         dispatch(placeOrderFnc(placeorderdetails, history));
       }
+      toast.success("order is placed successfully", {
+        position: "top-right",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(home, 11000);
     } else {
       console.log("data");
     }
   };
-
+  const home = () => {
+    history.push("/mycart");
+    history.push("/");
+  };
   const SuccessHandler = (paymentResult) => {
     if (id) {
       let placeorderdetails = {
@@ -112,10 +131,31 @@ export default function ReviewOrder() {
       };
       dispatch(placeOrderFnc(placeorderdetails, history));
     }
+    toast.success("order is placed successfully", {
+      position: "top-right",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(home, 15000);
   };
 
   return (
     <React.Fragment>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>

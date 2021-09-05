@@ -64,7 +64,6 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    console.log(`${user} `);
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
   const { carts } = useSelector((state) => state.cartReducer);

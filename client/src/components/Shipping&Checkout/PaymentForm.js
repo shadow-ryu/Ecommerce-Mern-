@@ -1,15 +1,14 @@
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import { PayPalButton } from "react-paypal-button-v2";
+
 import { useForm } from "react-hook-form";
 import { Button, Select } from "@material-ui/core";
 import { savemypaymentMethod } from "../../Redux/Actions/PaymentMethodActopn";
 import { useDispatch } from "react-redux";
 
 export default function PaymentForm() {
-  const { register, control, handleSubmit, reset, trigger, setError } =
-    useForm();
+  const { register, handleSubmit } = useForm();
 
   const dispatch = useDispatch();
   const onSubmit = (data) => {

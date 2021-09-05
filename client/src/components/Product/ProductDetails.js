@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getproduct } from "../../Redux/Actions/productActions";
 import { Button } from "@material-ui/core";
 import { addProductToCart } from "../../Redux/Actions/cartActions";
 import { useHistory } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 const ProductDetails = (props) => {
   const { id } = props;
   const dispatch = useDispatch();
@@ -14,9 +16,21 @@ const ProductDetails = (props) => {
   }, []);
 
   const { product, isLoading } = useSelector((state) => state.productReducers);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <>
         <div>
           <img src={product?.image} alt="" style={{ objectFit: "contain" }} />
@@ -29,7 +43,22 @@ const ProductDetails = (props) => {
           <Button
             size="small"
             color="secondary"
-            onClick={() => dispatch(addProductToCart(product._id, history))}
+            onClick={() => {
+              if (user?.user) {
+                console.log(product?._id);
+                dispatch(addProductToCart(product._id, history));
+              } else {
+                toast.error("plz login /signup to add to get", {
+                  position: "top-right",
+                  autoClose: 5000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                });
+              }
+            }}
           >
             addtocart
           </Button>

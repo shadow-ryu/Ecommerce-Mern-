@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import ReviewOrder from "./ReviewOrder";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -62,6 +63,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  SucessFully: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 }));
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
@@ -90,46 +97,49 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const { Order, sucessOrder } = useSelector((state) => state.OrderReducers);
   return (
     <React.Fragment>
       <CssBaseline />
 
       <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
-            Checkout
-          </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <React.Fragment>
-            {getStepContent(activeStep)}
-            <div className={classes.buttons}>
-              {activeStep !== 0 && (
-                <Button onClick={handleBack} className={classes.button}>
-                  Back
-                </Button>
-              )}
-              {activeStep === steps.length - 1 ? (
-                ""
-              ) : (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleNext}
-                  className={classes.button}
-                >
-                  Next
-                </Button>
-              )}
-            </div>
-          </React.Fragment>
-        </Paper>
+        <>
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h4" align="center">
+              Checkout
+            </Typography>
+            <Stepper activeStep={activeStep} className={classes.stepper}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            <React.Fragment>
+              {getStepContent(activeStep)}
+              <div className={classes.buttons}>
+                {activeStep !== 0 && (
+                  <Button onClick={handleBack} className={classes.button}>
+                    Back
+                  </Button>
+                )}
+                {activeStep === steps.length - 1 ? (
+                  ""
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>
+                )}
+              </div>
+            </React.Fragment>
+          </Paper>
+        </>
+
         <Copyright />
       </main>
     </React.Fragment>

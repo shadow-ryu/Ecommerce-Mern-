@@ -13,9 +13,10 @@ function Home(props) {
   const { byId } = props;
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [added, setAdded] = useState(false);
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch, added]);
   const { products, isLoading } = useSelector((state) => state.productReducers);
 
   if (!products?.length && !isLoading) return "No products";

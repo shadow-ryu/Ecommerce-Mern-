@@ -17,8 +17,8 @@ export const placeOrder = async (req, res) => {
     const totalCartprice = userCart[0]?.grandtotalPrice;
     const shippingPrice = userCart[0]?.ShipingPrice;
     const totalPrice = totalCartprice;
-    const cartItems = userCart[0].cartItems.map((p) => p);
-    const sellerorder = cartItems.forEach((product) => {
+    const cartItems = userCart[0]?.cartItems?.map((p) => p);
+    const sellerorder = cartItems?.forEach((product) => {
       var newSellerOrder = new SellerOrder({
         costumer: user,
         productID: product.productID,
@@ -94,12 +94,9 @@ export const placeOrder = async (req, res) => {
     }
 
     // // findOneAndDelete
-    res.status(200).json({
-      message: "order done",
-    });
-    const empty = await Cart.findOneAndDelete({ user: user }).then((result) => {
-      res.json({ message: "order is placed and cart is empty now." });
-    });
+
+    await Cart.findOneAndDelete({ user: user });
+    res.json({ message: "order is placed and cart is empty now." });
   } catch (error) {
     console.log(error);
     res.status(500).json({

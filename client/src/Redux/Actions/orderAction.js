@@ -1,17 +1,17 @@
 import {
-  START_LOADING,
+  SUCESS_FULLY,
   END_LOADING,
   SELLERORDERS,
+  START_LOADING,
 } from "../../constants/ActionTypes";
 import * as api from "../../api/api.js";
+import { toast } from "react-toastify";
 
 export const placeOrderFnc = (result, router) => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING });
     const { data } = await api.placOrder(result);
 
-    dispatch({ type: END_LOADING });
-    router.push("/sucessOrder");
+    dispatch({ type: SUCESS_FULLY });
   } catch (error) {
     console.log(error);
   }

@@ -1,44 +1,28 @@
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import React, { useEffect } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { Button, Container, IconButton } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createProduct } from "../../Redux/Actions/productActions";
-import { makeStyles } from "@material-ui/core/styles";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { useParams } from "react-router-dom";
-import { fetchProductsId } from "../../api/api";
-
-const useStyles = makeStyles({
-  input: {
-    width: 250,
-    height: 35,
-    outline: "none",
-
-    borderBlockEndColor: "1px  solid grey",
-    textDecoration: "none",
-  },
-});
 
 export default function ProductForm(prop) {
-  const { register, control, handleSubmit, reset, trigger, setError } = useForm(
-    {
-      defaultValues: {
-        specs: [{ specName: "", specValue: "" }],
-      },
-    }
-  );
-  const { fields, append, remove, swap, move, insert } = useFieldArray({
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      specs: [{ specName: "", specValue: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "specs",
   });
 
   const dispatch = useDispatch();
-  const classes = useStyles();
+
   const onSubmit = (data) => {
     console.log(data);
     dispatch(createProduct(data));

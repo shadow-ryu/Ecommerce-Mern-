@@ -4,21 +4,23 @@ import {
   SELLERORDERS,
   // REMOVEFROMCART,
   PLACEORDER,
+  SUCESS_FULLY,
 } from "../../constants/ActionTypes";
-const OrderReducers = (state = { isLoading: true, Order: [] }, action) => {
+const OrderReducers = (
+  state = { isLoading: true, sucessOrder: false, Order: [] },
+  action
+) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
     case END_LOADING:
       return { ...state, isLoading: false };
+    case SUCESS_FULLY:
+      return { ...state, sucessOrder: true };
     case PLACEORDER:
-      return {
-        ...state,
-        Order: action.payload.data,
-      };
+      return state;
 
     case SELLERORDERS:
-      console.log(action.payload.data);
       return {
         ...state,
         Order: action.payload.data,

@@ -1,6 +1,6 @@
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import React, { useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
@@ -33,14 +33,12 @@ const useStyles = makeStyles({
 });
 
 export default function ProductForm(prop) {
-  const { register, control, handleSubmit, reset, trigger, setError } = useForm(
-    {
-      defaultValues: {
-        specs: [{ specName: "", specValue: "" }],
-      },
-    }
-  );
-  const { fields, append, remove, swap, move, insert } = useFieldArray({
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      specs: [{ specName: "", specValue: "" }],
+    },
+  });
+  const { fields, append, remove } = useFieldArray({
     control,
     name: "specs",
   });

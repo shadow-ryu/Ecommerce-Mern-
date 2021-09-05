@@ -13,7 +13,7 @@ import Product from "../../components/Product/Product";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { CircularProgress } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 import { fetchsellerOrders } from "../../Redux/Actions/orderAction";
 
 const styles = (theme) => ({
@@ -73,6 +73,7 @@ function SellerOrderList(props) {
                   <th>Order placed at</th>
                   <th>Order Cancelled</th>
                   <th>Order Delivered</th>
+                  <th>Order update</th>
                 </tr>
 
                 {Order?.map((product) => (
@@ -80,8 +81,11 @@ function SellerOrderList(props) {
                     <td>{product._id}</td>
                     <td>{product.name}</td>
                     <td>{product.createdAt}</td>
-                    <td>{product.cancelled}</td>
+                    <td>{product.cancelled === "true " ? "Yes" : "no"}</td>
                     <td>{product.isDelivered}</td>
+                    <td>
+                      <Button>edit</Button>
+                    </td>
                   </tr>
                 ))}
               </table>

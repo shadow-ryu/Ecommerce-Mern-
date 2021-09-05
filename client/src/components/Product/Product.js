@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -17,12 +17,15 @@ import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../Redux/Actions/productActions";
-
+import { addProductToCart } from "../../Redux/Actions/cartActions";
+import { useHistory } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
     margin: "20px",
-    height: 500,
+    height: 530,
   },
   media: {},
 
@@ -32,13 +35,46 @@ const useStyles = makeStyles((theme) => ({
   bottom: {
     marginBottom: 0,
   },
+  actions: {
+    margin: "20px",
+  },
 }));
 
-const Product = (product) => {
+const Product = (product, setAdded, added) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const addtoCart = () => {
+    if (user?.user) {
+      console.log("user" + user?.user);
+      dispatch(addProductToCart(product._id, history));
+    } else {
+      toast.error("plz login /signup to add to get", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return (
     <Card className={classes.root}>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <CardHeader />
 
       <CardMedia className={classes.media}>
@@ -46,29 +82,21 @@ const Product = (product) => {
           src={product.image}
           alt=""
           width="100%"
-          height="100%"
+          height="300px"
           style={{ objectFit: "contain" }}
         />
       </CardMedia>
       <CardContent>
-        <Typography variant="body2" component="h2">
-          {product.title}
-        </Typography>
-        <Typography variant="body2" component="h6">
-          $ {product.price}
-        </Typography>
-        <Typography variant="body2" component="p">
-          {product.rating}
-        </Typography>
+        <Typography variant="subtitle2">{product.title}</Typography>
+        <Typography variant="subtitle2">$ {product.price}</Typography>
+        <Typography variant="subtitle2">{product.rating}</Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions className={classes.actions} disableSpacing>
         {product.edit ? (
           <>
             <IconButton className={classes.bottom} aria-label="edit">
               <Link to={`/admin/editProduct/${product.id}`}>
-                <Typography variant="body2" component="p">
-                  edit
-                </Typography>
+                <Typography variant="subtitle2">edit</Typography>
                 <EditIcon />
               </Link>
             </IconButton>
@@ -82,14 +110,29 @@ const Product = (product) => {
           </>
         ) : (
           <>
-            <IconButton aria-label="share">
+            <IconButton
+              aria-label="share"
+              onClick={() => {
+                if (user?.user) {
+                  dispatch(addProductToCart(product.id, history));
+                } else {
+                  toast.error("plz login /signup to add to get", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }
+              }}
+            >
               <AddShoppingCartIcon />
             </IconButton>
             <IconButton className={classes.bottom} aria-label="show more">
               <Link to={`/Product/${product.id}`}>
-                <Typography variant="body2" component="p">
-                  More info
-                </Typography>
+                <Typography variant="subtitle2">More info</Typography>
                 <NavigateNextIcon />
               </Link>
             </IconButton>

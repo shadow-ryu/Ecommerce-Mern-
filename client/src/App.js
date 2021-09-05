@@ -10,7 +10,6 @@ import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
 
 import { Cart } from "./components/Cart/Cart";
 import Checkout from "./components/Shipping&Checkout/Checkout";
-import Thanks from "./components/Thnaks";
 
 function App() {
   return (
@@ -42,10 +41,7 @@ function App() {
             <Navbar />
             <Checkout />
           </Route>
-          <Route path="/sucessOrder" exact>
-            <Navbar />
-            <Thanks />
-          </Route>
+
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />
           </Route>
