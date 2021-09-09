@@ -54,16 +54,18 @@
   .navbar__optionBasket {
     display: flex;
     align-items: center;
-    margin-top: 5px;
+    margin-top: 45%;
     justify-content: center;
     color: white;
   }
   
   .navbar__basketCount {
-    margin-left: 3px;
-    margin-bottom: 11px;
-    margin-right: 3px;
-    background-color:gray;
+    /* margin-left: 3px;
+    margin-bottom: 115px;
+    margin-right: 3px; */
+    position: fixed;
+    top:1.2%;
+    background-color:#131921;
     text-decoration: none;
     border-radius:100%;
     padding:3px;
@@ -87,29 +89,54 @@
   }
   .navbar__miniScreen{
       display:none;
+      align-items: center;
+      justify-content: center;
   }
 
+  .navbar2__search{
+    display:none;
+  }
+  .mibileview{
+    display: flex;
+   justify-content: flex-end;
+   align-items: center;
+
+  
+  }
+  .menutoggle{
+    display: none;
+  }
   @media only screen and (max-width: 600px) {
 
     .navbar__hidden{
       display:none;
-      transform: translateX(0%);
+ 
     }
     .mini_navbar__nav {
-       display: flex;
-       position: absolute;
-       flex-direction: column;
-       align-items: center;
-      text-align: center;
-      justify-content: space-evenly;
-       top: 60px;
-       margin: 0;
-       height:42vh;
-       align-items: center;
-       width: 100%;
-       background-color: #131921;
-      transition:transition easeease-in-out;
-      
+      display: flex;
+      position: absolute;
+      flex-direction: column;
+      align-items: center;
+     text-align: center;
+     justify-content: space-evenly;
+      top: 60px;
+      margin: 0;
+      height:42vh;
+      align-items: center;
+      width: 100%;
+      background-color: #131921;
+     transition:transition easeease-in-out;
+     
+   }
+    .navbar {
+      height: 60px;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      background-color: #131921;
+   
+      top: 0;
+      z-index: 100;
     }
  
     .navbar__logo {
@@ -121,29 +148,47 @@
        
       } 
       .navbar__search {
-        display: flex;
-        flex: 0.9;
-        align-items: center;
-        border-radius: 24px;
+        display: none;
+       
       }
       
-      .navbar__optionBasket {
-        display: flex;
+      .mibileview{
+        flex:0.4;
+        display: flex; 
+        -ms-flex-align: end;
         align-items: center;
-        color: white;
-        
-        margin: 0 7px;
-      }
-      .navbar__basketCount {
-        margin-left: 3px;
-        margin-bottom: 11px;
+        justify-content: flex-end;
+      }   
+  .navbar__optionBasket {
+    display: flex;
+    align-items: center;
+    margin-top: 10%;
+   flex: 0.1;
+    justify-content: center;
+    color: white;
+    
+  }
+  .navbar__optionBasket  .MuiSvgIcon-root {
+ 
+    position: absolute;
+    left: 76%; 
+    top:30%;
+    user-select: none;
+}
+  
+  .navbar__basketCount {
+    /* margin-left: 3px;
+    margin-bottom: 115px;
+    margin-right: 3px; */
+    position: fixed;
+    top:0.8%;
+    left:78%;
+    background-color:#131921;
+    text-decoration: none;
+    border-radius:100%;
    
-        background-color:gray;
-        text-decoration: none;
-        border-radius:100%;
-        padding:3px;
-        border:none;
-      }
+    border:none;
+  }
       .navbar__miniScreen{
           display: block;
           align-items: center;
@@ -163,4 +208,61 @@
           align-items: center;
           background-color: #131921;
       }
+      
+ 
+  .navbar2{
+    display:block;
+   
+
+  }
+  .navbar2__search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    top: 99%;
+
+    height: 50px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    background-color: #131921;
+    z-index: 100;
+    
+
+   
+    align-items: center;
+  
+    
+  }
+  .navbar2__searchInput{
+    flex: 0.9;
+   
+    height: 30px;
+    border-radius:5px;
+    border: 0;
+  
+    margin-right: 1%;
+  }
+  .navbar2__searchIcon {
+    padding: 5px;
+    position: fixed;
+    margin-left: 1%;
+    margin-right: 1%;
+  
+    height: 27px; left: 88%;
+    background-color: #cd9042;
+    border-radius:5px;
+  }
+ .menutoggle{
+   display: block;
+   align-items: center;
+   justify-content: center;
+   color:white; 
+   margin-left:3%;
+   padding: 3px;
+   border: none;
+  border-radius:4%;
+
+ }
   }

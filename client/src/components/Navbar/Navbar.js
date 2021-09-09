@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 
 import * as actionType from "../../constants/ActionTypes";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 
+import AddShoppingCartOutlinedIcon from "@material-ui/icons/AddShoppingCartOutlined";
 import logo from "./logo.png";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import Button from "@material-ui/core/Button";
@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import decode from "jwt-decode";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Avatar } from "@material-ui/core";
-
+import MenuIcon from "@material-ui/icons/Menu";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./navbar.css";
@@ -52,6 +52,10 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleSingIn = () => {
+    history.push("/auth");
+    setAnchorEl(null);
+  };
 
   const token = user?.token;
   useEffect(() => {
@@ -71,6 +75,9 @@ const Navbar = () => {
   return (
     // <img classNamr="navbar__logo" src={logo} alt="" />
     <div className="navbar">
+      <div className="menutoggle">
+        <MenuIcon />
+      </div>
       <Link to="/">
         <img className="navbar__logo" src={logo} alt="" height="50" />
       </Link>
@@ -91,23 +98,28 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <Link to="/mycart">
-        <div className="navbar__optionBasket">
-          <ShoppingBasketIcon />
-          <span className="navbar__optionLineTwo navbar__basketCount">
-            {carts ? carts?.cartItems?.length : 0}
-          </span>
-        </div>
-      </Link>
+      <div className="mibileview">
+        <div className="mibileview__spac"></div>
+        <Link to="/mycart">
+          <div className="navbar__optionBasket">
+            <AddShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+            <span className="navbar__optionLineTwo navbar__basketCount">
+              {carts ? carts?.cartItems?.length : 0}
+            </span>
+          </div>
+        </Link>
 
-      {user ? (
         <>
           <Button
             aria-controls="simple-menu"
             aria-haspopup="true"
             onClick={handleClick}
           >
-            <Avatar alt={user?.user.name} src={user?.user.imageUrl}>
+            <Avatar
+              alt={user?.user.name}
+              className="avatar"
+              src={user?.user.imageUrl}
+            >
               {user?.user.name.charAt(0)}
             </Avatar>
           </Button>
@@ -118,20 +130,25 @@ const Navbar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
+            <MenuItem onClick={handleSingIn}>Sign In</MenuItem>
             <MenuItem onClick={handleClose}>Profile</MenuItem>
 
             <MenuItem onClick={handleClose}>orders</MenuItem>
-
-            <MenuItem onClick={logout}>Logout</MenuItem>
+            {user?.user ? (
+              <>
+                <MenuItem onClick={logout}>Logout</MenuItem>
+              </>
+            ) : (
+              ""
+            )}
           </Menu>
         </>
-      ) : (
-        <Link to="/auth">
-          <Button variant="contained" color="primary">
-            Sign In
-          </Button>
-        </Link>
-      )}
+      </div>
+
+      <div className="navbar2__search">
+        <input className="navbar2__searchInput" type="text" />
+        <SearchIcon className="navbar2__searchIcon" />
+      </div>
     </div>
   );
 };
