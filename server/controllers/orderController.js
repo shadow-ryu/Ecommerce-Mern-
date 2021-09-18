@@ -105,13 +105,62 @@ export const placeOrder = async (req, res) => {
   }
 };
 
-export const myBill = async (req, res) => {};
-
-export const myOrder = async (req, res) => {};
-
 export const sellerOrderList = async (req, res) => {
   const user = req.userData.id;
   await SellerOrder.find({ seller: user }).then((result) => {
     res.status(201).json(result);
   });
+};
+
+export const sellerOrderByID = async (req, res) => {
+  const { id } = req.params;
+  await SellerOrder.findById(id).then((result) => {
+    res.status(201).json(result);
+  });
+};
+export const updatesellerOrderByID = async (req, res) => {
+  const { id } = req.params;
+
+  SellerOrder.updateOne({ _id: id }, { $set: req.body })
+    .then((order) => {
+      res.status(201).json({
+        message: " u have  updated the order",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err.message,
+      });
+    });
+};
+///customer order_s
+export const myBill = async (req, res) => {};
+
+export const myOrder = async (req, res) => {
+  const user = req.userData.id;
+  await SellerOrder.find({ costumer: user }).then((result) => {
+    res.status(201).json(result);
+  });
+};
+
+export const myOrderByID = async (req, res) => {
+  const { id } = req.params;
+  await SellerOrder.findById(id).then((result) => {
+    res.status(201).json(result);
+  });
+};
+export const updatemyOrderByID = async (req, res) => {
+  const { id } = req.params;
+
+  SellerOrder.updateOne({ _id: id }, { $set: { cancelled: true } })
+    .then((order) => {
+      res.status(201).json({
+        message: " u have  updated the order",
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err.message,
+      });
+    });
 };

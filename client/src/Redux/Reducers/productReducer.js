@@ -30,10 +30,12 @@ const productReducers = (state = { isLoading: true, product: [] }, action) => {
     case BYID:
       return { ...state, product: action.payload.product };
     case UPDATE:
+      console.log(action.payload.id);
       return {
         ...state,
+
         products: state.products.map((product) =>
-          product._id === action.payload._id ? action.payload : product
+          product._id === action.payload?.id ? action.payload : product
         ),
       };
     case DELETE:

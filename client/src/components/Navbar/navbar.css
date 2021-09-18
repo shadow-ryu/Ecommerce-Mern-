@@ -51,27 +51,36 @@
     font-weight: 800;
   }
   
-  .navbar__optionBasket {
+  /* .navbar__optionBasket {
     display: flex;
     align-items: center;
-    margin-top: 45%;
+   margin:2%;
+   padding: 4%;
     justify-content: center;
     color: white;
-  }
-  
-  .navbar__basketCount {
-    /* margin-left: 3px;
-    margin-bottom: 115px;
-    margin-right: 3px; */
-    position: fixed;
-    top:1.2%;
-    background-color:#131921;
-    text-decoration: none;
-    border-radius:100%;
-    padding:3px;
-    border:none;
-  }
-  
+  } */
+  /* .navbar__optionBasket  .MuiSvgIcon-root {
+ 
+  margin-top: 1%;
+    user-select: none;
+} */
+
+
+.navbar__basketCount1 {
+ position:absolute;
+ top: 4%;
+ background-color: #131921;
+  text-decoration: none;
+  border-radius:100%;
+  padding:3px;
+  border:none;
+}
+/* 
+  .MuiAvatar-root .MuiAvatar-circular .avatar .MuiAvatar-colorDefault .MuiSvgIcon-root .avatar{
+    position:absolute;
+    left:20%;
+    padding:10px
+   } */
   .navbar__nav {
     display: flex;
     margin: 0 10px;
@@ -97,17 +106,24 @@
     display:none;
   }
   .mibileview{
-    display: flex;
-   justify-content: flex-end;
-   align-items: center;
-
+  display: none;
+color: white;
+align-items: center;
+justify-content: center;
   
   }
   .menutoggle{
     display: none;
   }
+  .navbar__optionBasket1{
+    display:flex;
+    
+    justify-content: center;
+    color: white;
+  }
   @media only screen and (max-width: 600px) {
-
+    .avtar1, .navbar__optionBasket1,.navbar__basketCount1,
+    
     .navbar__hidden{
       display:none;
  
@@ -128,7 +144,8 @@
      transition:transition easeease-in-out;
      
    }
-    .navbar {
+    .navbar { 
+      padding: 0 1px;
       height: 60px;
       display: flex;
       width: 100%;
@@ -155,15 +172,15 @@
       .mibileview{
         flex:0.4;
         display: flex; 
-        -ms-flex-align: end;
+       margin-right: 10px;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: center; ;
       }   
   .navbar__optionBasket {
     display: flex;
     align-items: center;
     margin-top: 10%;
-   flex: 0.1;
+
     justify-content: center;
     color: white;
     
@@ -171,22 +188,31 @@
   .navbar__optionBasket  .MuiSvgIcon-root {
  
     position: absolute;
-    left: 76%; 
-    top:30%;
+    left: 72%; 
+    top:28%;
     user-select: none;
+}
+.MuiAvatar-root .MuiAvatar-circular .avatar .MuiAvatar-colorDefault .MuiSvgIcon-root .avatar{
+ position:fixed;
+
+ right:2%;
+ padding:10px
 }
   
   .navbar__basketCount {
     /* margin-left: 3px;
     margin-bottom: 115px;
     margin-right: 3px; */
-    position: fixed;
-    top:0.8%;
-    left:78%;
+    position: absolute;
+    top:4%;
+    font-size:16px;
+    left:73%;
     background-color:#131921;
     text-decoration: none;
-    border-radius:100%;
-   
+    /* border-radius:100%; */
+    font-size: 16px;
+   margin-top: 8px;
+   margin-left:9px;
     border:none;
   }
       .navbar__miniScreen{
@@ -221,7 +247,7 @@
     align-items: center;
     position:absolute;
     top: 99%;
-
+    left:0;
     height: 50px;
     display: flex;
     width: 100%;
@@ -236,7 +262,7 @@
     
   }
   .navbar2__searchInput{
-    flex: 0.9;
+    flex: 0.7;
    
     height: 30px;
     border-radius:5px;
@@ -250,7 +276,7 @@
     margin-left: 1%;
     margin-right: 1%;
   
-    height: 27px; left: 88%;
+    height: 27px; left: 78%;
     background-color: #cd9042;
     border-radius:5px;
   }

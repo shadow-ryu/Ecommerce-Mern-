@@ -56,10 +56,12 @@ const Navbar = () => {
     history.push("/auth");
     setAnchorEl(null);
   };
-
+  const myorder = () => {
+    history.push("/myOrder");
+    setAnchorEl(null);
+  };
   const token = user?.token;
   useEffect(() => {
-    dispatch(userCart());
     if (token) {
       const decodedToken = decode(token);
 
@@ -98,51 +100,69 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      <Link to="/mycart">
+        <div className="navbar__optionBasket1">
+          <AddShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+          <span className="navbar__optionLineTwo navbar__basketCount1">
+            {carts ? carts?.cartItems?.length : 0}
+          </span>
+        </div>
+      </Link>
+
+      <div className="navbar__hidden">
+        <Button
+          className="avtar1"
+          aria-controls="simple-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <Avatar alt={user?.user.name} src={user?.user.imageUrl}>
+            {user?.user.name.charAt(0)}
+          </Avatar>
+        </Button>
+        <Menu
+          id="simple-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {user?.user ? (
+            <div>
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+
+              <MenuItem onClick={myorder}>orders</MenuItem>
+
+              <MenuItem onClick={logout}>Logout</MenuItem>
+            </div>
+          ) : (
+            <div>
+              <MenuItem onClick={handleSingIn}>Sign In</MenuItem>
+
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+
+              <MenuItem onClick={handleClose}>Orders</MenuItem>
+            </div>
+          )}
+        </Menu>
+      </div>
       <div className="mibileview">
-        <div className="mibileview__spac"></div>
         <Link to="/mycart">
           <div className="navbar__optionBasket">
-            <AddShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+            <AddShoppingCartOutlinedIcon style={{ fontSize: 35 }} />
             <span className="navbar__optionLineTwo navbar__basketCount">
               {carts ? carts?.cartItems?.length : 0}
             </span>
           </div>
         </Link>
 
-        <>
-          <Button
-            aria-controls="simple-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <Avatar
-              alt={user?.user.name}
-              className="avatar"
-              src={user?.user.imageUrl}
-            >
-              {user?.user.name.charAt(0)}
-            </Avatar>
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleSingIn}>Sign In</MenuItem>
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-
-            <MenuItem onClick={handleClose}>orders</MenuItem>
-            {user?.user ? (
-              <>
-                <MenuItem onClick={logout}>Logout</MenuItem>
-              </>
-            ) : (
-              ""
-            )}
-          </Menu>
-        </>
+        <Avatar
+          alt={user?.user.name}
+          className="avatar"
+          src={user?.user.imageUrl}
+        >
+          {user?.user.name.charAt(0)}
+        </Avatar>
       </div>
 
       <div className="navbar2__search">

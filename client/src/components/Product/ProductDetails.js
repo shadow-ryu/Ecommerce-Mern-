@@ -96,10 +96,12 @@ const ProductDetails = (props) => {
           <h2 className="line2"></h2>
         </div>
         {product?.specs?.map((spec) => (
-          <div className="productDetails__specs" key={spec._id}>
-            <p className="productDetails__specs_h5">{spec?.specName}:</p>
-            <p>{spec?.specValue}</p>
-          </div>
+          <>
+            <div className="productDetails__specs" key={spec._id}>
+              <p className="productDetails__specs_h5">{spec?.specName}:</p>
+              <p>{spec?.specValue}</p>
+            </div>
+          </>
         ))}
       </div>
 

@@ -55,9 +55,9 @@ export const getproduct = (id) => async (dispatch) => {
   }
 };
 
-export const updateProductById = (id, post, router) => async (dispatch) => {
+export const updateProductById = (id, product, router) => async (dispatch) => {
   try {
-    const { data } = await api.updateProduct(id, post);
+    const { data } = await api.updateProduct(id, product);
     router.push("/admin");
 
     dispatch({ type: UPDATE, payload: data });

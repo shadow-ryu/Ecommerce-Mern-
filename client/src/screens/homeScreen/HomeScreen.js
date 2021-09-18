@@ -31,17 +31,20 @@ function Home(props) {
               <CircularProgress />
             ) : (
               <>
-                <Grid container alignItems="stretch" spacing={3}>
+                <Grid container spacing={3}>
                   {products?.map((product) => (
-                    <Grid key={product._id}>
-                      <Product
-                        id={product._id}
-                        title={product.name}
-                        price={product.price}
-                        rating={product.rating}
-                        image={product.image}
-                      />
-                    </Grid>
+                    <>
+                      <Grid>
+                        <Product
+                          key={product._id}
+                          id={product._id}
+                          title={product.name}
+                          price={product.price}
+                          rating={product.rating}
+                          image={product.image}
+                        />
+                      </Grid>
+                    </>
                   ))}
                 </Grid>
               </>

@@ -8,13 +8,16 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./sellerorder.css";
 import { withStyles } from "@material-ui/core/styles";
-
+import { useHistory } from "react-router-dom";
 import Product from "../../components/Product/Product";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, CircularProgress } from "@material-ui/core";
 import { fetchsellerOrders } from "../../Redux/Actions/orderAction";
+import { IconButton } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { EditIcon } from "@material-ui/icons/Edit";
 
 const styles = (theme) => ({
   paper: {
@@ -42,12 +45,15 @@ const styles = (theme) => ({
 function SellerOrderList(props) {
   const { classes } = props;
 
-  const { Order, isLoading } = useSelector((state) => state.OrderReducers);
+  const { Order, isLoading, update } = useSelector(
+    (state) => state.OrderReducers
+  );
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
-    dispatch(fetchsellerOrders());
+    dispatch(fetchsellerOrders(history));
   }, [dispatch]);
-  console.log(Order);
+
   return (
     <Paper className={classes.paper}>
       <AppBar
@@ -61,35 +67,68 @@ function SellerOrderList(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.contentWrapper}>
-        <Grid className container alignItems="stretch" spacing={3}>
+        <Grid container alignItems="stretch" spacing={3}>
           {isLoading ? (
             <CircularProgress />
           ) : (
-            <>
-              <table id="customers">
-                <tr>
-                  <th>productID</th>
-                  <th>Product name</th>
-                  <th>Order placed at</th>
-                  <th>Order Cancelled</th>
-                  <th>Order Delivered</th>
-                  <th>Order update</th>
-                </tr>
+            <Grid>
+              <div className="orderheading">
+                <h4>Orders</h4>
+              </div>
+              <div className="allorders">
+                {isLoading === false &&
+                  Order.length != 0 &&
+                  Order?.map((product) => (
+                    <div className="order " key={product._id}>
+                      <h4 className="order__header">orderid: {product._id}</h4>
+                      <div className="order___Details">
+                        <div className="ordered__product">
+                          <div className="orderitem">
+                            <h4>Costumer ID :</h4>
+                            <p>{product.costumer}</p>
+                          </div>
 
-                {Order?.map((product) => (
-                  <tr key={product._id}>
-                    <td>{product._id}</td>
-                    <td>{product.name}</td>
-                    <td>{product.createdAt}</td>
-                    <td>{product.cancelled === "true " ? "Yes" : "no"}</td>
-                    <td>{product.isDelivered}</td>
-                    <td>
-                      <Button>edit</Button>
-                    </td>
-                  </tr>
-                ))}
-              </table>
-            </>
+                          <div className="orderitem">
+                            <h4>Product ID :</h4>
+                            <p>{product.productID}</p>
+                          </div>
+                          <div className="orderitem">
+                            <h4>Product Name :</h4>
+                            <p>{product.name}</p>
+                          </div>
+                          <div className="orderitem">
+                            <h4>Order Placed At :</h4>
+                            <p>{product.createdAt}</p>
+                          </div>
+                          <div className="orderitem">
+                            <h4>Order Cancelled :</h4>
+                            <p>{product.cancelled === true ? "Yes" : "no"}</p>
+                          </div>
+                          <div className="orderitem">
+                            <h4>Order Deliver :</h4>
+                            <p>
+                              {product.isDelivered === false ? "no" : "yes"}
+                            </p>
+                          </div>
+                          <div className="updatebU">
+                            <Button
+                              variant="contained"
+                              style={{ background: "#a7ff83" }}
+                              onClick={() =>
+                                history.push(
+                                  `/admin/sellerOrderById/${product._id}`
+                                )
+                              }
+                            >
+                              Update
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </Grid>
           )}
         </Grid>
       </div>

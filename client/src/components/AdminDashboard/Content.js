@@ -49,7 +49,7 @@ function Content(props) {
   };
 
   const { products, isLoading } = useSelector((state) => state.productReducers);
-  console.log(products);
+
   return (
     <Paper className={classes.paper}>
       <AppBar

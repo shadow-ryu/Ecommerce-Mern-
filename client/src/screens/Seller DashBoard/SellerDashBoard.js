@@ -18,7 +18,7 @@ import { fetchsellerProducts } from "../../Redux/Actions/productActions";
 import UpdateProduct from "../../components/AdminDashboard/UpdateProduct";
 import { useParams } from "react-router-dom";
 import SellerOrderList from "../../components/AdminDashboard/SellerOrderList";
-
+import OrderUpdate from "../../components/AdminDashboard/OrderUpdate";
 function Copyright() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -172,7 +172,7 @@ const styles = {
 };
 
 function AdminDashboard(props) {
-  const { classes, sellerProducts, SellerOrder, Update } = props;
+  const { classes, sellerProducts, SellerOrder, Update, orderByid } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -207,6 +207,7 @@ function AdminDashboard(props) {
             {Update ? <UpdateProduct id={id} /> : ""}
             {sellerProducts ? <Content /> : ""}
             {SellerOrder ? <SellerOrderList /> : ""}
+            {orderByid ? <OrderUpdate id={id} /> : ""}
           </main>
           <footer className={classes.footer}>
             <Copyright />

@@ -25,11 +25,17 @@ export const myadress = () => API.get("/user/address");
 export const fetchProduct = (id) => API.get(`/product/${id}`);
 export const fetchMyProducts = () => API.get("/user/MyProducts");
 export const createP = (newProduct) => API.post("/product", newProduct);
-export const updateProduct = (id, updatedPost) =>
-  API.patch(`/product/${id}`, updatedPost);
+export const updateProduct = (id, updatedProduct) =>
+  API.patch(`/product/${id}`, updatedProduct);
 export const deleteProduct = (id) => API.delete(`/product/${id}`);
 export const addtoCart = (id) => API.get(`/product/${id}/addCart`);
 export const removetoCart = (id) => API.get(`/product/${id}/removeCart`);
 export const getuserCart = () => API.get("/cart");
 export const placOrder = (formData) => API.post("order", formData);
 export const sellerOrderList = () => API.get("/user/sellerOrders");
+export const myOrderList = () => API.get("/user/myOrder");
+
+export const updatemyOrderById = (id) => API.get(`/user/myOrder/${id}`);
+export const sellerOrderById = (id) => API.get(`/user/sellerOrderById/${id}`);
+export const updateSellerOrderById = (id, updatedOrder) =>
+  API.patch(`/user/sellerOrderById/${id}`, updatedOrder);

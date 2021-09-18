@@ -10,6 +10,7 @@ import SellerDashBoard from "./screens/Seller DashBoard/SellerDashBoard";
 
 import { Cart } from "./components/Cart/Cart";
 import Checkout from "./components/Shipping&Checkout/Checkout";
+import MyOrder from "./components/MyOrders/MyOrder";
 
 function App() {
   return (
@@ -41,7 +42,13 @@ function App() {
             <Navbar />
             <Checkout />
           </Route>
-
+          <Route path="/myOrder" exact>
+            <Navbar />
+            <MyOrder />
+          </Route>
+          <Route path="/admin/sellerOrderById/:id" exact>
+            <SellerDashBoard orderByid />
+          </Route>
           <Route path="/admin/orders" exact>
             <SellerDashBoard SellerOrder />
           </Route>

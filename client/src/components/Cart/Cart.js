@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { removeProductToCart, userCart } from "../../Redux/Actions/cartActions";
-
+import DeleteForeverRoundedIcon from "@material-ui/icons/DeleteForeverRounded";
 import "./cart.css";
 export const Cart = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export const Cart = () => {
   return (
     //
     <div className="cartM">
-      {user?.user ? (
+      {user?.user && carts?.cartItems?.length != undefined ? (
         <>
           <div className="cart">
             <div className="cart__items">
@@ -49,7 +49,7 @@ export const Cart = () => {
                           setRemove((prev) => !prev);
                         }}
                       >
-                        Remove from Basket
+                        <DeleteForeverRoundedIcon />
                       </Button>
                     </div>
 
@@ -62,6 +62,7 @@ export const Cart = () => {
               ))}
             </div>
             <div className="cart__Total">
+              <div className="heading">Cart Summary:</div>
               <div className="cartItems">
                 <div className="cart__summing__header">
                   <h4> price</h4>
@@ -74,20 +75,28 @@ export const Cart = () => {
                   </div>
                 ))}
               </div>
-              <div className="cartotal1">
+              {/* <div className="cartotal1">
                 <h4>ShipingPrice</h4>
 
-                <h4>
+                <h4 className="cart__shipping_price">
                   {" "}
                   {carts?.cartItems?.length === 0 ? 0 : carts?.ShipingPrice}
                 </h4>
+                
+              </div> */}
+              <div className="cartotal">
+                <h4>ShipingPrice</h4>
+                <p>
+                  {" "}
+                  {carts?.cartItems?.length === 0 ? 0 : carts?.ShipingPrice}
+                </p>
               </div>
               <div className="cartotal">
-                <h4>total</h4>
-                <h4>
+                <h4>Total</h4>
+                <p>
                   {" "}
                   {carts?.cartItems?.length === 0 ? 0 : carts?.grandtotalPrice}
-                </h4>
+                </p>
               </div>
             </div>
           </div>
@@ -101,7 +110,13 @@ export const Cart = () => {
           )}
         </>
       ) : (
-        <> plz login to add products to carts</>
+        <div className="noUser">
+          {carts?.cartItems?.length === undefined ? (
+            <p> add products to carts</p>
+          ) : (
+            <p>plz Login to add products to carts</p>
+          )}
+        </div>
       )}
     </div>
   );

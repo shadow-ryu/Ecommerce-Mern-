@@ -5,11 +5,18 @@
    
     grid-template-columns: 2fr 2fr ;
     height:100vh;
+    width:100%;
     
 }
 .avatar{
-   position: fixed  !important;
-   right:2%;
+    
+        position: fixed !important;
+        right: 2%;
+        margin: 5%;
+    
+}
+.cartotal1{
+    display: grid;
 }
 .productDetails__img img{
   
@@ -123,6 +130,9 @@
     font-weight:bold;
 }
 @media only screen and (max-width: 900px) {
+    .avtar1{
+        display: none;
+    }
     .productDetails{
         display: grid;
        
