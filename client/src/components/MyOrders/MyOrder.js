@@ -12,6 +12,7 @@ const MyOrder = () => {
   useEffect(() => {
     dispatch(myOrders());
   }, [dispatch]);
+
   return (
     <div className="myorder">
       <div className="myorder___heading">
@@ -22,7 +23,7 @@ const MyOrder = () => {
         Order?.map((order) => (
           <>
             <div className="myorder__details" key={order._id}>
-              <div className="orderitem">
+              <div className="orderitem order_id">
                 <h4>Order ID :</h4>
                 <p>{order._id}</p>
               </div>
@@ -46,6 +47,10 @@ const MyOrder = () => {
                     <p>{order.createdAt}</p>
                   </div>
                   <div className="orderitem">
+                    <h4>Qty :</h4>
+                    <p>{order.qty}</p>
+                  </div>
+                  <div className="orderitem">
                     <h4>Order Cancelled :</h4>
                     <p>{order.cancelled === true ? "Yes" : "no"}</p>
                   </div>
@@ -67,7 +72,7 @@ const MyOrder = () => {
                     ) : (
                       <Button
                         variant="contained"
-                        style={{ background: "#e41749 ", margin: "5px" }}
+                        style={{ background: "#e41749 " }}
                         onClick={() => {
                           dispatch(fd(order._id, history));
                         }}

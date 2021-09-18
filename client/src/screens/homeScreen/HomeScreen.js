@@ -8,6 +8,7 @@ import SellerDashBoard from "../Seller DashBoard/SellerDashBoard";
 import { getProducts } from "../../Redux/Actions/productActions";
 import { useParams } from "react-router-dom";
 import ProductDetails from "../../components/Product/ProductDetails";
+import ProductNew from "../../components/Product/ProductNew";
 
 function Home(props) {
   const { byId } = props;
@@ -31,11 +32,11 @@ function Home(props) {
               <CircularProgress />
             ) : (
               <>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} style={{ margin: "15px" }}>
                   {products?.map((product) => (
                     <>
                       <Grid>
-                        <Product
+                        <ProductNew
                           key={product._id}
                           id={product._id}
                           title={product.name}

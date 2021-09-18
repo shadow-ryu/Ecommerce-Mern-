@@ -95,7 +95,10 @@ const Product = (product, setAdded, added) => {
         {product.edit ? (
           <>
             <IconButton className={classes.bottom} aria-label="edit">
-              <Link to={`/admin/editProduct/${product.id}`}>
+              <Link
+                to={`/admin/editProduct/${product.id}`}
+                style={{ display: "flex" }}
+              >
                 <Typography variant="subtitle2">edit</Typography>
                 <EditIcon />
               </Link>
@@ -109,34 +112,7 @@ const Product = (product, setAdded, added) => {
             </Button>
           </>
         ) : (
-          <>
-            <IconButton
-              aria-label="share"
-              onClick={() => {
-                if (user?.user) {
-                  dispatch(addProductToCart(product.id, history));
-                } else {
-                  toast.error("plz login /signup to add to get", {
-                    position: "top-right",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                  });
-                }
-              }}
-            >
-              <AddShoppingCartIcon />
-            </IconButton>
-            <IconButton className={classes.bottom} aria-label="show more">
-              <Link to={`/Product/${product.id}`}>
-                <Typography variant="subtitle2">More info</Typography>
-                <NavigateNextIcon />
-              </Link>
-            </IconButton>
-          </>
+          <></>
         )}
       </CardActions>
     </Card>
