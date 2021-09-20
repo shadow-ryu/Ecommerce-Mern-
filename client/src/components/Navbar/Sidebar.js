@@ -11,9 +11,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
 import CloseIcon from "@material-ui/icons/Close";
-
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SettingsInputComponentIcon from "@material-ui/icons/SettingsInputComponent";
-import { AccountCircleIcon } from "@material-ui/icons";
+
 import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
 
 import { Link, useHistory, useLocation } from "react-router-dom";

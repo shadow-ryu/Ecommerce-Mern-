@@ -4,6 +4,7 @@ import {
   createProduct,
   updateProductById,
   deleteProductById,
+  reviewProductById,
 } from "../controllers/productController.js";
 import express from "express";
 import { addToCart, removeitem } from "../controllers/cartController.js";
@@ -26,5 +27,5 @@ router.delete("/:id", checkAuth, isSellerOrAdmin, deleteProductById);
 router.get("/:id/addCart", checkAuth, addToCart);
 
 router.get("/:id/removeCart", checkAuth, removeitem);
-
+router.post("/:id/reviews", checkAuth, reviewProductById);
 export default router;

@@ -256,7 +256,7 @@ flex: 0.4;
   }
   .navbar2__searchIcon {
     padding: 5px;
-    position: fixed;
+    position: absolute;
     margin-left: 1%;
     margin-right: 1%;
   

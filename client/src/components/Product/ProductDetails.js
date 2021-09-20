@@ -2,12 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { getproduct } from "../../Redux/Actions/productActions";
-import { Button, Icon } from "@material-ui/core";
+import {
+  Button,
+  Chip,
+  Icon,
+  InputLabel,
+  OutlinedInput,
+} from "@material-ui/core";
 import { addProductToCart } from "../../Redux/Actions/cartActions";
 import { useHistory } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import "./productDetails.css";
+import { Rating } from "./Rating";
 const ProductDetails = (props) => {
   const { id, rating } = props;
   const dispatch = useDispatch();
@@ -19,6 +26,18 @@ const ProductDetails = (props) => {
   const { product, isLoading } = useSelector((state) => state.productReducers);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
+  const [values, setValues] = useState({
+    comment: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(values);
+  };
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
   return (
     <div className="productDetails">
       <div className="productDetails__img">
@@ -28,14 +47,18 @@ const ProductDetails = (props) => {
         <h4 className="productDetails__details_name">{product?.name}</h4>
         <h2 className="line"></h2>
         <div className="product__rating">
-          {Array(5)
-            .fill()
-            .map((_, i) => (
-              <p>⭐</p>
-            ))}
+          {/* <Rating rating={product.rating} /> */}
+          <div className="productDetails_reviews_count">
+            <h5>Rating : </h5>
+            <p className="productDetails__details_number">
+              <Chip label={` ${product?.rating} ⭐`} />
+            </p>
+          </div>
           <div className="productDetails_reviews_count">
             <h5>Reviews : </h5>
-            <p className="productDetails__details_number">{product?.rating}</p>
+            <p className="productDetails__details_number">
+              {product?.numReviews}
+            </p>
           </div>
         </div>
         <div className="productDetails__price">
@@ -108,7 +131,27 @@ const ProductDetails = (props) => {
       {/* */}
       <div className="productDetails_reivew">
         <h4>Reviews</h4>
-        <form action=""></form>
+        <form onSubmit={handleSubmit}>
+          <InputLabel htmlFor="outlined-adornment-amount">
+            Review Comment
+          </InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            value={values.comment}
+            onChange={handleChange("comment")}
+            label="comment"
+          />
+          <Button Type="submit">Submit</Button>
+        </form>
+        {product?.reviews?.map((review) => (
+          <>
+            <div className="productDetails__specs" key={review._id}>
+              <p className="productDetails__specs_h5">{review?.name}:</p>
+              <p>{review?.comment}</p>
+              <p>{review?.rating}</p>
+            </div>
+          </>
+        ))}
       </div>
       <ToastContainer
         position="top-right"

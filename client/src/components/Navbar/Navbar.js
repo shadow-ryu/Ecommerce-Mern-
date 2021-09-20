@@ -7,18 +7,19 @@ import { styled } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartOutlinedIcon from "@material-ui/icons/AddShoppingCartOutlined";
 import logo from "./logo.png";
-import { Link, useHistory, useLocation } from "react-router-dom";
+
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import decode from "jwt-decode";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Link } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import "./navbar.css";
 import { userCart } from "./../../Redux/Actions/cartActions";
 import SideBar from "./Sidebar";
+import { useHistory, useLocation } from "react-router";
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
@@ -79,6 +80,14 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
+  const home = () => {
+    history.push("/");
+    setAnchorEl(null);
+  };
+  const cart = () => {
+    history.push("/mycart");
+    setAnchorEl(null);
+  };
   const token = user?.token;
   useEffect(() => {
     if (token) {
@@ -96,13 +105,18 @@ const Navbar = () => {
   return (
     // <img classNamr="navbar__logo" src={logo} alt="" />
     <div className="navbar">
+      {sideBar ? <SideBar toggle={toggle} /> : ""}
       <div className="menutoggle" onClick={toggle}>
         <MenuIcon />
       </div>
-      {sideBar ? <SideBar toggle={toggle} /> : ""}
-      <Link to="/">
-        <img className="navbar__logo" src={logo} alt="" height="50" />
-      </Link>
+
+      <img
+        className="navbar__logo"
+        onClick={home}
+        src={logo}
+        alt=""
+        height="50"
+      />
 
       <div className="navbar__search">
         <input className="navbar__searchInput" type="text" />
@@ -120,22 +134,21 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <Link to="/mycart">
-        <div className="navbar__optionBasket1">
-          <IconButton aria-label="cart">
-            <StyledBadge
-              badgeContent={carts ? carts?.cartItems?.length : 0}
-              style={{ color: "white" }}
-            >
-              <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
-            </StyledBadge>
-          </IconButton>
-          {/* <ShoppingCartOutlinedIcon  />
+
+      <div className="navbar__optionBasket1" onClick={cart}>
+        <IconButton aria-label="cart">
+          <StyledBadge
+            badgeContent={carts ? carts?.cartItems?.length : 0}
+            style={{ color: "white" }}
+          >
+            <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+          </StyledBadge>
+        </IconButton>
+        {/* <ShoppingCartOutlinedIcon  />
           <span className="navbar__optionLineTwo navbar__basketCount1">
             {carts ? carts?.cartItems?.length : 0}
           </span> */}
-        </div>
-      </Link>
+      </div>
 
       <div className="navbar__hidden">
         <Button

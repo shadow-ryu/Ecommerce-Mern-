@@ -31,6 +31,7 @@ const ProductNew = (product) => {
       });
     }
   };
+  console.log("rating" + product.rating);
   return (
     <div className="main">
       <ToastContainer
@@ -56,38 +57,54 @@ const ProductNew = (product) => {
         </div>
         <div className="product___rating">
           <div className="starrating">
-            {product.rating === 1 ? (
+            {product.rating >= 1 ? (
               <StarIcon />
-            ) : product.rating === 0.5 ? (
+            ) : product.rating >= 0.5 ? (
               <StarHalfIcon />
             ) : (
               <StarBorderIcon />
             )}
-            {product.rating === 2 ? (
-              <StarIcon />
-            ) : product.rating === 1.5 ? (
-              <StarHalfIcon />
+            {product.rating >= 2 ? (
+              <>
+                <StarIcon />
+              </>
+            ) : product.rating >= 1.5 ? (
+              <>
+                <StarHalfIcon />
+              </>
             ) : (
               <StarBorderIcon />
             )}
-            {product.rating === 3 ? (
-              <StarIcon />
-            ) : product.rating === 2.5 ? (
-              <StarHalfIcon />
+            {product.rating >= 3 ? (
+              <>
+                <StarIcon />
+              </>
+            ) : product.rating >= 2.5 ? (
+              <>
+                <StarHalfIcon />
+              </>
             ) : (
               <StarBorderIcon />
             )}
-            {product.rating === 4 ? (
-              <StarIcon />
-            ) : product.rating === 3.5 ? (
-              <StarHalfIcon />
+            {product.rating >= 4 ? (
+              <>
+                <StarIcon />
+              </>
+            ) : product.rating >= 3.5 ? (
+              <>
+                <StarHalfIcon />
+              </>
             ) : (
               <StarBorderIcon />
             )}
-            {product.rating === 5 ? (
-              <StarIcon />
-            ) : product.rating === 4.5 ? (
-              <StarHalfIcon />
+            {product.rating >= 5 ? (
+              <>
+                <StarIcon />
+              </>
+            ) : product.rating >= 4.5 ? (
+              <>
+                <StarHalfIcon />
+              </>
             ) : (
               <StarBorderIcon />
             )}
