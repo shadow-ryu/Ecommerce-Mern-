@@ -121,6 +121,12 @@ justify-content: center;
     justify-content: center;
     color: white;
   }
+
+
+  .sideBar__hide{
+    display: none;
+  }
+  
   @media only screen and (max-width: 600px) {
     .avtar1, .navbar__optionBasket1,.navbar__basketCount1,
     
@@ -148,7 +154,7 @@ justify-content: center;
       padding: 0 1px;
       height: 60px;
       display: flex;
-      width: 100%;
+      width: 100%!important;
       align-items: center;
       background-color: #131921;
    
@@ -170,51 +176,33 @@ justify-content: center;
       }
       
       .mibileview{
-        flex:0.4;
+        flex:0.6;
         display: flex; 
-       margin-right: 10px;
+
         align-items: center;
-        justify-content: center; ;
+
       }   
   .navbar__optionBasket {
     display: flex;
     align-items: center;
-    margin-top: 10%;
+   top:25%;
+   left: 86%;
 
-    justify-content: center;
+position: absolute;
+    justify-content: flex-end;
     color: white;
     
   }
-  .navbar__optionBasket  .MuiSvgIcon-root {
- 
-    position: absolute;
-    left: 72%; 
-    top:28%;
-    user-select: none;
-}
-.MuiAvatar-root .MuiAvatar-circular .avatar .MuiAvatar-colorDefault .MuiSvgIcon-root .avatar{
- position:fixed;
-
- right:2%;
- padding:10px
+  
+.navbar__avatar{
+flex: 0.4;
+  position: absolute;
+  top: -30%;
+  border-bottom: 1px solid white;
+  left:10% !important;
+ margin: 10px;
 }
   
-  .navbar__basketCount {
-    /* margin-left: 3px;
-    margin-bottom: 115px;
-    margin-right: 3px; */
-    position: absolute;
-    top:4%;
-    font-size:16px;
-    left:73%;
-    background-color:#131921;
-    text-decoration: none;
-    /* border-radius:100%; */
-    font-size: 16px;
-   margin-top: 8px;
-   margin-left:9px;
-    border:none;
-  }
       .navbar__miniScreen{
           display: block;
           align-items: center;
@@ -236,11 +224,7 @@ justify-content: center;
       }
       
  
-  .navbar2{
-    display:block;
-   
 
-  }
   .navbar2__search{
     display: flex;
     justify-content: center;
@@ -253,7 +237,7 @@ justify-content: center;
     width: 100%;
     align-items: center;
     background-color: #131921;
-    z-index: 100;
+    z-index: 99;
     
 
    
@@ -276,7 +260,7 @@ justify-content: center;
     margin-left: 1%;
     margin-right: 1%;
   
-    height: 27px; left: 78%;
+    height: 27px; left: 75%;
     background-color: #cd9042;
     border-radius:5px;
   }
@@ -291,4 +275,21 @@ justify-content: center;
   border-radius:4%;
 
  }
+ 
+  .sideBar{
+  
+   
+    
+    z-index: 100;
+    width: 40vh;
+    background-color: #131921;
+  }
+ .sidebar__h {
+  margin-top: 15%;
+  align-items: center;
+  color:white;
+
+  justify-content: flex-start;
+  display: flex;
+}
   }

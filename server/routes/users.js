@@ -18,6 +18,7 @@ router.get("/MyProducts", checkAuth, isSellerOrAdmin, MyProducts);
 router.get("/sellerOrders", checkAuth, isSellerOrAdmin, sellerOrderList);
 router.get("/sellerOrderById/:id", checkAuth, isSellerOrAdmin, sellerOrderByID);
 router.get("/myOrder", checkAuth, myOrder);
+// router.get("/myOrder", checkAuth, myaddress);
 // router.get("/myOrder/:id", checkAuth, myOrderByID);
 router.get("/myOrder/:id", checkAuth, updatemyOrderByID);
 router.patch(
@@ -26,6 +27,7 @@ router.patch(
   isSellerOrAdmin,
   updatesellerOrderByID
 );
+
 router.get("/address", checkAuth, getadress);
 // router.get("/getSellerShippingPrice", checkAuth, );
 

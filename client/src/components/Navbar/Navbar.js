@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 
 import * as actionType from "../../constants/ActionTypes";
-
+import Badge from "@material-ui/core/Badge";
+import { styled } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartOutlinedIcon from "@material-ui/icons/AddShoppingCartOutlined";
 import logo from "./logo.png";
 import { Link, useHistory, useLocation } from "react-router-dom";
@@ -13,16 +15,16 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Avatar } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useDispatch, useSelector } from "react-redux";
-
+import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import "./navbar.css";
 import { userCart } from "./../../Redux/Actions/cartActions";
-
+import SideBar from "./Sidebar";
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
-
+  const [sideBar, setSideBar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
@@ -32,7 +34,19 @@ const Navbar = () => {
     setUser(null);
     setUser(null);
   };
-
+  const toggle = () => {
+    setSideBar(!sideBar);
+  };
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: -3,
+      top: 18,
+      fontSize: "10px",
+      color: "white",
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 2px",
+    },
+  }));
   useEffect(() => {
     const token = user?.token;
 
@@ -60,6 +74,11 @@ const Navbar = () => {
     history.push("/myOrder");
     setAnchorEl(null);
   };
+  const myProfile = () => {
+    history.push("/myProfile");
+    setAnchorEl(null);
+  };
+
   const token = user?.token;
   useEffect(() => {
     if (token) {
@@ -77,9 +96,10 @@ const Navbar = () => {
   return (
     // <img classNamr="navbar__logo" src={logo} alt="" />
     <div className="navbar">
-      <div className="menutoggle">
+      <div className="menutoggle" onClick={toggle}>
         <MenuIcon />
       </div>
+      {sideBar ? <SideBar toggle={toggle} /> : ""}
       <Link to="/">
         <img className="navbar__logo" src={logo} alt="" height="50" />
       </Link>
@@ -91,7 +111,7 @@ const Navbar = () => {
 
       <div className={"navbar__nav"}>
         <div className="navbar__hidden">
-          <div onClick className="navbar__option">
+          <div className="navbar__option">
             <span className="navbar__optionLineOne">Hello </span>
 
             <span className="navbar__optionLineTwo">
@@ -102,10 +122,18 @@ const Navbar = () => {
       </div>
       <Link to="/mycart">
         <div className="navbar__optionBasket1">
-          <AddShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+          <IconButton aria-label="cart">
+            <StyledBadge
+              badgeContent={carts ? carts?.cartItems?.length : 0}
+              style={{ color: "white" }}
+            >
+              <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+            </StyledBadge>
+          </IconButton>
+          {/* <ShoppingCartOutlinedIcon  />
           <span className="navbar__optionLineTwo navbar__basketCount1">
             {carts ? carts?.cartItems?.length : 0}
-          </span>
+          </span> */}
         </div>
       </Link>
 
@@ -129,7 +157,7 @@ const Navbar = () => {
         >
           {user?.user ? (
             <div>
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={myProfile}>Profile</MenuItem>
 
               <MenuItem onClick={myorder}>orders</MenuItem>
 
@@ -139,7 +167,7 @@ const Navbar = () => {
             <div>
               <MenuItem onClick={handleSingIn}>Sign In</MenuItem>
 
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={myProfile}>Profile</MenuItem>
 
               <MenuItem onClick={handleClose}>Orders</MenuItem>
             </div>
@@ -148,27 +176,31 @@ const Navbar = () => {
       </div>
       <div className="mibileview">
         <Link to="/mycart">
-          <div className="navbar__optionBasket">
-            <AddShoppingCartOutlinedIcon style={{ fontSize: 35 }} />
-            <span className="navbar__optionLineTwo navbar__basketCount">
-              {carts ? carts?.cartItems?.length : 0}
-            </span>
+          <div className="navbar__optionBasket" aria-label="cart">
+            <StyledBadge
+              badgeContent={carts ? carts?.cartItems?.length : 0}
+              style={{ color: "white" }}
+            >
+              <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+            </StyledBadge>
           </div>
         </Link>
-
-        <Avatar
-          alt={user?.user.name}
-          className="avatar"
-          src={user?.user.imageUrl}
-        >
-          {user?.user.name.charAt(0)}
-        </Avatar>
+        {/* <div className="navbar__avatar">
+          <Avatar
+            alt={user?.user.name}
+            className="avatar"
+            src={user?.user.imageUrl}
+          >
+            {user?.user.name.charAt(0)}
+          </Avatar>
+        </div> */}
       </div>
 
       <div className="navbar2__search">
         <input className="navbar2__searchInput" type="text" />
         <SearchIcon className="navbar2__searchIcon" />
       </div>
+      <div></div>
     </div>
   );
 };

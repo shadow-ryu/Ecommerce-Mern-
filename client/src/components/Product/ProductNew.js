@@ -10,6 +10,7 @@ import "./productNew.css";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { Button } from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import { Link } from "react-router-dom";
 const ProductNew = (product) => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -115,13 +116,14 @@ const ProductNew = (product) => {
           >
             <AddShoppingCartIcon></AddShoppingCartIcon>
           </Button>
-          <Button
-            onclick={() => history.push(`/Product/${product.id}`)}
+          <Link
+            style={{ display: "flex", alignItems: "center" }}
+            to={`/Product/${product.id}`}
             // variant="contained"
           >
             More info
             <NavigateNextIcon />
-          </Button>
+          </Link>
         </div>
       </div>
     </div>

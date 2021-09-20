@@ -34,7 +34,7 @@ export const getuserCart = () => API.get("/cart");
 export const placOrder = (formData) => API.post("order", formData);
 export const sellerOrderList = () => API.get("/user/sellerOrders");
 export const myOrderList = () => API.get("/user/myOrder");
-
+// export const myAddress = () => API.get("/user/myaddress");
 export const updatemyOrderById = (id) => API.get(`/user/myOrder/${id}`);
 export const sellerOrderById = (id) => API.get(`/user/sellerOrderById/${id}`);
 export const updateSellerOrderById = (id, updatedOrder) =>

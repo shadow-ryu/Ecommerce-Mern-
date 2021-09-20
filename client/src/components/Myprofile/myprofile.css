@@ -1,0 +1,31 @@
+.myprofile{
+   
+   
+}
+.myprofile__header{
+    position: fixed;
+    left: 50%;
+    top:15%;
+ 
+}
+.myprofile__ba {
+    background-image: url("https://wallpaperaccess.com/full/187161.jpg");
+  
+    height:100px;
+
+}
+@media only screen and (max-width: 600px) {
+
+   
+    .myprofile{
+    margin-top:25px;
+   
+    }
+    .myprofile__header{
+        position: fixed;
+        left: 40%;
+        top:15%;
+    }
+    
+
+}
