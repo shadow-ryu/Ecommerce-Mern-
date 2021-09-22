@@ -17,15 +17,17 @@ export const getProductById = async (req, res) => {
 
   try {
     const product = await Product.findById(id);
-    const numReviews = product.reviews.length;
+    if (product.reviews.length !== 0) {
+      const numReviews = product.reviews.length;
 
-    const rating =
-      product.reviews.reduce((acc, review) => review.rating + acc, 0) /
-      numReviews;
-    await Product.updateOne(
-      { _id: id },
-      { $set: { rating: rating, numReviews: numReviews } }
-    );
+      const rating =
+        product.reviews.reduce((acc, review) => review.rating + acc, 0) /
+        numReviews;
+      await Product.updateOne(
+        { _id: id },
+        { $set: { rating: rating, numReviews: numReviews } }
+      );
+    }
 
     res.status(200).json(product);
   } catch (error) {

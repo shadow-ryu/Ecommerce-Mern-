@@ -1,0 +1,10 @@
+.home__container{
+    margin: 15px;
+}
+@media only screen and (max-width: 600px) {
+    .home__container{
+        margin: 25% 0;
+        margin-left:20px;
+        margin-right:10px;
+    }
+}

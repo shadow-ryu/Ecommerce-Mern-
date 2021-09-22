@@ -7,6 +7,7 @@ import { styled } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import AddShoppingCartOutlinedIcon from "@material-ui/icons/AddShoppingCartOutlined";
 import logo from "./logo.png";
+import Fuse from "fuse.js";
 
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
@@ -17,9 +18,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import "./navbar.css";
-import { userCart } from "./../../Redux/Actions/cartActions";
+
 import SideBar from "./Sidebar";
 import { useHistory, useLocation } from "react-router";
+
 const Navbar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
@@ -96,12 +98,35 @@ const Navbar = () => {
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
   }, []);
-
+  const [query, updateQuery] = useState("");
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
   const { carts } = useSelector((state) => state.cartReducer);
+  const { products, isLoading } = useSelector((state) => state.productReducers);
 
+  const fuse = new Fuse(products, {
+    keys: ["name", "brand", "category"],
+    includeScore: true,
+  });
+
+  const results = query ? fuse.search(query) : 0;
+
+  const onSearchSumit = () => {
+    let results = fuse.search(query);
+
+    // dispatch(createSearchProducts(results));
+  };
+  const characterResults = query
+    ? results.map((character) => character.item)
+    : "";
+  const onSearch = ({ currentTarget }) => {
+    updateQuery(currentTarget.value);
+  };
+  const ProductD = (id) => {
+    history.push(`/Product/${id}`);
+    updateQuery("");
+  };
   return (
     // <img classNamr="navbar__logo" src={logo} alt="" />
     <div className="navbar">
@@ -109,7 +134,6 @@ const Navbar = () => {
       <div className="menutoggle" onClick={toggle}>
         <MenuIcon />
       </div>
-
       <img
         className="navbar__logo"
         onClick={home}
@@ -117,12 +141,31 @@ const Navbar = () => {
         alt=""
         height="50"
       />
-
       <div className="navbar__search">
-        <input className="navbar__searchInput" type="text" />
-        <SearchIcon className="navbar__searchIcon" />
+        <input
+          className="navbar__searchInput"
+          type="text"
+          value={query}
+          onChange={onSearch}
+        />
+        <SearchIcon className="navbar__searchIcon" onClick={onSearchSumit} />
+        <div className="searchResults">
+          {query
+            ? results.map((character) => (
+                <div
+                  className="searchResults__Links"
+                  onClick={() => {
+                    ProductD(character.item._id);
+                  }}
+                  key={character.item._id}
+                >
+                  <img src={character.item.image} alt="" />
+                  <p>{character.item.name}</p>
+                </div>
+              ))
+            : ""}
+        </div>
       </div>
-
       <div className={"navbar__nav"}>
         <div className="navbar__hidden">
           <div className="navbar__option">
@@ -134,7 +177,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
       <div className="navbar__optionBasket1" onClick={cart}>
         <IconButton aria-label="cart">
           <StyledBadge
@@ -144,10 +186,6 @@ const Navbar = () => {
             <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
           </StyledBadge>
         </IconButton>
-        {/* <ShoppingCartOutlinedIcon  />
-          <span className="navbar__optionLineTwo navbar__basketCount1">
-            {carts ? carts?.cartItems?.length : 0}
-          </span> */}
       </div>
 
       <div className="navbar__hidden">
@@ -198,22 +236,32 @@ const Navbar = () => {
             </StyledBadge>
           </div>
         </Link>
-        {/* <div className="navbar__avatar">
-          <Avatar
-            alt={user?.user.name}
-            className="avatar"
-            src={user?.user.imageUrl}
-          >
-            {user?.user.name.charAt(0)}
-          </Avatar>
-        </div> */}
       </div>
-
       <div className="navbar2__search">
-        <input className="navbar2__searchInput" type="text" />
-        <SearchIcon className="navbar2__searchIcon" />
+        <input
+          className="navbar2__searchInput"
+          type="text"
+          value={query}
+          onChange={onSearch}
+        />
+        <SearchIcon className="navbar2__searchIcon" onClick={onSearchSumit} />
+        <div className="mnavSerachResults">
+          {query
+            ? results.map((character) => (
+                <div
+                  className="searchResults1__Links"
+                  onClick={() => {
+                    ProductD(character.item._id);
+                  }}
+                  key={character.item._id}
+                >
+                  <img src={character.item.image} alt="" />
+                  <p>{character.item.name}</p>
+                </div>
+              ))
+            : ""}
+        </div>
       </div>
-      <div></div>
     </div>
   );
 };

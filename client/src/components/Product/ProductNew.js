@@ -31,7 +31,7 @@ const ProductNew = (product) => {
       });
     }
   };
-  console.log("rating" + product.rating);
+
   return (
     <div className="main">
       <ToastContainer

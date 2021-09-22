@@ -17,7 +17,7 @@ function Home(props) {
   const [added, setAdded] = useState(false);
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch, added]);
+  }, [dispatch]);
   const { products, isLoading } = useSelector((state) => state.productReducers);
 
   if (!products?.length && !isLoading) return "No products";
@@ -32,7 +32,7 @@ function Home(props) {
               <CircularProgress />
             ) : (
               <>
-                <Grid container spacing={3} style={{ margin: "15px" }}>
+                <Grid container spacing={3}>
                   {products?.map((product) => (
                     <>
                       <Grid>
