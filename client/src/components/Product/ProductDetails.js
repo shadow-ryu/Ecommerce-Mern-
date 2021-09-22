@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
-import { getproduct } from "../../Redux/Actions/productActions";
+import {
+  getproduct,
+  ReviewProductById,
+} from "../../Redux/Actions/productActions";
 import {
   Button,
   Chip,
@@ -28,9 +31,11 @@ const ProductDetails = (props) => {
 
   const [values, setValues] = useState({
     comment: "",
+    rating: 0,
   });
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(ReviewProductById(id, values, history));
     console.log(values);
   };
 
@@ -140,6 +145,13 @@ const ProductDetails = (props) => {
             value={values.comment}
             onChange={handleChange("comment")}
             label="comment"
+          />
+          <OutlinedInput
+            id="outlined-adornment-amount"
+            type="number"
+            value={values.rating}
+            onChange={handleChange("rating")}
+            label="rating"
           />
           <Button Type="submit">Submit</Button>
         </form>

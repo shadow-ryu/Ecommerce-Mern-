@@ -120,6 +120,8 @@ export const reviewProductById = async (req, res) => {
     const alreadyreviewd = product.reviews.find(
       (r) => r.user.toString() === user.toString()
     );
+    const intRating = parseFloat(req.body.rating);
+    console.log(typeof intRating);
     if (ifprodcut && alreadyreviewd === undefined) {
       const review = {
         user: user,
@@ -127,6 +129,17 @@ export const reviewProductById = async (req, res) => {
         comment: req.body.comment,
         rating: req.body.rating,
       };
+
+      Product.updateOne(
+        { _id: id },
+        {
+          $push: {
+            reviews: review,
+          },
+        }
+      ).then((result) => {
+        res.json({ message: "review added  successfully." });
+      });
     }
     if (alreadyreviewd) {
       res

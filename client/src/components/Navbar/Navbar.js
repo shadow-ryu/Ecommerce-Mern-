@@ -177,6 +177,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
       <div className="navbar__optionBasket1" onClick={cart}>
         <IconButton aria-label="cart">
           <StyledBadge

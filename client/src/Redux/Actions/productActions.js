@@ -75,3 +75,13 @@ export const deleteProduct = (id) => async (dispatch) => {
     console.log(error);
   }
 };
+export const ReviewProductById = (id, product, router) => async (dispatch) => {
+  try {
+    const { data } = await api.reviewProductById(id, product);
+    console.log(data);
+    // router.push("/");
+    // router.push(`/Product/${id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -18,24 +18,34 @@ API.interceptors.request.use(
 
   // return req;"
 );
+//home  page
 export const fetchProducts = () => API.get("/product");
+export const fetchProduct = (id) => API.get(`/product/${id}`);
+//user sign up /login
 export const loginIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
+//user
 export const myadress = () => API.get("/user/address");
-export const fetchProduct = (id) => API.get(`/product/${id}`);
+export const addtoCart = (id) => API.get(`/product/${id}/addCart`);
+export const removetoCart = (id) => API.get(`/product/${id}/removeCart`);
+export const getuserCart = () => API.get("/cart");
+export const placOrder = (formData) => API.post("order", formData);
+export const myOrderList = () => API.get("/user/myOrder");
+export const updatemyOrderById = (id) => API.get(`/user/myOrder/${id}`);
+export const reviewProductById = (id, updatedProduct) =>
+  API.post(`/product/${id}/reviews`, updatedProduct);
+//admin or seller
 export const fetchMyProducts = () => API.get("/user/MyProducts");
 export const createP = (newProduct) => API.post("/product", newProduct);
 export const updateProduct = (id, updatedProduct) =>
   API.patch(`/product/${id}`, updatedProduct);
 export const deleteProduct = (id) => API.delete(`/product/${id}`);
-export const addtoCart = (id) => API.get(`/product/${id}/addCart`);
-export const removetoCart = (id) => API.get(`/product/${id}/removeCart`);
-export const getuserCart = () => API.get("/cart");
-export const placOrder = (formData) => API.post("order", formData);
-export const sellerOrderList = () => API.get("/user/sellerOrders");
-export const myOrderList = () => API.get("/user/myOrder");
-// export const myAddress = () => API.get("/user/myaddress");
-export const updatemyOrderById = (id) => API.get(`/user/myOrder/${id}`);
 export const sellerOrderById = (id) => API.get(`/user/sellerOrderById/${id}`);
 export const updateSellerOrderById = (id, updatedOrder) =>
   API.patch(`/user/sellerOrderById/${id}`, updatedOrder);
+
+export const sellerOrderList = () => API.get("/user/sellerOrders");
+
+// export const myAddress = () => API.get("/user/myaddress");
+
+// /:id/reviews
