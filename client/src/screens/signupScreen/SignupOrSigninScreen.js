@@ -2,20 +2,20 @@
 import React, { useState } from "react";
 
 import {
-  Avatar,
   Button,
   Paper,
   Grid,
   Typography,
   Container,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import { signin, signup } from "../../Redux/Actions/AuthActions";
-import { AUTH } from "../../constants/ActionTypes";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import { Link, useHistory } from "react-router-dom";
+
 import { useDispatch } from "react-redux";
 import useStyles from "./styles";
 import Input from "../../components/Input/Input";
+import { useHistory } from "react-router";
 
 const initialState = {
   firstName: "",
@@ -29,6 +29,7 @@ const initialState = {
 const SignupOrSigninScreen = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const [err, setError] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -45,21 +46,37 @@ const SignupOrSigninScreen = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
-      dispatch(signup(form, history));
+      if (form.password.length > 6) {
+        if (form.password === form.confirmPassword) {
+          dispatch(signup(form, history));
+          setError("");
+        } else {
+          setError("plz check both pass");
+        }
+      } else {
+        setError("password is small minimum 6 letter ");
+      }
+      //
     } else {
       dispatch(signin(form, history));
     }
   };
 
-  const handleChange = (e) =>
+  const [role, setRole] = React.useState("user");
+
+  const handlerole = (event) => {
+    setRole(event.target.value);
+    form.role = role;
+    console.log(form.role);
+  };
+
+  const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={6}>
-        {/* <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar> */}
         <Typography component="h1" variant="h5">
           {isSignup ? "Sign up" : "Login in"}
         </Typography>
@@ -80,12 +97,24 @@ const SignupOrSigninScreen = () => {
                   handleChange={handleChange}
                   half
                 />
-                <Input
-                  name="role"
-                  label="role"
-                  handleChange={handleChange}
-                  half
-                />
+
+                <div style={{ margin: "5px 15px" }}>
+                  <h6 style={{ margin: "5px" }}>Select a Role</h6>
+                  <input
+                    onChange={handleChange}
+                    type="radio"
+                    value="user"
+                    name="role"
+                  />{" "}
+                  Customer
+                  <input
+                    onChange={handleChange}
+                    type="radio"
+                    value="seller"
+                    name="role"
+                  />{" "}
+                  Seller
+                </div>
               </>
             )}
             <Input
@@ -101,6 +130,13 @@ const SignupOrSigninScreen = () => {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
+            {err ? (
+              <p style={{ color: " red", fontSize: "10px", margin: "0 15px" }}>
+                {err}
+              </p>
+            ) : (
+              ""
+            )}
             {isSignup && (
               <Input
                 name="confirmPassword"

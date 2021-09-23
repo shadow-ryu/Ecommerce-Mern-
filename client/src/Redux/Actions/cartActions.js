@@ -17,7 +17,7 @@ export const addProductToCart = (id, router) => async (dispatch) => {
     dispatch({ type: END_LOADING });
     router.push("/");
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 
@@ -29,7 +29,7 @@ export const removeProductToCart = (id, router) => async (dispatch) => {
     dispatch({ type: REMOVEFROMCART, payload: data });
     router.push("/mycart");
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 
@@ -41,6 +41,6 @@ export const userCart = (router) => async (dispatch) => {
     dispatch({ type: GETCART, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };

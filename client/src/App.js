@@ -12,6 +12,7 @@ import { Cart } from "./components/Cart/Cart";
 import Checkout from "./components/Shipping&Checkout/Checkout";
 import MyOrder from "./components/MyOrders/MyOrder";
 import { MyProfile } from "./components/Myprofile/MyProfile";
+import MyOrderBill from "./components/MyOrders/MyOrderBill";
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
           <Route path="/myOrder" exact>
             <Navbar />
             <MyOrder />
+          </Route>
+          <Route path="/myBills" exact>
+            <Navbar />
+            <MyOrderBill />
           </Route>
           <Route path="/myProfile" exact>
             <Navbar />

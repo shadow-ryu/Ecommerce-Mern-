@@ -112,8 +112,16 @@ padding-left: 50px;
 @media only screen and (max-width: 900px) {
     .cart{
         display: grid;
-        padding:15px;
+margin-top: 25px;
         grid-template-columns:  1fr ;
-    }        
-
+    }  .cart__Total{
+        display: grid;
+        
+       padding:20px;
+    
+      width:70%;
+        background-color:rgba(255, 255, 255, 0.63);
+        margin-bottom: 20px;
+    
+    }
 }

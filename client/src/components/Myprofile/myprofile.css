@@ -1,7 +1,4 @@
-.myprofile{
-   
-   
-}
+
 .myprofile__header{
     position: fixed;
     left: 50%;
@@ -12,6 +9,15 @@
     background-image: url("https://wallpaperaccess.com/full/187161.jpg");
   
     height:100px;
+
+}
+.myprofile___details{
+    margin-left: 20px;
+}
+.myprofile__userName .myprofile__userEmail.myprofile__userCreated{
+    display:grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
 
 }
 @media only screen and (max-width: 600px) {

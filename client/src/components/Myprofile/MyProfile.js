@@ -1,14 +1,13 @@
 import { Avatar, CircularProgress } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import "./myprofile.css";
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
+
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getmyaddress } from "../../Redux/Actions/UseraddressAction";
 export const MyProfile = () => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   const { address, isLoading } = useSelector((state) => state.addressReducers);
   const dispatch = useDispatch();
@@ -49,7 +48,7 @@ export const MyProfile = () => {
                 <h4>Created At :</h4>
                 <p>{user?.user.createdAt}</p>
               </div>
-              <div className="myprofile__userMyAdress">
+              {/* <div className="myprofile__userMyAdress">
                 <h4>All Adress</h4>
                 <Grid className container alignItems="stretch" spacing={3}>
                   {isLoading ? (
@@ -64,18 +63,44 @@ export const MyProfile = () => {
                     </>
                   )}
                 </Grid>
-              </div>
+              </div> */}
             </div>
           </div>
         </>
       ) : (
         <>
           <div className="myprofile">
-            <Avatar
-              //   className="myprofile__header"
-              alt=""
-              src=""
-            />
+            <div className="myprofile__ba"></div>
+            <div className="myprofile__header">
+              <Avatar
+                style={{
+                  width: "86px",
+                  height: "86px",
+                  fontSize: "34px",
+                  background: "#2d6cdf",
+                  boxShadow: " 0 6px #364f6b",
+                }}
+              />
+            </div>
+
+            <div className="myprofile___details">
+              <div className="myprofile__userName">
+                <h4>Name :</h4>
+                <p>Guest</p>
+              </div>
+              <div className="myprofile__userEmail">
+                <h4>Email :</h4>
+                <p>Guest Email</p>
+              </div>
+              <div className="myprofile__userCreated">
+                <h4>Created At :</h4>
+                <p>none</p>
+              </div>
+              {/* <div className="myprofile__userMyAdress">
+                <h4>All Adress</h4>
+                <p>--</p>
+              </div> */}
+            </div>
           </div>
         </>
       )}{" "}

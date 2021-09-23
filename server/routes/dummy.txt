@@ -65,3 +65,4 @@ numReviews
 //admin
 email_address:erud@gmail.com
 password:erud@
+costemer01@gmail.com

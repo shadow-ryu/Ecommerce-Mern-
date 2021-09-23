@@ -16,19 +16,39 @@ export const placeOrderFnc = (result, router) => async (dispatch) => {
 
     dispatch({ type: SUCESS_FULLY });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const myOrders = () => async (dispatch) => {
   try {
-    dispatch({ type: START_LOADING });
-    const { data } = await api.myOrderList();
+    const user = JSON.parse(localStorage.getItem("profile"));
 
-    dispatch({ type: SELLERORDERS, payload: { data } });
-    dispatch({ type: END_LOADING });
+    if (user?.user) {
+      dispatch({ type: START_LOADING });
+      const { data } = await api.myOrderList();
+
+      dispatch({ type: SELLERORDERS, payload: { data } });
+      dispatch({ type: END_LOADING });
+    }
     //
   } catch (error) {
-    console.log(error);
+    alert(error);
+  }
+};
+export const myBills = () => async (dispatch) => {
+  try {
+    const user = JSON.parse(localStorage.getItem("profile"));
+
+    if (user?.user) {
+      dispatch({ type: START_LOADING });
+      const { data } = await api.myBillList();
+
+      dispatch({ type: SELLERORDERS, payload: { data } });
+      dispatch({ type: END_LOADING });
+    }
+    //
+  } catch (error) {
+    alert(error);
   }
 };
 export const fetchsellerOrders = () => async (dispatch) => {
@@ -40,7 +60,7 @@ export const fetchsellerOrders = () => async (dispatch) => {
     dispatch({ type: END_LOADING });
     //
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const fetchsellerOrderById = (id) => async (dispatch) => {
@@ -51,7 +71,7 @@ export const fetchsellerOrderById = (id) => async (dispatch) => {
     dispatch({ type: SELLERORDERBYID, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const updatellerOrderById = (id, order, router) => async (dispatch) => {
@@ -60,7 +80,7 @@ export const updatellerOrderById = (id, order, router) => async (dispatch) => {
     const { data } = await api.updateSellerOrderById(id, order);
     router.push("/admin/orders");
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const fd = (id, router) => async (dispatch) => {
@@ -70,7 +90,7 @@ export const fd = (id, router) => async (dispatch) => {
     router.push("/");
     router.push("/myOrder");
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 // export const updatemyOrderById = (id, router) => async (dispatch) => {

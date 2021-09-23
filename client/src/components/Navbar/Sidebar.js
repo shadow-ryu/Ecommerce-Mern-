@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
+import decode from "jwt-decode";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -10,14 +10,13 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import PeopleIcon from "@material-ui/icons/People";
+
 import CloseIcon from "@material-ui/icons/Close";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import SettingsInputComponentIcon from "@material-ui/icons/SettingsInputComponent";
-
-import CollectionsBookmarkIcon from "@material-ui/icons/CollectionsBookmark";
-
+import * as actionTypes from "../../constants/ActionTypes";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { Avatar } from "@material-ui/core";
+import { Avatar, Divider } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 const styles = (theme) => ({
   categoryHeader: {
@@ -30,6 +29,12 @@ const styles = (theme) => ({
     color: theme.palette.common.white,
   },
   item: {
+    paddingTop: 1,
+    backgroundColor: "#131921",
+    paddingBottom: 1,
+    color: "rgba(255, 255, 255, 0.7)",
+  },
+  linkItem: {
     paddingTop: 1,
     backgroundColor: "#131921",
     paddingBottom: 1,
@@ -81,15 +86,34 @@ const styles = (theme) => ({
   },
   space: {
     backgroundColor: "#131921",
-    height: "160%",
+    height: "110%",
   },
 });
 
 function SideBar(props) {
   const { classes, ...other } = props;
   const history = useHistory();
+  const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch({ type: actionTypes.LOGOUT });
 
+    history.push("/auth");
+
+    setUser(null);
+  };
+  useEffect(() => {
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
+
+    setUser(JSON.parse(localStorage.getItem("profile")));
+  }, [location]);
   return (
     <div style={{ backgroundColor: "#131921" }}>
       <Drawer variant="permanent" {...other}>
@@ -127,11 +151,10 @@ function SideBar(props) {
               {!user ? "Guest" : user?.user.name}
             </ListItemText>
           </ListItem>
+
           <ListItem className={clsx(classes.item, classes.itemCategory)}>
             <Link to="/" className={classes.link} onClick={props.toggle}>
-              <ListItemIcon className={classes.itemIcon}>
-                <HomeIcon />
-              </ListItemIcon>
+              <ListItemIcon className={classes.itemIcon}></ListItemIcon>
               <ListItemText
                 classes={{
                   primary: classes.itemPrimary,
@@ -148,10 +171,8 @@ function SideBar(props) {
               className={classes.link}
               onClick={props.toggle}
             >
-              <ListItem button className={classes.item}>
-                <ListItemIcon className={classes.itemIcon}>
-                  <AccountCircleIcon />
-                </ListItemIcon>
+              <ListItem button className={classes.linkItem}>
+                <ListItemIcon className={classes.itemIcon}></ListItemIcon>
                 <ListItemText
                   classes={{
                     primary: classes.itemPrimary,
@@ -161,11 +182,10 @@ function SideBar(props) {
                 </ListItemText>
               </ListItem>
             </Link>
+
             <Link to="/myOrder" className={classes.link} onClick={props.toggle}>
-              <ListItem button className={classes.item}>
-                <ListItemIcon className={classes.itemIcon}>
-                  <PeopleIcon />
-                </ListItemIcon>
+              <ListItem button className={classes.linkItem}>
+                <ListItemIcon className={classes.itemIcon}></ListItemIcon>
                 <ListItemText
                   classes={{
                     primary: classes.itemPrimary,
@@ -176,6 +196,42 @@ function SideBar(props) {
               </ListItem>
             </Link>
 
+            <ListItem
+              className={clsx(
+                classes.item,
+
+                classes.itemCategory
+              )}
+            >
+              {user?.user ? (
+                <>
+                  <ListItem button onClick={logout} className={classes.item}>
+                    <ListItemIcon className={classes.itemIcon}></ListItemIcon>
+                    <ListItemText
+                      classes={{
+                        primary: classes.itemPrimary,
+                      }}
+                    >
+                      LogOut
+                    </ListItemText>
+                  </ListItem>
+                </>
+              ) : (
+                <Link
+                  to="/auth"
+                  className={classes.link}
+                  onClick={props.toggle}
+                >
+                  <ListItemText
+                    classes={{
+                      primary: classes.itemPrimary,
+                    }}
+                  >
+                    Sign In
+                  </ListItemText>
+                </Link>
+              )}
+            </ListItem>
             {/* <Divider className={classes.divider} /> */}
           </React.Fragment>
           <div className={classes.space}></div>

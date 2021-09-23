@@ -104,7 +104,8 @@
       border-bottom: 2px solid rgba(131, 130, 130, 0.747);
   }
   .productDetails__insStock{
-      display: flex;
+      display: flex;align-items: center;
+      justify-content: flex-start;
   }
   .productDetails__stockLogo{
       margin-top: -2%;
@@ -116,7 +117,7 @@
       border-radius:15%;
   }
   .productDetails__specs_header{
- margin-left: -3%;      justify-content:flex-start;
+    justify-content:flex-start;
       align-items: center;
 
 
@@ -128,6 +129,15 @@
 .productDetails__specs .productDetails__specs_h5{
     font-size:1em ;
     font-weight:bold;
+}
+.reviewForm{
+    display: grid;
+    margin:40px;
+    grid-template-columns:2fr ;
+
+}
+.reviewForm div{
+      margin :10px 0;
 }
 @media only screen and (max-width: 900px) {
     .avtar1{

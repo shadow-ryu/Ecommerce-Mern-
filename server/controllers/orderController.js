@@ -134,13 +134,13 @@ export const updatesellerOrderByID = async (req, res) => {
     });
 };
 ///customer order_s
-export const myBill = async (req, res) => {};
-// export const myaddress = async (req, res) => {
-//   const user = req.userData.id;
-//   await shippingAddressM.find({ user: user }).then((result) => {
-//     res.status(201).json(result);
-//   });
-// };
+export const myBill = async (req, res) => {
+  const user = req.userData.id;
+  await Order.find({ user: user }).then((result) => {
+    res.status(201).json(result);
+  });
+};
+
 export const myOrder = async (req, res) => {
   const user = req.userData.id;
   await SellerOrder.find({ costumer: user }).then((result) => {

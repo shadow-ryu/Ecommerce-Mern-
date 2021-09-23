@@ -1,7 +1,7 @@
 .navbar {
     height: 60px;
     display: grid;
-    grid-template-columns: 1fr  4.5fr 1fr 0.5fr 0.4fr ;
+    grid-template-columns: 1fr  3.5fr 0.8fr 0.7fr 0.4fr 0.4fr ;
     width: 100%;
     align-items: center;
     background-color: #131921;
@@ -18,12 +18,7 @@
     margin: 0 20px;
    
   }
-  /* .navv{
-    display: grid;
 
-    margin-left: 40%;
-    justify-content: flex-end;
-  } */
   .navbar__search {
     display: flex;
   
@@ -36,7 +31,7 @@
     padding: 10px;
     border: none;
     
-    width: 70%;
+    width: 83%;
   }
   input[type="text"], textarea, select { 
     outline: none;
@@ -55,8 +50,15 @@
   .navbar__optionLineTwo {
     font-size: 13px;
     font-weight: 800;
+    cursor: pointer;
   }
   
+  .navbar__option2{
+    color:white;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 800;
+  }
 
 
 .navbar__basketCount1 {
@@ -305,19 +307,10 @@ flex: 0.4;
   justify-content: flex-start;
   display: flex;
 }
-/* .searchResults1{
 
-
-  
-color: black !important;;
-border-end-end-radius: 4%;
-border-end-start-radius: 4%;
-  width: 47.5%;
-  background-color:black;
-} */
 .mnavSerachResults{
-  position: fixed;
-  top: 15.9%;
+  position: absolute;
+  top: 14.2%;
   background-color:white;
   width: 65%;
   left: 15%;

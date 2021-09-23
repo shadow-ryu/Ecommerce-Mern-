@@ -12,6 +12,6 @@ export const savemypaymentMethod = (data) => async (dispatch) => {
 
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };

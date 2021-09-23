@@ -39,7 +39,7 @@ export default function ReviewOrder() {
   const { carts } = useSelector((state) => state.cartReducer);
   const { newAddress } = useSelector((state) => state.newAddressReducer);
   const { address } = useSelector((state) => state.addressReducers);
-  const { Order, isLoading } = useSelector((state) => state.OrderReducers);
+  // const { Order, isLoading } = useSelector((state) => state.OrderReducers);
   const history = useHistory();
   const [paypalID, setPaypalID] = useState(false);
   const { savePaynetMethod } = useSelector(

@@ -11,8 +11,7 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
+
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
@@ -45,22 +44,6 @@ const Product = (product, setAdded, added) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const addtoCart = () => {
-    if (user?.user) {
-      console.log("user" + user?.user);
-      dispatch(addProductToCart(product._id, history));
-    } else {
-      toast.error("plz login /signup to add to get", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
 
   return (
     <Card className={classes.root}>

@@ -1,8 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -13,7 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import ReviewOrder from "./ReviewOrder";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -97,7 +96,7 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const { Order, sucessOrder } = useSelector((state) => state.OrderReducers);
+  // const { Order, sucessOrder } = useSelector((state) => state.OrderReducers);
   return (
     <React.Fragment>
       <CssBaseline />

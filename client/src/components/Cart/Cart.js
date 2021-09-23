@@ -25,7 +25,7 @@ export const Cart = () => {
   return (
     //
     <div className="cartM">
-      {user?.user && carts?.cartItems?.length != undefined ? (
+      {user?.user && carts?.cartItems?.length !== undefined ? (
         <>
           <div className="cart">
             <div className="cart__items">
@@ -66,7 +66,7 @@ export const Cart = () => {
               <div className="cartItems">
                 <div className="cart__summing__header">
                   <h4> price</h4>
-                  <p>qty </p>
+                  <h4>qty </h4>
                 </div>
                 {carts?.cartItems?.map((cartItem) => (
                   <div className="cart__summing__value">
@@ -84,14 +84,14 @@ export const Cart = () => {
                 </h4>
                 
               </div> */}
-              <div className="cartotal">
+              <div className="cart__summing__header">
                 <h4>ShipingPrice</h4>
                 <p>
                   {" "}
                   {carts?.cartItems?.length === 0 ? 0 : carts?.ShipingPrice}
                 </p>
               </div>
-              <div className="cartotal">
+              <div className="cart__summing__header">
                 <h4>Total</h4>
                 <p>
                   {" "}

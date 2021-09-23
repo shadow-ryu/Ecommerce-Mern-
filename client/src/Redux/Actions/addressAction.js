@@ -13,7 +13,7 @@ export const savemyaddress = (data) => async (dispatch) => {
 
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 // export const getmyNewaddress = () => async (dispatch) => {
@@ -23,6 +23,6 @@ export const savemyaddress = (data) => async (dispatch) => {
 //     dispatch({ type: FETCH_ALL });
 //     dispatch({ type: END_LOADING });
 //   } catch (error) {
-//     console.log(error);
+//      alert(error);;
 //   }
 // };

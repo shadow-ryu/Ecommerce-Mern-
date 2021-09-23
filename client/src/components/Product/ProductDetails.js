@@ -8,7 +8,7 @@ import {
 import {
   Button,
   Chip,
-  Icon,
+  Divider,
   InputLabel,
   OutlinedInput,
 } from "@material-ui/core";
@@ -17,18 +17,18 @@ import { useHistory } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import "./productDetails.css";
-import { Rating } from "./Rating";
+
 const ProductDetails = (props) => {
-  const { id, rating } = props;
+  const { id } = props;
   const dispatch = useDispatch();
   const history = useHistory();
   useEffect(() => {
     dispatch(getproduct(id));
-  }, []);
+  }, [id, dispatch]);
 
-  const { product, isLoading } = useSelector((state) => state.productReducers);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-
+  const { product } = useSelector((state) => state.productReducers);
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const [creview, setCreview] = useState(false);
   const [values, setValues] = useState({
     comment: "",
     rating: 0,
@@ -36,11 +36,14 @@ const ProductDetails = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(ReviewProductById(id, values, history));
-    console.log(values);
+    setCreview(false);
   };
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
+  };
+  const handleReiew = () => {
+    setCreview(!creview);
   };
 
   return (
@@ -50,7 +53,7 @@ const ProductDetails = (props) => {
       </div>
       <div className="productDetails__ details">
         <h4 className="productDetails__details_name">{product?.name}</h4>
-        <h2 className="line"></h2>
+        <Divider variant="middle" />
         <div className="product__rating">
           {/* <Rating rating={product.rating} /> */}
           <div className="productDetails_reviews_count">
@@ -75,9 +78,11 @@ const ProductDetails = (props) => {
           <p>Procduct remaining: </p>
           <p>{product?.countInStock}</p>
         </div>
-        <h6 className="productDetails__stockLogo">
-          {product?.countInStock !== 0 ? "in stock" : "out of stock"}
-        </h6>
+        <Chip
+          style={{ margin: "10px 0", backgroundColor: "skyblue" }}
+          label={product?.countInStock !== 0 ? "In stock" : "Out of stock"}
+        />
+
         <div className="productDetails__options">
           <div className="productDetails__options_main">
             <div className="productDetails__options_qty">
@@ -89,7 +94,6 @@ const ProductDetails = (props) => {
               className="productDetails__addto_button"
               onClick={() => {
                 if (user?.user) {
-                  console.log(product?._id);
                   dispatch(addProductToCart(product._id, history));
                 } else {
                   toast.error("plz login /signup to add to get", {
@@ -121,7 +125,7 @@ const ProductDetails = (props) => {
         </div>
         <div className="productDetails__specs_header">
           <h3> Product Details</h3>
-          <h2 className="line2"></h2>
+          <Divider variant="middle" />
         </div>
         {product?.specs?.map((spec) => (
           <>
@@ -136,25 +140,54 @@ const ProductDetails = (props) => {
       {/* */}
       <div className="productDetails_reivew">
         <h4>Reviews</h4>
-        <form onSubmit={handleSubmit}>
-          <InputLabel htmlFor="outlined-adornment-amount">
-            Review Comment
-          </InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={values.comment}
-            onChange={handleChange("comment")}
-            label="comment"
-          />
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            type="number"
-            value={values.rating}
-            onChange={handleChange("rating")}
-            label="rating"
-          />
-          <Button Type="submit">Submit</Button>
-        </form>
+        {creview ? (
+          <div className="reviewForm">
+            <form onSubmit={handleSubmit}>
+              <h4 htmlFor="outlined-adornment-amount">Review Comment</h4>
+              <div className="">
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  Comment
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  value={values.comment}
+                  onChange={handleChange("comment")}
+                  label="comment"
+                  fullWidth
+                />
+              </div>
+              <div className="">
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  Rating
+                </InputLabel>
+                <OutlinedInput
+                  id="outlined-adornment-amount"
+                  type="number"
+                  value={values.rating}
+                  onChange={handleChange("rating")}
+                  label="rating"
+                />
+              </div>
+
+              <Button variant="contained" Type="submit">
+                Submit
+              </Button>
+            </form>
+            <Button onClick={handleReiew} style={{ margin: "10px 0" }}>
+              Back
+            </Button>
+          </div>
+        ) : (
+          <>
+            <Button
+              onClick={handleReiew}
+              style={{ margin: "10px 0", backgroundColor: "skyblue" }}
+            >
+              Write Review
+            </Button>
+          </>
+        )}
+
         {product?.reviews?.map((review) => (
           <>
             <div className="productDetails__specs" key={review._id}>
@@ -181,6 +214,3 @@ const ProductDetails = (props) => {
 };
 
 export default ProductDetails;
-{
-  /* */
-}

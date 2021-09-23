@@ -38,6 +38,10 @@
  display:grid;
      grid-template-columns: 1fr 2fr;
 }
+.myorder___product1{
+  display:grid;
+      grid-template-columns: 3fr 2fr;
+ }
 .order_id{
     background-color:  #fcfcfcd8;
     padding: 2px 7px;
@@ -52,7 +56,18 @@
 .order_id p{
     font-weight: 700;
 }
+.searchResults1__Links{
+  display: grid;
+  cursor: pointer;
+  grid-template-columns: 1fr 3fr 2fr 1fr  ;
 
+
+}
+.searchResults1__Links img{
+height:60px;
+width:60px;
+object-fit: contain;
+}
   @media only screen and (max-width: 600px) {
 
     .myorder{

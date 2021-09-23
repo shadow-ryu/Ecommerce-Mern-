@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import { Button, Container, Select } from "@material-ui/core";
+import { Button, Select } from "@material-ui/core";
 import { getmyaddress } from "../../Redux/Actions/UseraddressAction";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,8 +17,7 @@ export default function AddressForm() {
   useEffect(() => {
     dispatch(getmyaddress());
   }, [dispatch]);
-  const { register, control, handleSubmit, reset, trigger, setError } =
-    useForm();
+  const { register, handleSubmit } = useForm();
   const newadress = () => {
     setNewAdress(!newAdress);
   };

@@ -15,22 +15,6 @@ const ProductNew = (product) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const addtoCart = () => {
-    if (user?.user) {
-      console.log("user" + user?.user);
-      dispatch(addProductToCart(product._id, history));
-    } else {
-      toast.error("plz login /signup to add to get", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
 
   return (
     <div className="main">
@@ -114,7 +98,7 @@ const ProductNew = (product) => {
 
         <div className="buttons">
           <Button
-            aria-label="share"
+            aria-label="add"
             onClick={() => {
               if (user?.user) {
                 dispatch(addProductToCart(product.id, history));

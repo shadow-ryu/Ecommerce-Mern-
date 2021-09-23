@@ -121,7 +121,7 @@ export const reviewProductById = async (req, res) => {
       (r) => r.user.toString() === user.toString()
     );
     const intRating = parseFloat(req.body.rating);
-    console.log(typeof intRating);
+
     if (ifprodcut && alreadyreviewd === undefined) {
       const review = {
         user: user,

@@ -5,7 +5,7 @@ import * as actionType from "../../constants/ActionTypes";
 import Badge from "@material-ui/core/Badge";
 import { styled } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
-import AddShoppingCartOutlinedIcon from "@material-ui/icons/AddShoppingCartOutlined";
+
 import logo from "./logo.png";
 import Fuse from "fuse.js";
 
@@ -81,6 +81,10 @@ const Navbar = () => {
     history.push("/myProfile");
     setAnchorEl(null);
   };
+  const myBills = () => {
+    history.push("/myBills");
+    setAnchorEl(null);
+  };
 
   const home = () => {
     history.push("/");
@@ -110,12 +114,10 @@ const Navbar = () => {
     includeScore: true,
   });
 
-  const results = query ? fuse.search(query) : 0;
+  const results = query ? fuse.search(query) : "";
 
   const onSearchSumit = () => {
     let results = fuse.search(query);
-
-    // dispatch(createSearchProducts(results));
   };
   const characterResults = query
     ? results.map((character) => character.item)
@@ -171,13 +173,21 @@ const Navbar = () => {
           <div className="navbar__option">
             <span className="navbar__optionLineOne">Hello </span>
 
-            <span className="navbar__optionLineTwo">
+            <span className="navbar__optionLineTwo" onClick={myProfile}>
               {!user ? "Guest" : user?.user.name}
             </span>
           </div>
         </div>
       </div>
 
+      <div className={"navbar__nav"}>
+        <div className="navbar__hidden">
+          <div className="navbar__option " onClick={myorder}>
+            <span className="navbar__optionLineOne">My </span>
+            <span className="navbar__optionLineTwo"> Orders </span>
+          </div>
+        </div>
+      </div>
       <div className="navbar__optionBasket1" onClick={cart}>
         <IconButton aria-label="cart">
           <StyledBadge
@@ -209,9 +219,10 @@ const Navbar = () => {
         >
           {user?.user ? (
             <div>
-              <MenuItem onClick={myProfile}>Profile</MenuItem>
+              <MenuItem onClick={myProfile}>My Profile</MenuItem>
 
-              <MenuItem onClick={myorder}>orders</MenuItem>
+              <MenuItem onClick={myorder}>My orders</MenuItem>
+              <MenuItem onClick={myBills}>My Bills</MenuItem>
 
               <MenuItem onClick={logout}>Logout</MenuItem>
             </div>
@@ -227,16 +238,14 @@ const Navbar = () => {
         </Menu>
       </div>
       <div className="mibileview">
-        <Link to="/mycart">
-          <div className="navbar__optionBasket" aria-label="cart">
-            <StyledBadge
-              badgeContent={carts ? carts?.cartItems?.length : 0}
-              style={{ color: "white" }}
-            >
-              <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
-            </StyledBadge>
-          </div>
-        </Link>
+        <div className="navbar__optionBasket" aria-label="cart" onClick={cart}>
+          <StyledBadge
+            badgeContent={carts ? carts?.cartItems?.length : 0}
+            style={{ color: "white" }}
+          >
+            <ShoppingCartOutlinedIcon style={{ fontSize: 30 }} />
+          </StyledBadge>
+        </div>
       </div>
       <div className="navbar2__search">
         <input
@@ -246,22 +255,34 @@ const Navbar = () => {
           onChange={onSearch}
         />
         <SearchIcon className="navbar2__searchIcon" onClick={onSearchSumit} />
-        <div className="mnavSerachResults">
-          {query
-            ? results.map((character) => (
-                <div
-                  className="searchResults1__Links"
-                  onClick={() => {
-                    ProductD(character.item._id);
-                  }}
-                  key={character.item._id}
-                >
-                  <img src={character.item.image} alt="" />
-                  <p>{character.item.name}</p>
-                </div>
-              ))
-            : ""}
-        </div>
+        {query ? (
+          <div className="mnavSerachResults">
+            {query && results.length === 0 ? (
+              <div className="searchResults1__Links">
+                <p></p>
+                <p>no results found</p>
+              </div>
+            ) : (
+              ""
+            )}
+            {query
+              ? results.map((character) => (
+                  <div
+                    className="searchResults1__Links"
+                    onClick={() => {
+                      ProductD(character.item._id);
+                    }}
+                    key={character.item._id}
+                  >
+                    <img src={character.item.image} alt="" />
+                    <p>{character.item.name}</p>
+                  </div>
+                ))
+              : ""}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

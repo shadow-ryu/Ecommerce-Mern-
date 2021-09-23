@@ -18,7 +18,7 @@ export const getProducts = () => async (dispatch) => {
     dispatch({ type: FETCH_ALL, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const createProduct = (product) => async (dispatch) => {
@@ -28,7 +28,7 @@ export const createProduct = (product) => async (dispatch) => {
 
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const fetchsellerProducts = () => async (dispatch) => {
@@ -39,7 +39,7 @@ export const fetchsellerProducts = () => async (dispatch) => {
     dispatch({ type: SELLERPRODUCTS, payload: { data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 
@@ -51,7 +51,7 @@ export const getproduct = (id) => async (dispatch) => {
     dispatch({ type: BYID, payload: { product: data } });
     dispatch({ type: END_LOADING });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 
@@ -62,7 +62,7 @@ export const updateProductById = (id, product, router) => async (dispatch) => {
 
     dispatch({ type: UPDATE, payload: data });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 
@@ -72,16 +72,16 @@ export const deleteProduct = (id) => async (dispatch) => {
 
     dispatch({ type: DELETE, payload: id });
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
 export const ReviewProductById = (id, product, router) => async (dispatch) => {
   try {
     const { data } = await api.reviewProductById(id, product);
-    console.log(data);
+
     // router.push("/");
     // router.push(`/Product/${id}`);
   } catch (error) {
-    console.log(error);
+    alert(error);
   }
 };
