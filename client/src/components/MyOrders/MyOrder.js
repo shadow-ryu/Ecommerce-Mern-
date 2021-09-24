@@ -25,7 +25,7 @@ const MyOrder = () => {
           {isLoading === false &&
             Order.length !== 0 &&
             Order?.map((order) => (
-              <>
+              <div key={order._id}>
                 <div className="myorder__details" key={order._id}>
                   <div className="orderitem order_id">
                     <h4>Order ID :</h4>
@@ -89,7 +89,7 @@ const MyOrder = () => {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             ))}
         </>
       ) : (

@@ -22,7 +22,7 @@ export default function PaymentForm() {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label for="cars">Choose Payment method:</label>
+            <label>Choose Payment method:</label>
             <Select
               native
               {...register("paymentMethod", { required: true })}

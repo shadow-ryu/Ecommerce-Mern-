@@ -86,7 +86,7 @@ const styles = (theme) => ({
   },
   space: {
     backgroundColor: "#131921",
-    height: "110%",
+    height: "90%",
   },
 });
 
@@ -182,7 +182,18 @@ function SideBar(props) {
                 </ListItemText>
               </ListItem>
             </Link>
-
+            <Link to="/myBills" className={classes.link} onClick={props.toggle}>
+              <ListItem button className={classes.linkItem}>
+                <ListItemIcon className={classes.itemIcon}></ListItemIcon>
+                <ListItemText
+                  classes={{
+                    primary: classes.itemPrimary,
+                  }}
+                >
+                  My Bills
+                </ListItemText>
+              </ListItem>
+            </Link>
             <Link to="/myOrder" className={classes.link} onClick={props.toggle}>
               <ListItem button className={classes.linkItem}>
                 <ListItemIcon className={classes.itemIcon}></ListItemIcon>

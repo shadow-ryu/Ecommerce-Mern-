@@ -56,7 +56,7 @@ export default function ReviewOrder() {
     dispatch(userCart());
     const addPaypalScript = async () => {
       const { data: clientId } = await axios.get(
-        "http://localhost:5000/config/paypal"
+        "https://dragon-mern-ecomm1.herokuapp.com//config/paypal"
       );
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -161,7 +161,7 @@ export default function ReviewOrder() {
       </Typography>
       <List disablePadding>
         {carts?.cartItems?.map((cartItem) => (
-          <ListItem className={classes.listItem} key={cartItem.name}>
+          <ListItem className={classes.listItem} key={cartItem._id}>
             <ListItemText primary={cartItem.name} secondary={cartItem.desc} />
             <Typography variant="body2">${cartItem.price}</Typography>
           </ListItem>

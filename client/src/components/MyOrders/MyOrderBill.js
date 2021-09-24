@@ -36,7 +36,7 @@ const MyOrderBill = () => {
                       <div className="orderitemCart">
                         <h5>order Products</h5>
                         {order?.orderItems?.map((orderItem) => (
-                          <div>
+                          <div key={orderItem?._id}>
                             <div
                               className="searchResults1__Links"
                               key={orderItem?._id}

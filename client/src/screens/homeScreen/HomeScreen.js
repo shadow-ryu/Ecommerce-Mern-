@@ -34,8 +34,8 @@ function Home(props) {
               <>
                 <Grid container spacing={3}>
                   {products?.map((product) => (
-                    <>
-                      <Grid>
+                    <div key={product._id}>
+                      <Grid key={product._id}>
                         <ProductNew
                           key={product._id}
                           id={product._id}
@@ -45,7 +45,7 @@ function Home(props) {
                           image={product.image}
                         />
                       </Grid>
-                    </>
+                    </div>
                   ))}
                 </Grid>
               </>

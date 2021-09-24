@@ -30,7 +30,7 @@ export const Cart = () => {
           <div className="cart">
             <div className="cart__items">
               {carts?.cartItems?.map((cartItem) => (
-                <div className="cartProduct">
+                <div className="cartProduct" key={cartItem._id}>
                   <img
                     className="cartProduct__image"
                     alt=" cartItemimage"
@@ -69,7 +69,7 @@ export const Cart = () => {
                   <h4>qty </h4>
                 </div>
                 {carts?.cartItems?.map((cartItem) => (
-                  <div className="cart__summing__value">
+                  <div className="cart__summing__value" key={cartItem._id}>
                     <p>{cartItem?.price}</p>
                     <h6> {cartItem?.qty}</h6>
                   </div>

@@ -59,17 +59,23 @@
 .searchResults1__Links{
   display: grid;
   cursor: pointer;
-  grid-template-columns: 1fr 3fr 2fr 1fr  ;
+  grid-template-columns: 2fr 3fr 2fr 1fr  ;
 
 
 }
 .searchResults1__Links img{
-height:60px;
-width:60px;
+height:70px;
+width:70px;
 object-fit: contain;
 }
   @media only screen and (max-width: 600px) {
-
+    .searchResults1__Links{
+      display: grid;
+      cursor: pointer;
+      grid-template-columns: 2fr 2fr   ;
+    
+    
+    }
     .myorder{
         
       
