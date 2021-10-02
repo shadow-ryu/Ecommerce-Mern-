@@ -9,7 +9,7 @@ var addcartSchema = new mongoose.Schema({
         ref: "Product",
         required: true,
       },
-      name: { type: String, required: true, unique: true },
+      name: { type: String, required: true },
       seller: {
         type: mongoose.Schema.Types.ObjectID,
         ref: "User",

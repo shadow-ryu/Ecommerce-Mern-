@@ -20,5 +20,5 @@ export const SUCESS_FULLY = "SUCESS_FULLY";
 export const SELLERORDERBYID = "SELLERORDERBYID";
 export const UPDATEORD = "UPDATEORD";
 export const MYORDERS = "MYORDERS";
-// export const PLACEORDER = "PLACEORDER";
-// export const PLACEORDER = "PLACEORDER";
+export const ALLUSER = "ALLUSER";
+export const ALLSELLER = "ALLSELLER";

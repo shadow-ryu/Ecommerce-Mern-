@@ -7,10 +7,14 @@ import { fd, myOrders } from "../../Redux/Actions/orderAction";
 import "./myorder.css";
 const MyOrder = () => {
   const { Order, isLoading } = useSelector((state) => state.OrderReducers);
-  const user = JSON.parse(localStorage.getItem("profile"));
-  const dispatch = useDispatch();
-  const history = useHistory();
 
+  const dispatch = useDispatch();
+
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const history = useHistory();
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
   useEffect(() => {
     dispatch(myOrders());
   }, [dispatch]);

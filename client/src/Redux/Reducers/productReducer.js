@@ -8,7 +8,10 @@ import {
   UPDATE,
   DELETE,
 } from "../../constants/ActionTypes";
-const productReducers = (state = { isLoading: true, product: [] }, action) => {
+const productReducers = (
+  state = { isLoading: true, created: false, product: [] },
+  action
+) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };
@@ -20,7 +23,11 @@ const productReducers = (state = { isLoading: true, product: [] }, action) => {
         products: action.payload.data,
       };
     case CREATE:
-      return { ...state, products: [...state.products, action.payload] };
+      return {
+        ...state,
+        created: true,
+        products: [...state.products, action.payload],
+      };
     case SELLERPRODUCTS:
       return {
         ...state,
@@ -30,7 +37,6 @@ const productReducers = (state = { isLoading: true, product: [] }, action) => {
     case BYID:
       return { ...state, product: action.payload.product };
     case UPDATE:
-      console.log(action.payload.id);
       return {
         ...state,
 

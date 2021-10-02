@@ -4,6 +4,11 @@ dotenv.config();
 export const checkAuth = (req, res, next) => {
   const secret = process.env.HIDDEN_JWT;
   try {
+    // if (req.headers.authorization === undefined) {
+    //   return res.status(402).json({
+    //     message: "plz check if ur login ",
+    //   });
+    // }
     const token = req.headers.authorization.split(" ")[1];
 
     const decoded = jwt.verify(token, secret);

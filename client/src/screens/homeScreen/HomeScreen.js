@@ -9,7 +9,7 @@ import { getProducts } from "../../Redux/Actions/productActions";
 import { useParams } from "react-router-dom";
 import ProductDetails from "../../components/Product/ProductDetails";
 import ProductNew from "../../components/Product/ProductNew";
-
+import { useHistory, useLocation } from "react-router";
 function Home(props) {
   const { byId } = props;
   const { id } = useParams();
@@ -18,9 +18,16 @@ function Home(props) {
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
+
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const history = useHistory();
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
   const { products, isLoading } = useSelector((state) => state.productReducers);
 
   if (!products?.length && !isLoading) return "No products";
+
   return (
     <div className="home">
       <div className="home__container">
@@ -32,10 +39,10 @@ function Home(props) {
               <CircularProgress />
             ) : (
               <>
-                <Grid container spacing={3}>
+                <Grid container spacing={5}>
                   {products?.map((product) => (
                     <div key={product._id}>
-                      <Grid key={product._id}>
+                      <Grid spacing={5} key={product._id}>
                         <ProductNew
                           key={product._id}
                           id={product._id}

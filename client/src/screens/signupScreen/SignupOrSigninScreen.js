@@ -24,16 +24,28 @@ const initialState = {
   password: "",
   confirmPassword: "",
   role: "",
+  sellerDetails: {
+    name: "",
+    logo: "",
+    description: "",
+    shippingPrice: 0,
+  },
 };
 
 const SignupOrSigninScreen = () => {
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
+  const [seller, setseller] = useState(false);
   const [err, setError] = useState(null);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-
+  const user = JSON.parse(localStorage.getItem("profile"));
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  } else if (user?.user.role === "user") {
+    history.push("/");
+  }
   const [showPassword, setShowPassword] = useState(false);
   const handleShowPassword = () => setShowPassword(!showPassword);
 
@@ -49,6 +61,7 @@ const SignupOrSigninScreen = () => {
       if (form.password.length > 6) {
         if (form.password === form.confirmPassword) {
           dispatch(signup(form, history));
+
           setError("");
         } else {
           setError("plz check both pass");
@@ -112,10 +125,43 @@ const SignupOrSigninScreen = () => {
                     type="radio"
                     value="seller"
                     name="role"
+                    onClick={() => {
+                      setseller(!seller);
+                    }}
                   />{" "}
                   Seller
                 </div>
               </>
+            )}
+            {seller ? (
+              <>
+                <Input
+                  name="name"
+                  label="Brand Name"
+                  handleChange={handleChange}
+                  type="text"
+                />
+                <Input
+                  name="logo"
+                  label="Brand logo"
+                  handleChange={handleChange}
+                  type="text"
+                />
+                <Input
+                  name="description"
+                  label="Seller intro info"
+                  handleChange={handleChange}
+                  type="text"
+                />
+                <Input
+                  name="shippingPrice"
+                  label="product shippingPrice"
+                  handleChange={handleChange}
+                  type="number"
+                />
+              </>
+            ) : (
+              ""
             )}
             <Input
               name="email"

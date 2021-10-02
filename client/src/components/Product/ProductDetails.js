@@ -12,7 +12,7 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@material-ui/core";
-import { addProductToCart } from "../../Redux/Actions/cartActions";
+import { addProductToCart, buyNow } from "../../Redux/Actions/cartActions";
 import { useHistory } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -35,10 +35,17 @@ const ProductDetails = (props) => {
   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(ReviewProductById(id, values, history));
-    setCreview(false);
+    if (values.rating <= 5) {
+      dispatch(ReviewProductById(id, values, history));
+      setCreview(false);
+    } else {
+      alert(" rating should between 0 to 5  ");
+    }
   };
 
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -58,9 +65,8 @@ const ProductDetails = (props) => {
           {/* <Rating rating={product.rating} /> */}
           <div className="productDetails_reviews_count">
             <h5>Rating : </h5>
-            <p className="productDetails__details_number">
-              <Chip label={` ${product?.rating} ⭐`} />
-            </p>
+
+            <Chip label={` ${product?.rating} ⭐`} />
           </div>
           <div className="productDetails_reviews_count">
             <h5>Reviews : </h5>
@@ -115,6 +121,21 @@ const ProductDetails = (props) => {
             <Button
               variant="contained"
               color="primary"
+              onClick={() => {
+                if (user?.user) {
+                  dispatch(buyNow(product._id, history));
+                } else {
+                  toast.error("plz login /signup to add to get", {
+                    position: "top-right",
+                    autoClose: 100,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  });
+                }
+              }}
               style={{ margin: "10px", width: "150px" }}
             >
               {"  "}
@@ -128,12 +149,12 @@ const ProductDetails = (props) => {
           <Divider variant="middle" />
         </div>
         {product?.specs?.map((spec) => (
-          <>
-            <div className="productDetails__specs" key={spec._id}>
-              <p className="productDetails__specs_h5">{spec?.specName}:</p>
-              <p>{spec?.specValue}</p>
-            </div>
-          </>
+          <div className="productDetails__specs" key={spec._id}>
+            <p key={spec._id} className="productDetails__specs_h5">
+              {spec?.specName}:
+            </p>
+            <p>{spec?.specValue}</p>
+          </div>
         ))}
       </div>
 
@@ -162,7 +183,7 @@ const ProductDetails = (props) => {
                 </InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-amount"
-                  type="number"
+                  Type="number"
                   value={values.rating}
                   onChange={handleChange("rating")}
                   label="rating"
@@ -189,13 +210,13 @@ const ProductDetails = (props) => {
         )}
 
         {product?.reviews?.map((review) => (
-          <>
-            <div className="productDetails__specs" key={review._id}>
-              <p className="productDetails__specs_h5">{review?.name}:</p>
-              <p>{review?.comment}</p>
-              <p>{review?.rating}</p>
-            </div>
-          </>
+          <div className="productDetails__specs" key={review._id}>
+            <p key={review._id} className="productDetails__specs_h5">
+              {review?.name}:
+            </p>
+            <p style={{ align: "center" }}> Comment: {review?.comment}</p>
+            <p>Rating:{review?.rating}</p>
+          </div>
         ))}
       </div>
       <ToastContainer

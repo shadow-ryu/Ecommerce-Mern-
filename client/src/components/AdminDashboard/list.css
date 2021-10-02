@@ -1,0 +1,40 @@
+/* orderitem style */
+.order{
+    border-radius: 5px;
+    border: 1px solid blueviolet;
+     margin: 4px;
+     padding:14px;
+    }
+    .orderheading{
+      padding: 1px;
+    }
+    .orderitem{
+      display: flex;
+       align-items: center;
+      margin-left:4px;
+    }
+    .orderitem h4{
+      color: #000;
+      font-size: 0.9rem;
+    }
+    .orderitem p{
+     margin:0 4px;
+    }
+    /* .order__customer{
+    
+    } */
+    .ordered__product{
+      display: grid;
+      grid-template-columns: 2.2fr 4fr 2fr   ;
+    
+    
+    }
+    .order___Details{
+     display: grid;
+     grid-template-columns: 2fr ;
+    
+    
+      
+    
+    }
+    

@@ -1,23 +1,22 @@
 // SellerOrderList
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./sellerorder.css";
 import { withStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import Product from "../../components/Product/Product";
 
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button, CircularProgress } from "@material-ui/core";
-import { fetchsellerOrders } from "../../Redux/Actions/orderAction";
-import { IconButton } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import { EditIcon } from "@material-ui/icons/Edit";
+import {
+  fetchsellerOrders,
+  updatellerOrderById,
+} from "../../Redux/Actions/orderAction";
 
 const styles = (theme) => ({
   paper: {
@@ -50,9 +49,13 @@ function SellerOrderList(props) {
   );
   const dispatch = useDispatch();
   const history = useHistory();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  if (user?.user.role === "user" || user === null) {
+    history.push("/");
+  }
   useEffect(() => {
     dispatch(fetchsellerOrders(history));
-  }, [dispatch]);
+  }, [dispatch, history]);
 
   return (
     <Paper className={classes.paper}>
@@ -111,17 +114,23 @@ function SellerOrderList(props) {
                             </p>
                           </div>
                           <div className="updatebU">
-                            <Button
-                              variant="contained"
-                              style={{ background: "#a7ff83" }}
-                              onClick={() =>
-                                history.push(
-                                  `/admin/sellerOrderById/${product._id}`
-                                )
-                              }
-                            >
-                              Update
-                            </Button>
+                            {(product.cancelled === false &&
+                              product.isDelivered === false) ||
+                            product.isDelivered === false ? (
+                              <Button
+                                variant="contained"
+                                style={{ background: "#a7ff83" }}
+                                onClick={() =>
+                                  dispatch(
+                                    updatellerOrderById(product._id, history)
+                                  )
+                                }
+                              >
+                                Mark Delivered
+                              </Button>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         </div>
                       </div>

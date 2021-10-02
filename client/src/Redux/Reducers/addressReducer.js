@@ -5,7 +5,7 @@ import {
   END_LOADING,
 } from "../../constants/ActionTypes";
 const newAddressReducer = (
-  state = { isLoading: true, newAddress: [] },
+  state = { isLoading: true, submited: false, newAddress: [] },
   action
 ) => {
   switch (action.type) {
@@ -15,7 +15,11 @@ const newAddressReducer = (
       return { ...state, isLoading: false };
 
     case CREATEA:
-      return { ...state, newAddress: [...state.newAddress, action.payload] };
+      return {
+        ...state,
+        submited: true,
+        newAddress: [...state.newAddress, action.payload],
+      };
 
     default:
       return state;

@@ -141,6 +141,23 @@ justify-content: center;
 }.searchResults1{
   display: none;
 }
+
+.footer{
+  display: flex;
+
+ 
+  align-items: center;
+    background-color: #131921;
+ 
+   justify-content: center;
+
+  
+   width: 100%;
+   color: white;
+    color: white;
+    font-size:10px;
+}
+
   @media screen and (max-width: 800px){
   
     .searchResults{

@@ -21,12 +21,14 @@ export const getProducts = () => async (dispatch) => {
     alert(error);
   }
 };
-export const createProduct = (product) => async (dispatch) => {
+export const createProduct = (product, router) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
+    router.push("/admin");
     const { data } = await api.createP(product);
 
     dispatch({ type: CREATE, payload: data });
+    window.location.reload(false);
   } catch (error) {
     alert(error);
   }
@@ -58,9 +60,10 @@ export const getproduct = (id) => async (dispatch) => {
 export const updateProductById = (id, product, router) => async (dispatch) => {
   try {
     const { data } = await api.updateProduct(id, product);
-    router.push("/admin");
 
     dispatch({ type: UPDATE, payload: data });
+    router.push("/admin");
+    window.location.reload(false);
   } catch (error) {
     alert(error);
   }

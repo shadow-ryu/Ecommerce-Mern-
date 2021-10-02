@@ -9,6 +9,7 @@ import { createProduct } from "../../Redux/Actions/productActions";
 
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { useHistory } from "react-router";
 
 export default function ProductForm(prop) {
   const { register, control, handleSubmit } = useForm({
@@ -22,10 +23,9 @@ export default function ProductForm(prop) {
   });
 
   const dispatch = useDispatch();
-
+  const router = useHistory();
   const onSubmit = (data) => {
-    console.log(data);
-    dispatch(createProduct(data));
+    dispatch(createProduct(data, router));
   };
 
   return (
@@ -35,7 +35,7 @@ export default function ProductForm(prop) {
           Product
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item={true} xs={12} sm={6}>
             <Controller
               render={({ field }) => (
                 <TextField variant="outlined" required {...field} />
@@ -45,7 +45,7 @@ export default function ProductForm(prop) {
               defaultValue={""} // make sure to set up defaultValue
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item={true} xs={12} sm={6}>
             <TextField
               variant="outlined"
               required
@@ -56,7 +56,7 @@ export default function ProductForm(prop) {
             />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item={true} xs={12}>
             <TextField
               variant="outlined"
               name="image"
@@ -65,7 +65,7 @@ export default function ProductForm(prop) {
               {...register("image", { required: true })}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item={true} xs={12}>
             <TextField
               variant="outlined"
               name="description"
@@ -74,7 +74,7 @@ export default function ProductForm(prop) {
               {...register("description", { required: true })}
             />
           </Grid>
-          <Grid item>
+          <Grid item={true}>
             <TextField
               variant="outlined"
               required
@@ -84,7 +84,7 @@ export default function ProductForm(prop) {
               {...register("category", { required: true })}
             />
           </Grid>
-          <Grid item>
+          <Grid item={true}>
             <TextField
               label="Product In Stock"
               name="countInStock"
@@ -96,7 +96,7 @@ export default function ProductForm(prop) {
               {...register("countInStock", { required: true })}
             />
           </Grid>
-          <Grid item xs={12} sm={5}>
+          <Grid item={true} xs={12} sm={5}>
             <TextField
               label="Product Price"
               name="price"
@@ -115,10 +115,9 @@ export default function ProductForm(prop) {
             </Typography>
 
             {fields.map((item, index) => (
-              <>
-                {console.log(item)}
+              <Grid key={item.id}>
                 <Grid container spacing={4} key={item.id}>
-                  <Grid item xs={4}>
+                  <Grid item={true} xs={4}>
                     <Controller
                       render={({ field }) => (
                         <TextField variant="outlined" required {...field} />
@@ -128,7 +127,7 @@ export default function ProductForm(prop) {
                       defaultValue={""}
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item={true} xs={4}>
                     <Controller
                       render={({ field }) => (
                         <TextField variant="outlined" required {...field} />
@@ -154,7 +153,7 @@ export default function ProductForm(prop) {
                     </IconButton>
                   </Grid>
                 </Grid>
-              </>
+              </Grid>
             ))}
             <Grid
               xs={3}

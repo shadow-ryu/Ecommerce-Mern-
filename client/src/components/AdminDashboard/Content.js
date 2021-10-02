@@ -17,6 +17,8 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 
 import { CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 const styles = (theme) => ({
   paper: {
     maxWidth: 936,
@@ -48,7 +50,18 @@ function Content(props) {
     setNewForm(!newForm);
   };
 
-  const { products, isLoading } = useSelector((state) => state.productReducers);
+  const { products, isLoading, created } = useSelector(
+    (state) => state.productReducers
+  );
+
+  if (created) {
+    setNewForm(false);
+  }
+  const history = useHistory();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  if (user?.user.role === "user") {
+    history.push("/");
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -115,7 +128,7 @@ function Content(props) {
           <ProductForm />
         ) : (
           <>
-            <Grid className container alignItems="stretch" spacing={3}>
+            <Grid container alignItems="stretch" spacing={3}>
               {isLoading ? (
                 <CircularProgress />
               ) : (

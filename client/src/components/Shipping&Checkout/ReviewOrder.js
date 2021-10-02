@@ -56,7 +56,7 @@ export default function ReviewOrder() {
     dispatch(userCart());
     const addPaypalScript = async () => {
       const { data: clientId } = await axios.get(
-        "https://dragon-mern-ecomm1.herokuapp.com//config/paypal"
+        "https://dragon-mern-ecomm1.herokuapp.com/config/paypal"
       );
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -94,14 +94,14 @@ export default function ReviewOrder() {
       }
       toast.success("order is placed successfully", {
         position: "top-right",
-        autoClose: 10000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
       });
-      setTimeout(home, 11000);
+      setTimeout(home, 2000);
     } else {
       console.log("data");
     }

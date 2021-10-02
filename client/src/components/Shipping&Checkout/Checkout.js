@@ -13,6 +13,8 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import ReviewOrder from "./ReviewOrder";
 // import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 function Copyright() {
   return (
@@ -33,10 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
   layout: {
     width: "auto",
+    marginTop: "45px",
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
+      height: 500,
       marginLeft: "auto",
       marginRight: "auto",
     },
@@ -88,10 +92,16 @@ function getStepContent(step) {
 export default function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const { submited } = useSelector((state) => state.newAddressReducer);
+  const { selected } = useSelector((state) => state.savePaynetMethodReducer);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
+  const user = JSON.parse(localStorage.getItem("profile"));
+  const history = useHistory();
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
@@ -124,7 +134,7 @@ export default function Checkout() {
                 )}
                 {activeStep === steps.length - 1 ? (
                   ""
-                ) : (
+                ) : submited ? (
                   <Button
                     variant="contained"
                     color="primary"
@@ -133,6 +143,17 @@ export default function Checkout() {
                   >
                     Next
                   </Button>
+                ) : selected ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  ""
                 )}
               </div>
             </React.Fragment>

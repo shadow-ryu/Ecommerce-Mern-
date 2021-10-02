@@ -1,17 +1,18 @@
-import { Avatar, CircularProgress } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import { Avatar } from "@material-ui/core";
+import React, { useEffect } from "react";
 import "./myprofile.css";
 
-import Grid from "@material-ui/core/Grid";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getmyaddress } from "../../Redux/Actions/UseraddressAction";
+import { useHistory } from "react-router";
 export const MyProfile = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
 
-  const { address, isLoading } = useSelector((state) => state.addressReducers);
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
   useEffect(() => {
     dispatch(getmyaddress());
   }, [dispatch]);

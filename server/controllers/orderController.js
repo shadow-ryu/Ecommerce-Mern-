@@ -106,66 +106,91 @@ export const placeOrder = async (req, res) => {
 };
 
 export const sellerOrderList = async (req, res) => {
-  const user = req.userData.id;
-  await SellerOrder.find({ seller: user }).then((result) => {
-    res.status(201).json(result);
-  });
+  try {
+    const user = req.userData.id;
+    await SellerOrder.find({ seller: user }).then((result) => {
+      res.status(201).json(result);
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 };
-
+//-------------------------------------------------//
 export const sellerOrderByID = async (req, res) => {
-  const { id } = req.params;
-  await SellerOrder.findById(id).then((result) => {
-    res.status(201).json(result);
-  });
+  try {
+    const { id } = req.params;
+    await SellerOrder.findById(id).then((result) => {
+      res.status(201).json(result);
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 };
+//-------------------- to mark a order is deliver from seller side ------------------------//
 export const updatesellerOrderByID = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  SellerOrder.updateOne({ _id: id }, { $set: req.body })
-    .then((order) => {
-      res.status(201).json({
-        message: " u have  updated the order",
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        error: err.message,
-      });
+    SellerOrder.updateOne({ _id: id }, { $set: { isDelivered: true } }).then(
+      (order) => {
+        res.status(201).json({
+          message: " You have updated orderD ",
+        });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
     });
+  }
 };
-///customer order_s
+// all customer order inform of bill --------//
 export const myBill = async (req, res) => {
-  const user = req.userData.id;
-  await Order.find({ user: user }).then((result) => {
-    res.status(201).json(result);
-  });
-};
-
-export const myOrder = async (req, res) => {
-  const user = req.userData.id;
-  await SellerOrder.find({ costumer: user }).then((result) => {
-    res.status(201).json(result);
-  });
-};
-
-export const myOrderByID = async (req, res) => {
-  const { id } = req.params;
-  await SellerOrder.findById(id).then((result) => {
-    res.status(201).json(result);
-  });
-};
-export const updatemyOrderByID = async (req, res) => {
-  const { id } = req.params;
-
-  SellerOrder.updateOne({ _id: id }, { $set: { cancelled: true } })
-    .then((order) => {
-      res.status(201).json({
-        message: " u have  updated the order",
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        error: err.message,
-      });
+  try {
+    const user = req.userData.id;
+    await Order.find({ user: user }).then((result) => {
+      res.status(201).json(result);
     });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+//-------to get all  customer    orders--------//
+export const myOrder = async (req, res) => {
+  try {
+    const user = req.userData.id;
+
+    await SellerOrder.find({ costumer: user }).then((result) => {
+      res.status(201).json(result);
+    });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+
+//-------to cancel  a  specific   order--------//
+export const updatemyOrderByID = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    SellerOrder.updateOne({ _id: id }, { $set: { cancelled: true } }).then(
+      (order) => {
+        res.status(201).json({
+          message: " u have  updated the order",
+        });
+      }
+    );
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 };

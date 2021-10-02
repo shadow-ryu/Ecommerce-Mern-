@@ -4,7 +4,10 @@ import {
   START_LOADING,
   END_LOADING,
 } from "../../constants/ActionTypes";
-const addressReducers = (state = { isLoading: true, address: [] }, action) => {
+const addressReducers = (
+  state = { isLoading: true, selected: false, address: [] },
+  action
+) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };

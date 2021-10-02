@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
@@ -8,14 +8,12 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import HomeIcon from "@material-ui/icons/Home";
-import PeopleIcon from "@material-ui/icons/People";
 
 import CloseIcon from "@material-ui/icons/Close";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+
 import * as actionTypes from "../../constants/ActionTypes";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { Avatar, Divider } from "@material-ui/core";
+import { Avatar } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 
 const styles = (theme) => ({
@@ -96,13 +94,14 @@ function SideBar(props) {
   const location = useLocation();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: actionTypes.LOGOUT });
 
     history.push("/auth");
 
     setUser(null);
-  };
+  }, [dispatch, history]);
+
   useEffect(() => {
     const token = user?.token;
 
@@ -113,7 +112,7 @@ function SideBar(props) {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, logout, user?.token]);
   return (
     <div style={{ backgroundColor: "#131921" }}>
       <Drawer variant="permanent" {...other}>

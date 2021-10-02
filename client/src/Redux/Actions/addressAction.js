@@ -2,9 +2,7 @@ import {
   CREATEA,
   START_LOADING,
   END_LOADING,
-  FETCH_ALL,
 } from "../../constants/ActionTypes";
-import * as api from "../../api/api.js";
 
 export const savemyaddress = (data) => async (dispatch) => {
   try {

@@ -13,6 +13,9 @@ export const Cart = () => {
   const location = useLocation();
   const [removed, setRemove] = useState(false);
 
+  if (user?.user.role === "admin" || user?.user.role === "seller") {
+    history.push("/admin");
+  }
   useEffect(() => {
     if (user?.user) {
       dispatch(userCart());

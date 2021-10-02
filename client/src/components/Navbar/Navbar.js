@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import SearchIcon from "@material-ui/icons/Search";
 
-import * as actionType from "../../constants/ActionTypes";
+import * as actionTypes from "../../constants/ActionTypes";
 import Badge from "@material-ui/core/Badge";
 import { styled } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
@@ -22,21 +22,21 @@ import "./navbar.css";
 import SideBar from "./Sidebar";
 import { useHistory, useLocation } from "react-router";
 
-const Navbar = () => {
+const Navbar = (props) => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
   const [sideBar, setSideBar] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const logout = () => {
-    dispatch({ type: actionType.LOGOUT });
+  const logout = useCallback(() => {
+    dispatch({ type: actionTypes.LOGOUT });
 
     history.push("/auth");
-    setAnchorEl(null);
+
     setUser(null);
-    setUser(null);
-  };
+  }, [dispatch, history]);
+
   const toggle = () => {
     setSideBar(!sideBar);
   };
@@ -60,7 +60,7 @@ const Navbar = () => {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, logout, user?.token]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -107,7 +107,7 @@ const Navbar = () => {
     setUser(JSON.parse(localStorage.getItem("profile")));
   }, []);
   const { carts } = useSelector((state) => state.cartReducer);
-  const { products, isLoading } = useSelector((state) => state.productReducers);
+  const { products } = useSelector((state) => state.productReducers);
 
   const fuse = new Fuse(products, {
     keys: ["name", "brand", "category"],
@@ -247,43 +247,47 @@ const Navbar = () => {
           </StyledBadge>
         </div>
       </div>
-      <div className="navbar2__search">
-        <input
-          className="navbar2__searchInput"
-          type="text"
-          value={query}
-          onChange={onSearch}
-        />
-        <SearchIcon className="navbar2__searchIcon" onClick={onSearchSumit} />
-        {query ? (
-          <div className="mnavSerachResults">
-            {query && results.length === 0 ? (
-              <div className="searchResults1__Links">
-                <p></p>
-                <p>no results found</p>
-              </div>
-            ) : (
-              ""
-            )}
-            {query
-              ? results.map((character) => (
-                  <div
-                    className="searchResults1__Links"
-                    onClick={() => {
-                      ProductD(character.item._id);
-                    }}
-                    key={character.item._id}
-                  >
-                    <img src={character.item.image} alt="" />
-                    <p>{character.item.name}</p>
-                  </div>
-                ))
-              : ""}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
+      {props.hideSearch ? (
+        ""
+      ) : (
+        <div className="navbar2__search">
+          <input
+            className="navbar2__searchInput"
+            type="text"
+            value={query}
+            onChange={onSearch}
+          />
+          <SearchIcon className="navbar2__searchIcon" onClick={onSearchSumit} />
+          {query ? (
+            <div className="mnavSerachResults">
+              {query && results.length === 0 ? (
+                <div className="searchResults1__Links">
+                  <p></p>
+                  <p>no results found</p>
+                </div>
+              ) : (
+                ""
+              )}
+              {query
+                ? results.map((character) => (
+                    <div
+                      className="searchResults1__Links"
+                      onClick={() => {
+                        ProductD(character.item._id);
+                      }}
+                      key={character.item._id}
+                    >
+                      <img src={character.item.image} alt="" />
+                      <p>{character.item.name}</p>
+                    </div>
+                  ))
+                : ""}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      )}
     </div>
   );
 };

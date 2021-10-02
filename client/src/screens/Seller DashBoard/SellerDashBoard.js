@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import { useHistory } from "react-router";
 import PropTypes from "prop-types";
 import {
   createTheme,
@@ -18,7 +18,10 @@ import { fetchsellerProducts } from "../../Redux/Actions/productActions";
 import UpdateProduct from "../../components/AdminDashboard/UpdateProduct";
 import { useParams } from "react-router-dom";
 import SellerOrderList from "../../components/AdminDashboard/SellerOrderList";
-import OrderUpdate from "../../components/AdminDashboard/OrderUpdate";
+
+import Welcome from "../../components/AdminDashboard/Welcome";
+import AllsellerDetails from "../../components/AdminDashboard/AllsellerDetails";
+import { MyProfile } from "../../components/Myprofile/MyProfile";
 function Copyright() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,9 +30,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
+      <Link color="inherit">Dragon-Mern-Ecommerce</Link>{" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -172,7 +173,15 @@ const styles = {
 };
 
 function AdminDashboard(props) {
-  const { classes, sellerProducts, SellerOrder, Update, orderByid } = props;
+  const {
+    classes,
+    sellerProducts,
+    sellerProfile,
+    SellerOrder,
+    Update,
+    allSellers,
+    allUser,
+  } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -183,7 +192,11 @@ function AdminDashboard(props) {
   useEffect(() => {
     dispatch(fetchsellerProducts());
   }, [dispatch]);
-
+  const history = useHistory();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  if (user?.user.role === "user" || user === null) {
+    history.push("/");
+  }
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
@@ -204,10 +217,21 @@ function AdminDashboard(props) {
         <div className={classes.app}>
           <Header onDrawerToggle={handleDrawerToggle} />
           <main className={classes.main}>
+            {sellerProducts ||
+            SellerOrder ||
+            allSellers ||
+            allUser ||
+            Update ? (
+              ""
+            ) : (
+              <Welcome />
+            )}
             {Update ? <UpdateProduct id={id} /> : ""}
             {sellerProducts ? <Content /> : ""}
+            {allSellers ? <AllsellerDetails allSellers /> : ""}
+            {allUser ? <AllsellerDetails allUser /> : ""}
             {SellerOrder ? <SellerOrderList /> : ""}
-            {orderByid ? <OrderUpdate id={id} /> : ""}
+            {/* {sellerProfile ? <MyProfile /> : ""} */}
           </main>
           <footer className={classes.footer}>
             <Copyright />

@@ -43,6 +43,10 @@ export default function ProductForm(prop) {
     name: "specs",
   });
   const history = useHistory();
+  const user = JSON.parse(localStorage.getItem("profile"));
+  if (user?.user.role === "user" || user === null) {
+    history.push("/");
+  }
   const classes = useStyles();
   const dispatch = useDispatch();
   const onSubmit = (data) => {

@@ -28,7 +28,7 @@ const db = mongoose
   .then((result) => {
     app.listen(
       PORT,
-      console.log(` server started and runing on http://localhost:${PORT}`)
+      console.log(` server started and runing on http:/localhost:${PORT}`)
     );
     console.log("db connected successfully");
   })
@@ -38,7 +38,7 @@ mongoose.set("useFindAndModify", false);
 
 // base route
 app.get("/", (req, res) => {
-  res.send(" home page is alive!");
+  res.send(" MERN Ecom Backend api  is alive!");
 });
 //login/signup routes
 app.use("/user", userRouter);

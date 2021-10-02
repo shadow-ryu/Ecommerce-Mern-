@@ -6,6 +6,7 @@ import cartReducer from "./cartReducer";
 import addressReducers from "./UserAddressReducer";
 import newAddressReducer from "./addressReducer";
 import savePaynetMethodReducer from "./paymentMethodReducer";
+
 import OrderReducers from "./orderReducer";
 
 const reducers = combineReducers({
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   addressReducers,
   savePaynetMethodReducer,
   OrderReducers,
+
   newAddressReducer,
 });
 export default reducers;

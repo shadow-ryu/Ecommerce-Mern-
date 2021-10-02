@@ -8,6 +8,7 @@ import {
   PLACEORDER,
   SUCESS_FULLY,
   UPDATEORD,
+  ALLSELLER,
 } from "../../constants/ActionTypes";
 const OrderReducers = (
   state = { isLoading: true, sucessOrder: false, update: false, Order: [] },
@@ -34,6 +35,7 @@ const OrderReducers = (
         ...state,
         Order: action.payload.data,
       };
+
     case SELLERORDERBYID:
       return { ...state, Order: action.payload.data };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -61,13 +61,13 @@ function Header(props) {
     setAnchorEl(null);
   };
 
-  const logout = () => {
+  const logout = useCallback(() => {
     dispatch({ type: actionType.LOGOUT });
 
     history.push("/auth");
-    setAnchorEl(null);
+
     setUser(null);
-  };
+  }, [dispatch, history]);
   const token = user?.token;
   useEffect(() => {
     if (token) {
@@ -77,8 +77,19 @@ function Header(props) {
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [token]);
-
+  }, [token, logout, user?.token]);
+  const handleSingIn = () => {
+    history.push("/auth");
+    setAnchorEl(null);
+  };
+  const myorder = () => {
+    history.push("/myOrder");
+    setAnchorEl(null);
+  };
+  const myProfile = () => {
+    history.push("admin/myProfile");
+    setAnchorEl(null);
+  };
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}>
@@ -98,13 +109,7 @@ function Header(props) {
             </Hidden>
             <Grid item xs />
 
-            <Grid item>
-              <Tooltip title="Alerts • No alerts">
-                <IconButton color="inherit">
-                  <NotificationsIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+            <Grid item></Grid>
             <Grid item>
               <Button
                 aria-controls="simple-menu"
@@ -122,13 +127,6 @@ function Header(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-
-                <MenuItem onClick={handleClose}>orders</MenuItem>
-                <MenuItem onClick={handleClose}>my products</MenuItem>
-
-                <MenuItem onClick={handleClose}></MenuItem>
-
                 <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </Grid>

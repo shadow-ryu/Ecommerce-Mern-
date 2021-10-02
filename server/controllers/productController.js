@@ -2,6 +2,7 @@ import Product from "../models/product.js";
 import SellerOrder from "../models/sellerOder.js";
 import User from "../models/user.js";
 import mongoose from "mongoose";
+//--------------get all product ---------------//
 export const getAllproducts = async (req, res, next) => {
   try {
     const allProducts = await Product.find();
@@ -11,7 +12,7 @@ export const getAllproducts = async (req, res, next) => {
     res.status(404).json({ message: error.message });
   }
 };
-
+//--------------get  a  particular  product (by ID) ---------------//
 export const getProductById = async (req, res) => {
   const { id } = req.params;
 
@@ -34,75 +35,76 @@ export const getProductById = async (req, res) => {
     res.json({ message: error.message });
   }
 };
-
+//--------------create a product  ---------------//
 export const createProduct = async (req, res) => {
-  const user = req.userData.id;
+  try {
+    const user = req.userData.id;
 
-  const newProduct = new Product({
-    // req.body
-    name: req.body.name,
-    seller: user,
+    const newProduct = new Product({
+      // req.body
+      name: req.body.name,
+      seller: user,
 
-    image: req.body.image,
-    brand: req.body.brand,
-    specs: req.body.specs,
-    category: req.body.category,
-    description: req.body.description,
-    price: parseInt(req.body.price),
-    countInStock: parseInt(req.body.countInStock),
-    rating: req.body.rating,
-    numReviews: req.body.numReviews,
-  });
-  newProduct
-    .save()
-    .then((result) => {
+      image: req.body.image,
+      brand: req.body.brand,
+      specs: req.body.specs,
+      category: req.body.category,
+      description: req.body.description,
+      price: parseInt(req.body.price),
+      countInStock: parseInt(req.body.countInStock),
+      rating: req.body.rating,
+      numReviews: req.body.numReviews,
+    });
+    newProduct.save().then((result) => {
       res.status(200).json({
         message:
           " The product has been added successfully and the details are below.",
         CreatedProduct: result,
       });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        message: err.message,
-      });
     });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 };
+//--------------Update a product (by ID) ---------------//
 export const updateProductById = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No product with id: ${id}`);
-  Product.updateOne({ _id: id }, { $set: req.body })
-    .then((course) => {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`No product with id: ${id}`);
+    Product.updateOne({ _id: id }, { $set: req.body }).then((Product) => {
       res.status(201).json({
-        message: " u have  updated the test course",
-        course: course,
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        error: err.message,
+        message: " u have  updated the  Product",
+        Product: Product,
       });
     });
+  } catch (err) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
 };
-
+//--------------delete a product (by ID) ---------------//
 export const deleteProductById = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(404).send(`No product with id: ${id}`);
+  try {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`No product with id: ${id}`);
 
-  await Product.findByIdAndRemove(id)
-    .then((result) => {
+    await Product.findByIdAndRemove(id).then((result) => {
       res.json({ message: "Product deleted successfully." });
-    })
-    .catch((error) => {
-      res.status(500).json({
-        message: error.message,
-      });
     });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
+
+//--------------review a product  (by id)---------------//
 export const reviewProductById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -113,10 +115,11 @@ export const reviewProductById = async (req, res) => {
     const userOrde = await SellerOrder.find({ costumer: user });
     const product = await Product.findById(id);
     const userDetails = await User.findById(user);
-
+    // to check if  user  has bought this product
     const ifprodcut = userOrde.find(
       (r) => r.productID.toString() === id.toString()
     );
+    // to check if user has already  written this a review for this product
     const alreadyreviewd = product.reviews.find(
       (r) => r.user.toString() === user.toString()
     );
@@ -149,7 +152,7 @@ export const reviewProductById = async (req, res) => {
     if (!ifprodcut) {
       res
         .status(400)
-        .json({ message: " You have to buy this product inorder to review." });
+        .json({ message: " You have to buy this product in order to review." });
     }
   } catch (error) {
     res.status(500).json({ message: error });

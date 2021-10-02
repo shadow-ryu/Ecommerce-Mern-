@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -16,10 +16,9 @@ import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { deleteProduct } from "../../Redux/Actions/productActions";
-import { addProductToCart } from "../../Redux/Actions/cartActions";
-import { useHistory } from "react-router-dom";
+
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 300,
@@ -42,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 const Product = (product, setAdded, added) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   return (
     <Card className={classes.root}>

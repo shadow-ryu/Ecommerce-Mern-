@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 const ProductNew = (product) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = JSON.parse(localStorage.getItem("profile"));
 
   return (
     <div className="main">
@@ -105,7 +105,7 @@ const ProductNew = (product) => {
               } else {
                 toast.error("plz login /signup to add to get", {
                   position: "top-right",
-                  autoClose: 5000,
+                  autoClose: 1000,
                   hideProgressBar: false,
                   closeOnClick: true,
                   pauseOnHover: true,
@@ -118,12 +118,18 @@ const ProductNew = (product) => {
             <AddShoppingCartIcon></AddShoppingCartIcon>
           </Button>
           <Link
-            style={{ display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              textDecoration: "none",
+              marginRight: "15px",
+              color: "black",
+            }}
             to={`/Product/${product.id}`}
             // variant="contained"
           >
-            More info
-            <NavigateNextIcon />
+            <p> More info > </p>
           </Link>
         </div>
       </div>

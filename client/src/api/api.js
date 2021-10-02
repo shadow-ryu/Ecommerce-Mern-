@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "https://dragon-mern-ecomm1.herokuapp.com/",
+  // baseURL: "http://localhost:5000",
 });
 
 API.interceptors.request.use(
@@ -44,11 +45,13 @@ export const updateProduct = (id, updatedProduct) =>
   API.patch(`/product/${id}`, updatedProduct);
 export const deleteProduct = (id) => API.delete(`/product/${id}`);
 export const sellerOrderById = (id) => API.get(`/user/sellerOrderById/${id}`);
-export const updateSellerOrderById = (id, updatedOrder) =>
-  API.patch(`/user/sellerOrderById/${id}`, updatedOrder);
+export const updateSellerOrderById = (id) =>
+  API.patch(`/user/sellerOrderById/${id}`);
 
 export const sellerOrderList = () => API.get("/user/sellerOrders");
-
-// export const myAddress = () => API.get("/user/myaddress");
-
+//admin
+export const allsellers = () => API.get("/user/allseller");
+export const allusers = () => API.get("/user/allusers");
+export const promoteSellerById = (id) => API.get(`/user/allseller/${id}`);
+export const deleteUserById = (id) => API.delete(`/user/${id}`);
 // /:id/reviews

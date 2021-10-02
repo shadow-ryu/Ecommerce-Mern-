@@ -4,11 +4,8 @@ import {
   SELLERORDERS,
   SELLERORDERBYID,
   START_LOADING,
-  UPDATEORD,
-  MYORDERS,
 } from "../../constants/ActionTypes";
 import * as api from "../../api/api.js";
-import { toast } from "react-toastify";
 
 export const placeOrderFnc = (result, router) => async (dispatch) => {
   try {
@@ -74,10 +71,12 @@ export const fetchsellerOrderById = (id) => async (dispatch) => {
     alert(error);
   }
 };
-export const updatellerOrderById = (id, order, router) => async (dispatch) => {
+export const updatellerOrderById = (id, router) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data } = await api.updateSellerOrderById(id, order);
+    router.push("/admin");
+    const { data } = await api.updateSellerOrderById(id);
+    console.log(data);
     router.push("/admin/orders");
   } catch (error) {
     alert(error);
@@ -93,6 +92,3 @@ export const fd = (id, router) => async (dispatch) => {
     alert(error);
   }
 };
-// export const updatemyOrderById = (id, router) => async (dispatch) => {
-
-// };

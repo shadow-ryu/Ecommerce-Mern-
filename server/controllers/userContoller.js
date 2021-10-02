@@ -30,7 +30,7 @@ export const signin = async (req, res) => {
         sellerDetails: oldUser.sellerDetails,
       },
       secret,
-      { expiresIn: "5h" }
+      { expiresIn: "1h" }
     );
 
     res.status(200).json({ user: oldUser, token });
@@ -41,10 +41,20 @@ export const signin = async (req, res) => {
 };
 
 export const signup = async (req, res) => {
-  const { email, password, firstName, lastName, role, sellerDetails } =
-    req.body;
-
   try {
+    // console.log(req.body);
+    const {
+      email,
+      password,
+      firstName,
+      lastName,
+      role,
+      brand,
+      logo,
+      description,
+      shippingPrice,
+    } = req.body;
+
     const oldUser = await UserModal.findOne({ email });
 
     if (oldUser)
@@ -52,33 +62,64 @@ export const signup = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const user = await UserModal.create({
-      email,
-      password: hashedPassword,
-      role: role,
-      sellerDetails: sellerDetails,
-      name: `${firstName} ${lastName}`,
-    });
-
-    const token = jwt.sign(
-      {
-        email: user.email,
-        name: user.name,
-        id: user._id,
+    if (role === "seller") {
+      const intShippingPrice = parseInt(shippingPrice);
+      const sellerDetails = {
+        name: brand,
+        logo: logo,
+        description: description,
+        shippingPrice: intShippingPrice,
+      };
+      const user = await UserModal.create({
+        email,
+        password: hashedPassword,
         role: role,
         sellerDetails: sellerDetails,
-      },
-      secret,
-      { expiresIn: "1h" }
-    );
+        name: `${firstName} ${lastName}`,
+      });
+      const token = jwt.sign(
+        {
+          email: user.email,
+          name: user.name,
+          id: user._id,
+          role: role,
+          sellerDetails: sellerDetails,
+        },
+        secret,
+        { expiresIn: "1h" }
+      );
 
-    res.status(201).json({ user, token });
+      res.status(201).json({ user, token });
+    } else {
+      const user = await UserModal.create({
+        email,
+        password: hashedPassword,
+        role: role,
+        sellerDetails: null,
+        name: `${firstName} ${lastName}`,
+      });
+      const token = jwt.sign(
+        {
+          email: user.email,
+          name: user.name,
+          id: user._id,
+          role: role,
+          sellerDetails: null,
+        },
+        secret,
+        { expiresIn: "1h" }
+      );
+
+      res.status(201).json({ user, token });
+    }
   } catch (error) {
     res.status(500).json({ message: "Something went wrong" });
 
     console.log(error);
   }
 };
+
+//------- get all seller product------//
 export const MyProducts = async (req, res) => {
   try {
     const user = req.userData.id;
@@ -89,6 +130,8 @@ export const MyProducts = async (req, res) => {
     console.log(error);
   }
 };
+
+//------- get all user address------//
 export const Myaddress = async (req, res) => {
   try {
     const user = req.userData.id;
@@ -97,5 +140,81 @@ export const Myaddress = async (req, res) => {
     res.status(200).json(ShippingAddress);
   } catch (error) {
     console.log(error);
+  }
+};
+
+//---- all seller----//
+export const allSellerBasicDetails = async (req, res) => {
+  try {
+    const allUser = await UserModal.find(
+      { role: "seller" },
+      {
+        name: 1,
+        email: 1,
+        role: 1,
+        sellerDetails: 1,
+      }
+    ).then((user) => {
+      res.status(200).json(user);
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+//---- all seller----//
+export const allUserBasicDetails = async (req, res) => {
+  try {
+    const allUser = await UserModal.find(
+      { role: "user" },
+      {
+        name: 1,
+        email: 1,
+        role: 1,
+      }
+    ).then((user) => {
+      res.status(200).json(user);
+    });
+  } catch (error) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+//-------promote to adimn------/
+export const promoteUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    await UserModal.updateOne(
+      { _id: userId },
+      { $set: { role: "admin" } }
+    ).then((result) => {
+      console.log("done" + result);
+      res.status(200).json({
+        message: "user promote to admin",
+      });
+    });
+    const user = await UserModal.find({ _id: userId });
+    console.log("done" + user);
+  } catch (error) {
+    res.status(500).json({
+      error: err.message,
+    });
+  }
+};
+//-----------delete user or seller------//
+export const deleteUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await UserModal.findByIdAndRemove(id);
+    await Product.findByIdAndRemove({ seller: id }).then((result) => {
+      res.json({ message: "User deleted successfully." });
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
   }
 };
